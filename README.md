@@ -1,60 +1,107 @@
-# Tumi Mundo
+# TuMi Mundo
 
-<img width="453" alt="image" src="https://github.com/fdnd-agency/tumi-mundo/assets/61702002/6c04d95e-f4ea-480d-9e86-cbf9148e8e15">
+Een innovatieve aanpak om taalontwikkeling bij kinderen te ondersteunen door middel van wetenschappelijke en technologische vooruitgang. Dit project richt zich op het verbeteren van moedertaal- en andere taalvaardigheden bij jonge kinderen door middel van een webapplicatie of mobiele website.
 
-## Belangrijk
-### [Design components](https://www.figma.com/design/tXRARfGkPQQhkkcp4VyXXR/Tumi-Mundo---Issues-prototype?node-id=4002-1692&t=XNYDmTT7hk1gslye-1)
-### [Issues](https://github.com/fdnd-agency/tumi-mundo/issues)
+![Project Logo](https://github.com/fdnd-agency/tumi-mundo/assets/61702002/6c04d95e-f4ea-480d-9e86-cbf9148e8e15)
 
-## Over Tumi Mundo
+## Inhoudsopgave
 
-Door de wetenschappelijke en technologische vooruitgang komt er steeds meer inzicht in het proces van taalontwikkeling bij kinderen. Wij voorzien dat deze nieuwe inzichten en de technologische ontwikkelingen een steeds grotere toegevoegde waarde zullen hebben in de ondersteuning van ouders en kinderen bij de ontwikkeling van hun moedertaal en andere talen.
+1. [Introductie](#introductie)
+2. [Kenmerken](#kenmerken)
+3. [Screenshots](#screenshots)
+4. [Live Link](#live-link)
+5. [Installatiehandleiding](#installatiehandleiding)
+6. [Huisstijl](#huisstijl)
+7. [Bijdragen](#bijdragen)
+8. [Hints voor volgende teams](#hints-voor-volgende-teams)
+9. [Gebruikte Bronnen](#gebruikte-bronnen)
+10. [Badges](#badges)
+11. [Link naar Projectboard](#link-naar-projectboard)
+12. [Licentie](#licentie)
 
-Uit diverse onderzoeken blijkt dat het tweetalig opvoeden van kinderen grote voordelen met zich mee brengt. Een paar van deze voordelen zijn:
+## Introductie
 
-* Tweetalige opvoeding vanaf de geboorte vergroot de complexiteit van de taalstructuur die een kind aanmaakt. Dit heeft grote voordelen voor het proces van leren van een “non native” taal.
-* Het op vroege leeftijd tweetalig worden opgevoed vergroot de flexibiliteit van de hersenen. Dit heeft grote voordelen heeft op het vlak van vermindering van geestesziektes als Alzheimer en Dementie.
-* Tweetalige opgevoede kinderen hebben een vergroot inlevingsvermogen en sociale vaardigheden.
+Door de wetenschappelijke en technologische vooruitgang is er steeds meer inzicht in het proces van taalontwikkeling bij kinderen. Deze inzichten, gecombineerd met technologische mogelijkheden, bieden een grote toegevoegde waarde in het ondersteunen van ouders en kinderen bij hun taalontwikkeling. Dit project richt zich specifiek op:
 
-Bovenstaande inzichten worden momenteel (nog) niet ingezet als ontwikkelings- of leermethode voor baby’s of zeer jonge kinderen.
+- Het benutten van de voordelen van tweetalige opvoeding, zoals:
+  - Verhoogde complexiteit van de taalstructuur.
+  - Verbeterde hersenflexibiliteit, met voordelen voor de geestelijke gezondheid.
+  - Verbeterde sociale vaardigheden en inlevingsvermogen.
 
-
-## Design challenge
-
-Vertaal het reeds bestaande grafische design naar een web applicatie of mobiele website die eindgebruikers in staat stelt de om de content van de methode af te kunnen spelen en die de onderzoekers in staat stelt data te verzamelen over het gebruik van de methode en de progressie die de kinderen maken. Tijdens deze eerste fase van de methode zal de focus liggen op het afspelen van taal verhalen en het doen van simpele attentie testjes.
-
-## Resources
-
-[Design](https://www.figma.com/file/RDlD4etdXBvcOW9AAqueBz/TuMiMundo_FDND_Prototype?type=design&node-id=0%3A1&mode=design&t=3z8nbpTxTLvGHUIm-1)  
-
-
-## Links
-[Issues](https://github.com/fdnd-agency/tumi-mundo/issues)  
-[Project board](https://github.com/orgs/fdnd-agency/projects/43)  
-[Debriefing TuMi Mundo.pdf](https://github.com/user-attachments/files/17307672/Debriefing.TuMi.Mundo.pdf)  
-[Datamodel](https://github.com/user-attachments/assets/5d32c35d-6d0c-4484-8547-9d7d812a13e7)  
-
-***
+Bovendien worden deze inzichten nog niet op grote schaal toegepast als ontwikkelings- of leermethode voor baby’s en zeer jonge kinderen.
 
 ## Kenmerken
 
-* HTML
-* CSS
-* JavaScript
-* Sveltekit
-* Directus
-<!-- Bij Kenmerken staat welke technieken zijn gebruikt en hoe. Wat is de HTML structuur? Wat zijn de belangrijkste dingen in CSS? Wat is er met Javascript gedaan en hoe? Misschien heb je een framwork of library gebruikt? -->
+- Ondersteunt ouders en kinderen bij taalontwikkeling.
+- Focus op tweetaligheid vanaf jonge leeftijd.
+- Taalverhalen en aandachtstestjes.
+- Data-analysemogelijkheden voor onderzoekers.
+- Gebruiksvriendelijke interface.
 
-## Installatie
-* Installeer NodeJs
-* Fork/clone deze repository
-* Open het in een code editor naar keuze
-* Open de terminal en maak een nieuwe werkomgeving aan:  
-* create a new project in the current directory
-* npm create svelte@latest
+## Screenshots
 
-### How to review
-* To start the project you firstly have load the repo from Github Desktop.
-* Navigate to the branch of this pull-request
-* Open the terminal and enter npm install to install the dependencies.
-* To see the other pages type "https://localhost:5173/home", "https://localhost:5173/playlist", "https://localhost:5173/onboarding-1" .
+![image](https://github.com/user-attachments/assets/6061a488-ad97-45c5-b6ab-b1bd8104b7d5)
+
+
+## Live Link
+
+[Bekijk de applicatie live](https://tumi-mundo.vercel.app/)
+
+## Installatiehandleiding
+
+Volg deze stappen om de applicatie lokaal te installeren:
+
+```bash
+# Clone de repository
+git clone https://github.com/Jesse-Kramer/tumi-mundo.git
+
+# Installeer afhankelijkheden
+npm install
+
+# Start de applicatie
+npm start
+```
+
+## Huisstijl
+
+De huisstijlrichtlijnen zijn beschikbaar in het Figma-bestand:
+
+[Huisstijl in Figma](https://www.figma.com/file/RDlD4etdXBvcOW9AAqueBz/TuMiMundo_FDND_Prototype?type=design&node-id=0%3A1&mode=design&t=3z8nbpTxTLvGHUIm-1)
+
+## Bijdragen
+
+Contributies aan dit project zijn welkom! Volg deze stappen om bij te dragen:
+
+1. Fork de repository.
+2. Maak een nieuwe branch (`git checkout -b feature-naam`).
+3. Commit je wijzigingen (`git commit -m "Beschrijving van de wijziging"`).
+4. Push naar de branch (`git push origin feature-naam`).
+5. Maak een Pull Request.
+
+## Hints voor volgende teams
+
+- Zorg voor duidelijke documentatie bij nieuwe functies.
+- Test nieuwe features grondig op verschillende apparaten.
+
+## Gebruikte Bronnen
+
+- [Figma](https://www.figma.com/)
+- [Svelte docs](https://svelte.dev/)
+- [Svelte view transitions](https://svelte.dev/blog/view-transitions)
+- [Github/Briannededeugd](https://github.com/briannededeugd/tumimundo/)
+- [Vercel](https://vercel.com/)
+- [Chatgpt](https://chat.openai.com)
+
+## Badges
+
+![Node.js](https://img.shields.io/badge/Node.js-v16-green)
+![License](https://img.shields.io/badge/License-MIT-yellow)
+
+## Link naar Projectboard
+
+[Bekijk het projectboard](https://github.com/orgs/fdnd-agency/projects/53)
+
+## Licentie
+
+Dit project is gelicenseerd onder de MIT-licentie. Zie het bestand [LICENSE](LICENSE) voor meer informatie.
+
