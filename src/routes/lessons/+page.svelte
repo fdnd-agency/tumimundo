@@ -1,6 +1,6 @@
 
 <script>
-    import { Story, Playlist, Menu, Carousel } from '$lib/index';
+    import { Story, Playlist, Menu, Carousel, Play, Plus } from '$lib/index';
 
     let currentPage = "lessons";
 
@@ -47,17 +47,13 @@
                     <img src="https://fdnd-agency.directus.app/assets/263e541a-9dd8-4978-8ad0-9a6e5b9dfe1a" class="story-img" alt="story">
                 </picture>
                 <h3>The octopus who was very hungry</h3>
-                <small>    
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="12" cy="12" r="12" fill="#F3A22A"/>
-                        <path d="M17.0874 13.0613C17.7817 12.5241 17.7817 11.4759 17.0874 10.9387C14.9891 9.31508 12.6461 8.03537 10.146 7.14743L9.68929 6.98522C8.8155 6.67488 7.89254 7.26607 7.77425 8.16805C7.44374 10.6882 7.44374 13.3118 7.77425 15.8319C7.89254 16.7339 8.8155 17.3251 9.68929 17.0148L10.146 16.8526C12.6461 15.9646 14.9891 14.6849 17.0874 13.0613Z" fill="white"/>
-                    </svg><a href="all-stories">31 min. 55 sec</a></small>
+                    <small> 
+                        <Play/>  
+                        <a href="all-stories">31 min. 55 sec</a>
+                    </small>
             </li>
             <li class="create-playlist">
-                <svg width="68" height="68" viewBox="0 0 68 68" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="30" width="8" height="68" rx="4" fill="white"/>
-                    <rect x="68" y="30" width="8" height="68" rx="4" transform="rotate(90 68 30)" fill="white"/>
-                </svg>                
+                <Plus/>
                 <h3>Make a playlist !</h3>
                 <small><a href="/create-playlist">Add your favorite stories in one playlist</a></small>
             </li>

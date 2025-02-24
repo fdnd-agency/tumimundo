@@ -1,5 +1,6 @@
 <script>
   import { onMount } from 'svelte';
+  import Eclipse from '../../lib/components/svg/eclipse.svelte';
 
   let currentSlide = 0;
 
@@ -44,9 +45,10 @@
         <section>
           <a href="/sign-up">Skip</a>
             <div class="mouse">
-              <svg width="242" height="242" viewBox="0 0 242 242" fill="none" xmlns="http://www.w3.org/2000/svg" class="eclipse">
+              <!-- <svg width="242" height="242" viewBox="0 0 242 242" fill="none" xmlns="http://www.w3.org/2000/svg" class="eclipse">
                 <circle cx="121" cy="121" r="121" fill="hsla(213, 53%, 52%, 1)"/>
-              </svg>                        
+              </svg>                         -->
+              <Eclipse/>
               <picture class="rat">
                 <source srcset="/characters/Rat.svg?format=avif" type="image/avif">
                 <source srcset="/characters/Rat.svg?format=webp">
@@ -74,9 +76,7 @@
         <section class="slide-2">
           <a href="/sign-up">Skip</a>
             <div class="mouse">
-              <svg width="242" height="242" viewBox="0 0 242 242" fill="none" xmlns="http://www.w3.org/2000/svg" class="eclipse">
-                <circle cx="121" cy="121" r="121" fill="hsla(199, 48%, 38%, 1)"/>
-              </svg>
+              <Eclipse color="hsla(199, 48%, 38%, 1)" />
               <picture class="rat">
                 <source srcset="/characters/Rat.svg?format=avif" type="image/avif">
                 <source srcset="/characters/Rat.svg?format=webp">
@@ -104,9 +104,7 @@
         <section class="slide-3">
           <a href="/sign-up">Skip</a>
             <div class="mouse">
-              <svg width="242" height="242" viewBox="0 0 242 242" fill="none" xmlns="http://www.w3.org/2000/svg" class="eclipse">
-                <circle cx="121" cy="121" r="121" fill="hsla(173, 95%, 25%, 1)"/>
-              </svg>                        
+              <Eclipse color="hsla(173, 95%, 25%, 1)" />                     
               <picture class="rat">
                 <source srcset="/characters/Rat.svg?format=avif" type="image/avif">
                 <source srcset="/characters/Rat.svg?format=webp">

@@ -1,5 +1,5 @@
 <script>
-import { Input } from '$lib/index';
+import { Input, Back } from '$lib/index';
 
 </script>
 
@@ -8,9 +8,7 @@ import { Input } from '$lib/index';
     <section>
         <div class="heading">
             <a href="/onboarding">
-                <svg width="14" height="24" viewBox="0 0 14 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M13.3398 0.554956C14.0797 1.2949 14.0797 2.49458 13.3398 3.23452L4.5743 12L13.3398 20.7655C14.0797 21.5054 14.0797 22.7051 13.3398 23.445C12.5998 24.185 11.4002 24.185 10.6602 23.445L0.554955 13.3398C-0.184985 12.5998 -0.184985 11.4002 0.554955 10.6602L10.6602 0.554956C11.4002 -0.184985 12.5998 -0.184985 13.3398 0.554956Z" fill="black"/>
-                </svg>                    
+                <Back color="black"/>
             </a>
             <h1>Sign up</h1> 
         </div>
