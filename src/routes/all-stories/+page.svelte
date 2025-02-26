@@ -1,9 +1,28 @@
-
 <script>
     import { Story, Search, Back } from '$lib/index';
+    import { writable } from 'svelte/store';
+    import { onMount } from 'svelte';
 
     /** @type {import('./$types').PageData} */
     export let data;
+
+    let selectedLanguage = writable('languages');
+    /** $: zorgt voor een reactive statement. de inhoud hiervan wordt automatisch geupdate wanneer data hierin wordt gewijzigd */
+    $: filteredStories = [];
+
+    $: {
+        if ($selectedLanguage !== 'languages') {
+            filteredStories = data.stories.filter(story => 
+                story.language && story.language.toLowerCase() === $selectedLanguage.toLowerCase()
+            );
+        } else {
+            filteredStories = data.stories;
+        }
+    }
+
+    function handleLanguageChange(event) {
+        selectedLanguage.set(event.target.value);
+    }
 </script>
 
 <main>
@@ -33,11 +52,11 @@
                 </select>
             </li>
             <li>
-                <select name="language" id="language"aria-label="Choose a language">
-                    <option  value="languages">Languages</option>
-                        {#each data.languages as language}
-                            <option value="{ language.language }">{ language.language }</option>
-                        {/each}
+                <select name="language" id="language" aria-label="Choose a language" on:change={handleLanguageChange}>
+                    <option value="languages">Languages</option>
+                    {#each data.languages as language}
+                        <option value="{language.language}">{language.language}</option>
+                    {/each}
                 </select>
             </li>
             <li>
@@ -53,9 +72,9 @@
     </header>
     
     <section class="story-list">
-        {#each data.stories as story}
-            <Story {story} />
-        {/each}
+            {#each filteredStories as story (story.id)}
+                <Story {story} />
+            {/each}
     </section>
 </main>
 
@@ -63,6 +82,7 @@
 main {
     background-image: var(--bg-image-purple);
     color: var(--color-white);
+    min-height: 100vh; 
 }
 
 .heading,
