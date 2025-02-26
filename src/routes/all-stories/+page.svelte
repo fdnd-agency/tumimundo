@@ -4,6 +4,7 @@
 
     /** @type {import('./$types').PageData} */
     export let data;
+    
 </script>
 
 <main>
@@ -21,10 +22,11 @@
             <li>
                 <select name="animal" id="animal-select" aria-label="Choose an animal">
                     <option value="animal">Animal</option>
-                        {#each data.buddys as buddy}
-                            <option value="{ buddy.animal }">{ buddy.animal }</option>
+                        {#each data.animals as animal}
+                            <option value="{ animal.animal }">{ animal.animal }</option>
                         {/each}
                 </select>
+                
             </li>
             <li>
                 <select name="season" id="season-select" aria-label="Choose a season">

@@ -15,7 +15,27 @@ export async function fetchCollection(fetch, collectionName, id = null) {
     // Haal een volledige collectie op als er geen ID is meegegeven
     return await directus.request(readItems(collectionName));
 }
-
+/**
+ * Fetches a list of animals from the Directus API.
+ *
+ * @async
+ * @function fetchAnimals
+ * @param {fetch} fetch - The fetch function provided by SvelteKit's `load` function.
+ * @returns {Promise<Array<Object>>} A promise that resolves to an array of animal objects.
+ * @throws {Error} If there's an error during the API request.
+ */
+export async function fetchAnimals(fetch) {
+    const directus = getDirectusInstance(fetch);
+    try {
+        const animals = await directus.request(readItems('tm_animal', {
+            fields: ['id', 'animal']
+        }));
+        return animals;
+    } catch (error) {
+        console.error('Error fetching animals:', error);
+        throw error;
+    }
+}
 export async function fetchAllData(fetch) {
 
     const [
