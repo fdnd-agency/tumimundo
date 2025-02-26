@@ -9,6 +9,7 @@
     let selectedLanguage = writable('languages');
     /** $: zorgt voor een reactive statement. de inhoud hiervan wordt automatisch geupdate wanneer data hierin wordt gewijzigd */
     $: filteredStories = [];
+    $: noStoriesFound = filteredStories.length === 0;
 
     $: {
         if ($selectedLanguage !== 'languages') {
@@ -72,9 +73,13 @@
     </header>
     
     <section class="story-list">
+        {#if noStoriesFound}
+            <p class="no-stories-message">No stories found</p>
+        {:else}
             {#each filteredStories as story (story.id)}
                 <Story {story} />
             {/each}
+        {/if}
     </section>
 </main>
 
@@ -169,6 +174,14 @@ ul {
     justify-content: center;
     flex-wrap: wrap;
     gap: 1em;
+}
+
+.no-stories-message {
+    color: var(--color-white);
+    font-size: 1.2em;
+    text-align: center;
+    width: 100%;
+    padding: 2em;
 }
 
 @media only screen and (min-width: 54.0625em) {
