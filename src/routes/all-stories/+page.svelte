@@ -1,7 +1,6 @@
 <script>
     import { Story, Search, Back } from '$lib/index';
     import { writable } from 'svelte/store';
-    import { onMount } from 'svelte';
 
     /** @type {import('./$types').PageData} */
     export let data;
