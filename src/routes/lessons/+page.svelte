@@ -60,10 +60,10 @@
         <h2>All stories</h2>
 
         <nav class="language-filter">
-            <label for="checkbox-nl"><img src="/languages/Dutch.svg" alt="dutch">Dutch</label>
+            <label for="checkbox-nl"><img src="/languages/dutch.svg" alt="dutch">Dutch</label>
             <input type="checkbox" id="checkbox-nl">
 
-            <label for="checkbox-en"><img src="/languages/English.svg" alt="english">English</label>
+            <label for="checkbox-en"><img src="/languages/english.svg" alt="english">English</label>
             <input type="checkbox" id="checkbox-en">
 
             <a href="/all-stories">Show all</a>
