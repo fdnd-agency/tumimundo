@@ -60,7 +60,7 @@
         {:else}
             <p>No languages found.</p>
         {/if}
-        <Button type="button"/>
+        <Button type="input" variant="secondary"/>
     </section>
 </main>
 

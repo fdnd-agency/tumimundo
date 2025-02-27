@@ -1,4 +1,6 @@
-
+<script>
+     import { Button } from '$lib/index';
+</script>
 
 <main>
     <section>
@@ -6,6 +8,8 @@
         <p>During the learning journey your child will have a buddy that learns with them, gives reminders and shows the statistics! Here you can pick a buddy.</p>
 
         <p>Drag left or right, or use the buttons on the side to see all the buddies!</p> 
+
+        <Button type="input" variant="primary" />
     </section>
     
 </main>

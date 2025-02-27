@@ -1,37 +1,53 @@
-
 <script>
- // Standard data
-  export let type = 'button';
+  export let type = 'button'; 
   export let label = 'Continue';
+  export let variant = 'primary'; 
   export let onClick = () => {};
 </script>
 
-
 {#if type === 'button'}
-  <button on:click={onClick}>{label}</button>
+  <button class={variant} on:click={onClick}>{label}</button>
 {:else if type === 'input'}
-  <input type="submit" value={label} on:click={onClick} />
+  <input type="submit" class={variant} value={label} on:click={onClick} />
 {/if}
 
 <style>
+  :global(:root) {
+    --button-blue: hsl(200, 52%, 46%);
+    --button-darker-blue: hsl(200, 49%, 26%);
+    --button-grey: hsl(0, 0%, 75%);
+  }
 
-input[type="submit"], button{
+  input[type="submit"], button {
     width: 85%;
+    max-width: 31.25em;
     padding: .8em;
     border-radius: .4em;
     border: none;
     font-size: 1.1em;
-    color: #4f4f4f;
-    background-color: #d4d4d4 ;
     position: fixed;
     bottom: 0;
     margin-bottom: 2.5em;
-}
-input[type="submit"]:hover,:focus{
     cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .primary {
+    background-color: var(--button-blue);
+    color: var(--primary-text);
+  }
+
+  .primary:hover, .primary:focus {
+    background-color: var(--primary-hover);
+  }
+
+  .secondary {
+    background-color: var(--button-grey);
+    color: hsl(0, 0%, 48%);
+  }
+
+  .secondary:hover, .secondary:active {
+    background-color: var(--button-darker-blue);
     color: white;
-    background-color: #215165 ;
-    border: 1px solid red;
-}
-    
+  }
 </style>
