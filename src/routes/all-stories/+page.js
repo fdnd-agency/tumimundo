@@ -27,7 +27,7 @@ export async function load({ fetch }) {
     };
 } catch (err) {
     
-    console.error('Error loading data:', err);
+    console.error('Error loading data:', error);
     throw error(500, {
         message: error.message
     });
