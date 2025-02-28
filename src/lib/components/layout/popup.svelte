@@ -1,4 +1,5 @@
 <script>
+  import { Close } from '$lib/index';
    // Standard data
   export let title = "Goodmorning,";
   export let message = "Shall we start with a story?";
@@ -10,11 +11,8 @@
           <p>{title}</p>
           <form method="dialog">
               <button>
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M14.375 14.375L5.625 5.625" stroke="#3E0D0D" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M14.375 5.625L5.625 14.375" stroke="#3E0D0D" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </button>
+                <Close/>
+              </button>
           </form>
       </div>
       <p class="popup-message">{message}</p>

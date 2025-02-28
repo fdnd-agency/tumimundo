@@ -1,15 +1,33 @@
 // Components
 export { default as Menu } from '$lib/components/core/menu.svelte'
 export { default as Carousel } from '$lib/components/core/carousel.svelte'
+export { default as Dropdown } from '$lib/components/core/dropdown.svelte'
 export { default as Button } from '$lib/components/forms/continue-btn.svelte'
 export { default as Input } from '$lib/components/forms/input.svelte'
 export { default as Search } from '$lib/components/forms/search.svelte'
 export { default as Playlist } from '$lib/components/layout/playlist.svelte'
 export { default as Popup } from '$lib/components/layout/popup.svelte'
 export { default as Story } from '$lib/components/layout/story.svelte'
-export { default as Dropdown } from '$lib/components/core/dropdown.svelte'
 
 // Helpers
 export { default as fetchJson } from '$lib/components/helpers/fetch-json.js'
 export { fetchApi } from '$lib/components/helpers/fetchApi.js'
 export { userState } from '$lib/components/helpers/account.js'
+
+// SVG's
+export { default as Back } from '$lib/components/svg/Back.svelte';
+export { default as Play } from '$lib/components/svg/Play.svelte';
+export { default as Plus } from '$lib/components/svg/Plus.svelte';
+export { default as Close } from '$lib/components/svg/Close.svelte';
+export { default as Eclipse } from '$lib/components/svg/Eclipse.svelte';
+export { default as Edit } from '$lib/components/svg/Edit.svelte';
+export { default as AddProfile } from '$lib/components/svg/AddProfile.svelte';
+export { default as LikeButton } from '$lib/components/svg/LikeButton.svelte';
+export { default as PlayStory } from '$lib/components/svg/PlayStory.svelte';
+export { default as Download } from '$lib/components/svg/Download.svelte';
+export { default as AddStory } from '$lib/components/svg/AddStory.svelte';
+export { default as Home } from '$lib/components/svg/Home.svelte';
+export { default as Test } from '$lib/components/svg/Test.svelte';
+export { default as Lessons } from '$lib/components/svg/Lessons.svelte';
+export { default as Statistics } from '$lib/components/svg/Statistics.svelte';
+export { default as Profile } from '$lib/components/svg/Profile.svelte';

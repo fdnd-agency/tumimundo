@@ -1,18 +1,36 @@
-
 <script>
-    import { Story, Search } from '$lib/index';
+    import { Story, Search, Back } from '$lib/index';
+    import { writable } from 'svelte/store';
 
     /** @type {import('./$types').PageData} */
     export let data;
+
+    let selectedLanguage = writable('languages');
+    /** $: zorgt voor een reactive statement. de inhoud hiervan wordt automatisch geupdate wanneer data hierin wordt gewijzigd */
+    $: stories = [];
+    $: noStoriesFound = stories.length === 0;
+
+    $: {
+        if ($selectedLanguage !== 'languages') {
+            stories = data.stories.filter(story => 
+                story.language && story.language.toLowerCase() === $selectedLanguage.toLowerCase()
+            );
+        } else {
+            stories = data.stories;
+        }
+    }
+
+    function handleLanguageChange(event) {
+        selectedLanguage.set(event.target.value);
+    }
+
 </script>
 
 <main>
     <header>
         <div class="heading">
             <a href="/lessons" aria-label="Go back to lessons">
-                <svg width="14" height="24" viewBox="0 0 14 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="heading-back">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M13.3398 0.554956C14.0797 1.2949 14.0797 2.49458 13.3398 3.23452L4.5743 12L13.3398 20.7655C14.0797 21.5054 14.0797 22.7051 13.3398 23.445C12.5998 24.185 11.4002 24.185 10.6602 23.445L0.554955 13.3398C-0.184985 12.5998 -0.184985 11.4002 0.554955 10.6602L10.6602 0.554956C11.4002 -0.184985 12.5998 -0.184985 13.3398 0.554956Z" fill="white"/>
-                </svg>                
+                <Back color="white"/>
             </a>
             <h1>All Stories</h1>
         </div>
@@ -23,10 +41,11 @@
             <li>
                 <select name="animal" id="animal-select" aria-label="Choose an animal">
                     <option value="animal">Animal</option>
-                        {#each data.buddys as buddy}
-                            <option value="{ buddy.animal }">{ buddy.animal }</option>
+                        {#each data.animals as animal}
+                            <option value="{ animal.animal }">{ animal.animal }</option>
                         {/each}
                 </select>
+                
             </li>
             <li>
                 <select name="season" id="season-select" aria-label="Choose a season">
@@ -35,11 +54,11 @@
                 </select>
             </li>
             <li>
-                <select name="language" id="language"aria-label="Choose a language">
-                    <option  value="languages">Languages</option>
-                        {#each data.languages as language}
-                            <option value="{ language.language }">{ language.language }</option>
-                        {/each}
+                <select name="language" id="language" aria-label="Choose a language" on:change={handleLanguageChange}>
+                    <option value="languages">Languages</option>
+                    {#each data.languages as language}
+                        <option value="{language.language}">{language.language}</option>
+                    {/each}
                 </select>
             </li>
             <li>
@@ -55,15 +74,21 @@
     </header>
     
     <section class="story-list">
-        {#each data.stories as story}
-            <Story {story} />
-        {/each}
+        {#if noStoriesFound}
+            <p class="no-stories-message">No stories found</p>
+        {:else}
+            {#each stories as story (story.id)}
+                <Story {story} />
+            {/each}
+        {/if}
     </section>
 </main>
 
 <style>
 main {
     background-image: var(--bg-image-purple);
+    color: var(--color-white);
+    min-height: 100vh; 
 }
 
 .heading,
@@ -124,6 +149,7 @@ select {
     background-color: transparent;
     overflow-x: auto; 
     border: none;
+    color: var(--color-white);
 }
 
 option,
@@ -149,6 +175,14 @@ ul {
     justify-content: center;
     flex-wrap: wrap;
     gap: 1em;
+}
+
+.no-stories-message {
+    color: var(--color-white);
+    font-size: 1.2em;
+    text-align: center;
+    width: 100%;
+    padding: 2em;
 }
 
 @media only screen and (min-width: 54.0625em) {

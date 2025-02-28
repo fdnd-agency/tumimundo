@@ -32,7 +32,29 @@ All notable changes to this project will be documented in this file.
 
 <!--  -->
 
-### Added 
-- playlist page with header/nav and a meta data section
-- static 
+### Added 2025-2-3
+- Added the playlist page with header/nav and metadata section
+
+### Added 2025-2-4
+- Added the stories component/section for stories within the playlist
+
+### Changed 2025-2-7
+- Changed the stories component with dynamic data from database
+
+### Refactored 2025-2-7
+- Removed unused files
+
+## [Unreleased]
+### Fixed 2025-2-10
+- Fixed hex color codes into HSLA
+- Fixed pixels to em
+
+## [Unreleased]
+### Added
+- Added try catch errors for if playlist is not loaded
+
+
+
+
+
 
