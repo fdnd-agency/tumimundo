@@ -7,16 +7,16 @@
 
     let selectedLanguage = writable('languages');
     /** $: zorgt voor een reactive statement. de inhoud hiervan wordt automatisch geupdate wanneer data hierin wordt gewijzigd */
-    $: filteredStories = [];
-    $: noStoriesFound = filteredStories.length === 0;
+    $: stories = [];
+    $: noStoriesFound = stories.length === 0;
 
     $: {
         if ($selectedLanguage !== 'languages') {
-            filteredStories = data.stories.filter(story => 
+            stories = data.stories.filter(story => 
                 story.language && story.language.toLowerCase() === $selectedLanguage.toLowerCase()
             );
         } else {
-            filteredStories = data.stories;
+            stories = data.stories;
         }
     }
 
@@ -75,7 +75,7 @@
         {#if noStoriesFound}
             <p class="no-stories-message">No stories found</p>
         {:else}
-            {#each filteredStories as story (story.id)}
+            {#each stories as story (story.id)}
                 <Story {story} />
             {/each}
         {/if}
