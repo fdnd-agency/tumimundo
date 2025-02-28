@@ -1,9 +1,28 @@
-
 <script>
     import { Story, Search, Back } from '$lib/index';
+    import { writable } from 'svelte/store';
 
     /** @type {import('./$types').PageData} */
     export let data;
+
+    let selectedLanguage = writable('languages');
+    /** $: zorgt voor een reactive statement. de inhoud hiervan wordt automatisch geupdate wanneer data hierin wordt gewijzigd */
+    $: stories = [];
+    $: noStoriesFound = stories.length === 0;
+
+    $: {
+        if ($selectedLanguage !== 'languages') {
+            stories = data.stories.filter(story => 
+                story.language && story.language.toLowerCase() === $selectedLanguage.toLowerCase()
+            );
+        } else {
+            stories = data.stories;
+        }
+    }
+
+    function handleLanguageChange(event) {
+        selectedLanguage.set(event.target.value);
+    }
 </script>
 
 <main>
@@ -33,11 +52,11 @@
                 </select>
             </li>
             <li>
-                <select name="language" id="language"aria-label="Choose a language">
-                    <option  value="languages">Languages</option>
-                        {#each data.languages as language}
-                            <option value="{ language.language }">{ language.language }</option>
-                        {/each}
+                <select name="language" id="language" aria-label="Choose a language" on:change={handleLanguageChange}>
+                    <option value="languages">Languages</option>
+                    {#each data.languages as language}
+                        <option value="{language.language}">{language.language}</option>
+                    {/each}
                 </select>
             </li>
             <li>
@@ -53,9 +72,13 @@
     </header>
     
     <section class="story-list">
-        {#each data.stories as story}
-            <Story {story} />
-        {/each}
+        {#if noStoriesFound}
+            <p class="no-stories-message">No stories found</p>
+        {:else}
+            {#each stories as story (story.id)}
+                <Story {story} />
+            {/each}
+        {/if}
     </section>
 </main>
 
@@ -63,6 +86,7 @@
 main {
     background-image: var(--bg-image-purple);
     color: var(--color-white);
+    min-height: 100vh; 
 }
 
 .heading,
@@ -149,6 +173,14 @@ ul {
     justify-content: center;
     flex-wrap: wrap;
     gap: 1em;
+}
+
+.no-stories-message {
+    color: var(--color-white);
+    font-size: 1.2em;
+    text-align: center;
+    width: 100%;
+    padding: 2em;
 }
 
 @media only screen and (min-width: 54.0625em) {
