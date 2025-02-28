@@ -27,7 +27,7 @@
   <h2 class="story-title">{title}</h2>
 
   <picture class="story-language flex-items">
-    <img src="/languages/{language}.svg" alt="{language} flag" height="17.59" width="17.58" loading="lazy">
+    <img src="/languages/{language}.svg" alt="{language}" height="17.59" width="17.58" loading="lazy">
   </picture>
 
   <p class="story-summary">{summary}</p>

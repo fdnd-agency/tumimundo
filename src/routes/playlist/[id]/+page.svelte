@@ -1,9 +1,11 @@
 <script>
-  import { Story, fetchApi, Back } from '$lib/index';
+  
+  import { Story, fetchApi, Back, Dropdown  } from '$lib/index';
 
   export let data;
  
   let playlist = data?.playlist;
+
   let isLoading = !playlist;
   let error = null;
 
@@ -42,12 +44,14 @@
 
 <main>
   <article>
-    <header>
+      <header>
       <nav>
-        <a href="/lessons" class="back" aria-label="Go back to all lessons"><Back/></a>
-        <a href="#dropdown" class="dots" aria-label="Go to more options">
-            <div class="dot"></div>
-        </a>
+          <a href="/lessons" aria-label="go back">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M26.3398 8.55508C27.0797 9.29502 27.0797 10.4947 26.3398 11.2346L17.5743 20.0001L26.3398 28.7656C27.0797 29.5055 27.0797 30.7052 26.3398 31.4452C25.5998 32.1851 24.4002 32.1851 23.6602 31.4452L13.555 21.3399C12.815 20.6 12.815 19.4003 13.555 18.6603L23.6602 8.55508C24.4002 7.81514 25.5998 7.81514 26.3398 8.55508Z" fill="black"/>
+            </svg>
+          </a>
+        <Dropdown/>
       </nav>
 
       <picture class="playlist-image-container">
@@ -63,30 +67,29 @@
         />
       </picture>
     </header>
+    
 
-    <section class="meta-section">
-        <h1>{playlist?.title}</h1>
-        <p>{playlist?.description}</p>
+   <section class="meta-section">
+    <h1>{playlist.title}</h1>
+    <p>{playlist.description}</p>
 
-
-        <div class="meta-info">
-            <img src="/icons/profile-icon.svg" alt="profile picture">
-            <p>Made by <strong>User {playlist?.creator}</strong></p>
-            <img src="/icons/clock.svg" alt="time">
-            <p>2u 11m</p>
-        </div>
+    <div class="meta-info">
+      <img src="/icons/profile-icon.svg" alt="profile picture" height="30">
+      <p>Made by <strong>User { playlist.creator }</strong></p>
+      <img src="/icons/clock.svg" alt="time" height="20">
+      <p>2u 11m</p>
+    </div>
 
      <div class="meta-play">
-        <a><img src="/icons/download.svg" alt="download"></a>
+        <a><img src="/icons/download.svg" alt="download" height="27"></a>
         <button on:click={toggleLike} class="heart-svg" aria-label="{isLiked ? 'Unlike' : 'Like'}">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class:liked={isLiked}>
             <path d="M11.6536 7.15238C11.8471 7.33832 12.1529 7.33832 12.3464 7.15238C13.1829 6.34871 14.326 5.75 15.6 5.75C18.1489 5.75 20.25 7.64769 20.25 10.0298C20.25 11.7261 19.4577 13.1809 18.348 14.428C17.2397 15.6736 15.7972 16.7316 14.4588 17.6376L12.1401 19.207C12.0555 19.2643 11.9445 19.2643 11.8599 19.207L9.54125 17.6376C8.20278 16.7316 6.76035 15.6736 5.65201 14.428C4.54225 13.1809 3.75 11.7261 3.75 10.0298C3.75 7.64769 5.85106 5.75 8.4 5.75C9.67403 5.75 10.8171 6.34871 11.6536 7.15238Z" stroke="#C4C4C4" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </button>
-        <a><img src="/icons/play.svg" alt="play"></a>
+        <a><img src="/icons/play.svg" alt="play" height=""60></a>
     </div>
   </section>
-
 
     {#if isLoading}
     <div class="loading">Loading playlist...</div>
@@ -109,7 +112,6 @@
     </section>
   {/if}
   </article>
-  
 </main>
 
 <style>
@@ -181,44 +183,6 @@ nav{
 a {
   z-index: 0;
 }
-/* styling for dots */
-.back{
-  z-index: 10;  
-}
-.dots {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  width: 3.125em; 
-  height: 3.125em;
-  z-index: 10;
-  position: absolute;
-  top: 0;  
-  right: 1em;
-}
-.dot, .dot:before, .dot:after {
-  position: absolute;
-  width: .4em;
-  height: .4em;
-  border-radius: var(--border-radius-m);
-  background-color: black;
-}
-.dot {
-  top: 50%;
-  left: 50%;
-  margin-top: 0.625em;
-  margin-left: 0.625em;
-}
-.dot:before, .dot:after {
-  content: "";
-}
-.dot:before {
-  right: .8em;
-}
-.dot:after {
-  left: .8em;
-}
 /* styling for meta info */
 .meta-info, .meta-play {
   display: flex;
@@ -258,11 +222,6 @@ a {
   width: 100%;
   height: 10em; 
 }
-@media only screen and (min-width: 600px) {
-  main {
-    background-color: lightblue;
-  }
-}
 
   .heart-svg {
   background: none;
@@ -296,3 +255,4 @@ a {
   animation: scale .5s ease-in;
   }
   </style>
+
