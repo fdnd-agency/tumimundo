@@ -4,6 +4,21 @@ Een innovatieve aanpak om taalontwikkeling bij kinderen te ondersteunen door mid
 
 ![Project Logo](https://github.com/fdnd-agency/tumi-mundo/assets/61702002/6c04d95e-f4ea-480d-9e86-cbf9148e8e15)
 
+**Release Candidate**  
+[Live site](https://biebinbloei.agency.fdnd.nl/)
+
+**Studentenwerk Sprint 5: Fix The Flow** 
+
+|  |  |  | 
+| :--------------- | :--------------- | :--------------- |
+| Nadia	| https://github.com/nadiachaja/fix-the-flow-interactive-website | https://nadiachaja.github.io/fix-the-flow-interactive-website/ 
+| Ravi	| https://github.com/Ravirkt/fix-the-flow-interactive-website | https://ravirkt.github.io/fix-the-flow-interactive-website/ 
+| Kate	| https://github.com/Kitkatisvibing/fix-the-flow-interactive-website | https://kitkatisvibing.github.io/fix-the-flow-interactive-website/ 
+| Kerem	| https://github.com/Keremttc/fix-the-flow-interactive-website	| https://keremttc.github.io/fix-the-flow-interactive-website/ 
+| Luuk	| https://github.com/Lutrian1/fix-the-flow-interactive-website	| https://lutrian1.github.io/fix-the-flow-interactive-website/ 
+| Safae	| https://github.com/Safae-e/fix-the-flow-interactive-website	| https://safae-e.github.io/fix-the-flow-interactive-website/
+
+
 ## Inhoudsopgave
 
 1. [Introductie](#introductie)
