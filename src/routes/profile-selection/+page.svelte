@@ -4,33 +4,30 @@
     import { onMount } from 'svelte';
 
     export let data;
-    let profiles = data.profiles || [];
-    let profileUsers = data.profileUsers || [];
+    const { profiles = [], profileUsers = [] } = data;
     let userId = $userState.userId;
     let filteredProfiles = [];
 
     onMount(() => {
         if (!userId) {
-            // goto('/log-in');
-            goto('/profile-selection')
+            goto('/profile-selection');
         }
     });
 
     $: {
         if (userId) {
-            filteredProfiles = profiles.filter(profile => {
-                return profileUsers.some(profileUser => profileUser.user_id === userId && profileUser.profile_id === profile.id);
-            });
+            filteredProfiles = profiles.filter(({ id }) => 
+                profileUsers.some(({ user_id, profile_id }) => user_id === userId && profile_id === id)
+            );
         }
     }
 
     async function handleProfileSelection(profileId) {
         userState.update(state => ({
             ...state,
-            profileId: profileId
+            profileId
         }));
         await goto('/');
-        // await goto ('/profile-selection')
     }
 </script>
 
@@ -40,14 +37,14 @@
         <button class="edit-button">
             <Edit/>
             <p>Edit</p>
-        <button>
+        </button>
     </section>
     <ul>
-        {#each filteredProfiles as profile}
+        {#each filteredProfiles as { id, avatar, name_of_child }}
             <li>
-                <button on:click={() => handleProfileSelection(profile.id)}>
-                    <img src="{profile.avatar}" alt="Profile avatar of {profile.name_of_child}" />
-                    <h2>{profile.name_of_child}</h2>
+                <button on:click={() => handleProfileSelection(id)}>
+                    <img src="{avatar}" alt="Profile avatar of {name_of_child}" />
+                    <h2>{name_of_child}</h2>
                 </button>
             </li>
         {/each}
@@ -59,6 +56,7 @@
         </li>
     </ul>
 </main>
+
 <style>
 main {
     background: var(--bg-image-blue);
