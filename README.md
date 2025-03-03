@@ -18,6 +18,25 @@ Een innovatieve aanpak om taalontwikkeling bij kinderen te ondersteunen door mid
 | Luuk	| [repository](https://github.com/Lutrian1/fix-the-flow-interactive-website)	| [live site](https://lutrian1.github.io/fix-the-flow-interactive-website/) 
 | Safae	| [repository](https://github.com/Safae-e/fix-the-flow-interactive-website)	| [live site](https://safae-e.github.io/fix-the-flow-interactive-website/)
 
+**API Endpoints**
+
+* https://fdnd-agency.directus.app/items/tm_users
+* https://fdnd-agency.directus.app/items/tm_profile
+* https://fdnd-agency.directus.app/items/tm_profile_statistics
+* https://fdnd-agency.directus.app/items/tm_buddy
+* https://fdnd-agency.directus.app/items/tm_language
+* https://fdnd-agency.directus.app/items/tm_audio
+* https://fdnd-agency.directus.app/items/tm_playlist
+* https://fdnd-agency.directus.app/items/tm_speaker_profile
+* https://fdnd-agency.directus.app/items/tm_story
+* https://fdnd-agency.directus.app/items/tm_animal
+* https://fdnd-agency.directus.app/items/tm_season
+* https://fdnd-agency.directus.app/items/tm_likes
+* https://fdnd-agency.directus.app/items/tm_tests
+* https://fdnd-agency.directus.app/items/tm_segments
+* https://fdnd-agency.directus.app/items/tm_events
+* https://fdnd-agency.directus.app/items/tm_results
+
 
 ## Inhoudsopgave
 
