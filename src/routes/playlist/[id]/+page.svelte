@@ -3,7 +3,8 @@
   import { Story, fetchApi, Back, Dropdown  } from '$lib/index';
 
   export let data;
- 
+  
+  let { playlist: { id, image, title, description, creator, isLiked, likeId, stories } } = data;
   let playlist = data?.playlist;
 
   let isLoading = !playlist;
@@ -15,7 +16,7 @@
     }
   }
 
-  let isLiked = playlist?.isLiked || false;
+  isLiked = playlist?.isLiked || false;
   let existingLikeId = playlist?.likeId || null;
   let profileId = 122;
  
@@ -44,22 +45,20 @@
 
 <main>
   <article>
-      <header>
+    <header>
       <nav>
-          <a href="/lessons" aria-label="go back" class="go-back-btn">
-            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M26.3398 8.55508C27.0797 9.29502 27.0797 10.4947 26.3398 11.2346L17.5743 20.0001L26.3398 28.7656C27.0797 29.5055 27.0797 30.7052 26.3398 31.4452C25.5998 32.1851 24.4002 32.1851 23.6602 31.4452L13.555 21.3399C12.815 20.6 12.815 19.4003 13.555 18.6603L23.6602 8.55508C24.4002 7.81514 25.5998 7.81514 26.3398 8.55508Z" fill="black"/>
-            </svg>
-          </a>
+        <a href="/lessons" aria-label="go back" class="go-back-btn">
+          <Back/>
+        </a>
         <Dropdown/>
       </nav>
 
       <picture class="playlist-image-container">
-        <source srcset="{playlist.image}?width=448&format=avif" type="image/avif">
-        <source srcset="{playlist.image}?width=448&format=webp" type="image/webp">
-        <source srcset="{playlist.image}?width=448" type="image/jpeg">
+        <source srcset="{image}?width=448&format=avif" type="image/avif">
+        <source srcset="{image}?width=448&format=webp" type="image/webp">
+        <source srcset="{image}?width=448" type="image/jpeg">
         <img 
-          src="{playlist.image}?width=64" 
+          src="{image}?width=64" 
           alt="playlist image"
           height="380" 
           width="448" 
@@ -67,20 +66,19 @@
         />
       </picture>
     </header>
-    
 
-   <section class="meta-section">
-    <h1>{playlist.title}</h1>
-    <p>{playlist.description}</p>
+    <section class="meta-section">
+      <h1>{title}</h1>
+      <p>{description}</p>
 
-    <div class="meta-info">
-      <img src="/icons/profile-icon.svg" alt="profile picture" height="30">
-      <p>Made by <strong>User { playlist.creator }</strong></p>
-      <img src="/icons/clock.svg" alt="time" height="20">
-      <p>2u 11m</p>
-    </div>
+      <div class="meta-info">
+        <img src="/icons/profile-icon.svg" alt="profile picture" height="30">
+        <p>Made by <strong>User {creator}</strong></p>
+        <img src="/icons/clock.svg" alt="time" height="20">
+        <p>2u 11m</p>
+      </div>
 
-     <div class="meta-play">
+      <div class="meta-play">
         <a><img src="/icons/download.svg" alt="download" height="27"></a>
         <button on:click={toggleLike} class="heart-svg" aria-label="{isLiked ? 'Unlike' : 'Like'}">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class:liked={isLiked}>
@@ -88,31 +86,32 @@
           </svg>
         </button>
         <a><img src="/icons/play.svg" alt="play" height="60"></a>
-    </div>
-  </section>
+      </div>
+    </section>
 
     {#if isLoading}
-    <div class="loading">Loading playlist...</div>
-  {:else if error}
-    <p class="error">Error loading playlist: {error}</p>
-  {:else if playlist && playlist.stories.length > 0}
-    <section class="stories-section">
-      <ul>
-        {#each playlist.stories as story}
-        <li>
-          <Story {story} />
-        </li>
-        {/each}
-      </ul>
-    </section>
-  {:else}
-    <section class="no-playlist">
-      <p>Playlist not found.</p>
-      <a href="/lessons" class="view-all">View all playlists</a>
-    </section>
-  {/if}
+      <div class="loading">Loading playlist...</div>
+    {:else if error}
+      <p class="error">Error loading playlist: {error}</p>
+    {:else if stories.length > 0}
+      <section class="stories-section">
+        <ul>
+          {#each stories as story}
+            <li>
+              <Story {story} />
+            </li>
+          {/each}
+        </ul>
+      </section>
+    {:else}
+      <section class="no-playlist">
+        <p>Playlist not found.</p>
+        <a href="/lessons" class="view-all">View all playlists</a>
+      </section>
+    {/if}
   </article>
 </main>
+
 
 <style>
 * {
