@@ -1,3 +1,4 @@
+// @author marjam lodien
 /** @type {import('./$types').PageLoad} */
 export let csr = true;
 
