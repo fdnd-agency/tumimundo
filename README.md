@@ -4,6 +4,10 @@ Een innovatieve aanpak om taalontwikkeling bij kinderen te ondersteunen door mid
 
 ![Project Logo](https://github.com/fdnd-agency/tumi-mundo/assets/61702002/6c04d95e-f4ea-480d-9e86-cbf9148e8e15)
 
+**Team Sprint 8**
+Ole, Fatima(A), Iris, Süleyman, Sidney, Rick
+
+
 **Release Candidate**  
 [Live site](https://tumimundo.agency.fdnd.nl/)
 
