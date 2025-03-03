@@ -11,12 +11,12 @@ Een innovatieve aanpak om taalontwikkeling bij kinderen te ondersteunen door mid
 
 |  |  |  | 
 | :--------------- | :--------------- | :--------------- |
-| Nadia	| https://github.com/nadiachaja/fix-the-flow-interactive-website | https://nadiachaja.github.io/fix-the-flow-interactive-website/ 
-| Ravi	| https://github.com/Ravirkt/fix-the-flow-interactive-website | https://ravirkt.github.io/fix-the-flow-interactive-website/ 
-| Kate	| https://github.com/Kitkatisvibing/fix-the-flow-interactive-website | https://kitkatisvibing.github.io/fix-the-flow-interactive-website/ 
-| Kerem	| https://github.com/Keremttc/fix-the-flow-interactive-website	| https://keremttc.github.io/fix-the-flow-interactive-website/ 
-| Luuk	| https://github.com/Lutrian1/fix-the-flow-interactive-website	| https://lutrian1.github.io/fix-the-flow-interactive-website/ 
-| Safae	| https://github.com/Safae-e/fix-the-flow-interactive-website	| https://safae-e.github.io/fix-the-flow-interactive-website/
+| Nadia	| [repository](https://github.com/nadiachaja/fix-the-flow-interactive-website) | [live site](https://nadiachaja.github.io/fix-the-flow-interactive-website/) 
+| Ravi	| [repository](https://github.com/Ravirkt/fix-the-flow-interactive-website) | [live site](https://ravirkt.github.io/fix-the-flow-interactive-website/) 
+| Kate	| [repository](https://github.com/Kitkatisvibing/fix-the-flow-interactive-website) | [live site](https://kitkatisvibing.github.io/fix-the-flow-interactive-website/) 
+| Kerem	| [repository](https://github.com/Keremttc/fix-the-flow-interactive-website)	| [live site](https://keremttc.github.io/fix-the-flow-interactive-website/) 
+| Luuk	| [repository](https://github.com/Lutrian1/fix-the-flow-interactive-website)	| [live site](https://lutrian1.github.io/fix-the-flow-interactive-website/) 
+| Safae	| [repository](https://github.com/Safae-e/fix-the-flow-interactive-website)	| [live site](https://safae-e.github.io/fix-the-flow-interactive-website/)
 
 
 ## Inhoudsopgave
