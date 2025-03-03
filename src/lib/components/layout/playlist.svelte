@@ -1,11 +1,9 @@
 <script>
-  
-  import { fetchApi, Play, LikeButton} from '$lib/index';
+  import { fetchApi, Play, LikeButton } from '$lib/index';
   import { createEventDispatcher } from 'svelte';
 
-
   export let playlist;
-  const { image, title, playtime, stories, isLiked: initialIsLiked, likeId: initialLikeId } = playlist;
+  const { image, title, playtime, stories, isLiked: initialIsLiked, likeId: initialLikeId, id: playlistId } = playlist;
 
   let isLiked = initialIsLiked;
   let existingLikeId = initialLikeId;
@@ -22,7 +20,7 @@
 
     try {
       const response = await fetchApi(endpoint, method, {
-        playlist: playlist.id,
+        playlist: playlistId,
         profile: profileId
       });
 
@@ -32,20 +30,21 @@
       }
       
       // Dispatch een event naar de parent component
-      dispatch('likeToggle', { playlistId: playlist.id, isLiked });
+      dispatch('likeToggle', { playlistId, isLiked });
     } catch (error) {
       console.error('Failed to toggle like:', error);
     }
   }
 </script>
 
+
 <article>
   <div class="playlist-image flex-items">
-    <img src="{image}" alt="">
+    <img src="{image}" alt="Playlist cover for {title}">
   </div>
 
   <h3 class="playlist-title">
-    <a href={`/playlist/${playlist.id}`} aria-label="Go to playlist page">{title}</a>
+    <a href={`/playlist/${playlistId}`} aria-label="Go to playlist page">{title}</a>
   </h3>
 
   <div class="playlist-playtime flex-items">
@@ -59,7 +58,7 @@
         <input type="hidden" name="likeId" value="{existingLikeId}">
         <input type="hidden" name="_method" value="DELETE">
       {:else}
-        <input type="hidden" name="playlistId" value="{playlist.id}">
+        <input type="hidden" name="playlistId" value="{playlistId}">
         <input type="hidden" name="profileId" value="{profileId}">
       {/if}
       
@@ -69,7 +68,6 @@
     </form>
   </div>
 </article>
-
 
 
 <style>
@@ -136,24 +134,6 @@
   .playlist-icons {
     grid-area: 5 / 2 / 6 / 3; 
     justify-content: flex-end;
-  }
-
-  .playlist-playtime svg:hover circle {
-    fill: #3A54DE;
-  }
-
-  .playlist-icons button {
-    background: none;
-    color: inherit;
-    border: none;
-    padding: 0;
-    font: inherit;
-    cursor: pointer;
-    outline: inherit;
-  }
-
-  .playlist-icons button svg:hover, .playlist-icons button svg:hover path {
-    stroke: #F33232;
   }
 
   @keyframes scale {
