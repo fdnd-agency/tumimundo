@@ -5,6 +5,7 @@
         languages: [] 
     };
 
+    const { languages } = data; 
     let filteredLanguages = data.languages;
     let searchTerm = ""; 
 
@@ -33,7 +34,7 @@
         </p>
 
         <Search
-            data={data.languages}
+            data={languages}
             bind:searchTerm
             on:filter={handleFilter} 
         />
@@ -41,18 +42,18 @@
 
         {#if filteredLanguages.length > 0}
             <ul>
-                {#each filteredLanguages as language}
+                {#each filteredLanguages as { language }}
                     <li class="languages">
                         <input
                             class="radio"
                             type="checkbox"
-                            id="language-{language.language}"
+                            id="language-{language}"
                             name="language"
-                            value="{language.language}"
+                            value="{language}"
                         />
-                        <label for="language-{language.language}">
-                            <img src="/languages/{language.language}.svg" alt="{language.language} flag" class="flag-svg" height="55" width="66">
-                            <strong class="language-strong">{language.language}</strong>
+                        <label for="language-{language}">
+                            <img src="/languages/{language}.svg" alt="{language} flag" class="flag-svg" height="55" width="66">
+                            <strong class="language-strong">{language}</strong>
                         </label>
                     </li>
                 {/each}
@@ -63,6 +64,7 @@
         <Button type="button"/>
     </section>
 </main>
+
 
 <style>
     main {
