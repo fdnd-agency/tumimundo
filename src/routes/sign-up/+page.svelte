@@ -1,5 +1,5 @@
 <script>
-import { Input, Back } from '$lib/index';
+import { Input, Back } from '$lib/index'
 
 </script>
 

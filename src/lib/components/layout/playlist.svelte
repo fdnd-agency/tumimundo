@@ -1,38 +1,38 @@
 <script>
-  import { fetchApi, Play, LikeButton } from '$lib/index';
-  import { createEventDispatcher } from 'svelte';
+  import { fetchApi, Play, LikeButton } from '$lib/index'
+  import { createEventDispatcher } from 'svelte'
 
-  export let playlist;
-  const { image, title, playtime, stories, isLiked: initialIsLiked, likeId: initialLikeId, id: playlistId } = playlist;
+  export let playlist
+  const { image, title, playtime, stories, isLiked: initialIsLiked, likeId: initialLikeId, id: playlistId } = playlist
 
-  let isLiked = initialIsLiked;
-  let existingLikeId = initialLikeId;
+  let isLiked = initialIsLiked
+  let existingLikeId = initialLikeId
 
-  let profileId = 122;
+  let profileId = 122
 
-  const dispatch = createEventDispatcher();
+  const dispatch = createEventDispatcher()
 
   async function toggleLike(event) {
-    event.preventDefault(); 
+    event.preventDefault()
 
-    const endpoint = isLiked ? `/tm_likes/${existingLikeId}` : '/tm_likes';
-    const method = isLiked ? 'DELETE' : 'POST';
+    const endpoint = isLiked ? `/tm_likes/${existingLikeId}` : '/tm_likes'
+    const method = isLiked ? 'DELETE' : 'POST'
 
     try {
       const response = await fetchApi(endpoint, method, {
         playlist: playlistId,
         profile: profileId
-      });
+      })
 
-      isLiked = !isLiked;
+      isLiked = !isLiked
       if (response?.likeId) {
-        existingLikeId = response.likeId;
+        existingLikeId = response.likeId
       }
       
       // Dispatch een event naar de parent component
-      dispatch('likeToggle', { playlistId, isLiked });
+      dispatch('likeToggle', { playlistId, isLiked })
     } catch (error) {
-      console.error('Failed to toggle like:', error);
+      console.error('Failed to toggle like:', error)
     }
   }
 </script>

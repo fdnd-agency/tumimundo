@@ -1,21 +1,21 @@
 <script>
-    import { Search, Button, Back } from '$lib/index';
+    import { Search, Button, Back } from '$lib/index'
 
     export let data = {
         languages: [] 
-    };
+    }
 
-    const { languages } = data; 
-    let filteredLanguages = data.languages;
-    let searchTerm = ''; 
+    const { languages } = data
+    let filteredLanguages = data.languages
+    let searchTerm = ''
 
     data.languages.forEach(language => {
-        language.name = language.language;
-    }); 
+        language.name = language.language
+    })
 
     function handleFilter(event) {
-        filteredLanguages = event.detail;
-    };
+        filteredLanguages = event.detail
+    }
 
 </script>
 

@@ -1,6 +1,7 @@
 <script>
-    import { Home, Test, Lessons, Statistics, Profile } from '$lib/index';
-    export let currentPage;
+    import { Home, Test, Lessons, Statistics, Profile } from '$lib/index'
+
+    export let currentPage
 </script>
 
 <header>

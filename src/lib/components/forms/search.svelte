@@ -1,27 +1,27 @@
-<script>
-    import { onMount } from "svelte";
-    import { createEventDispatcher } from "svelte";
+    <script>
+        import { onMount } from "svelte"
+        import { createEventDispatcher } from "svelte"
 
-    export let data = [];
-    export let searchTerm = '';
+        export let data = []
+        export let searchTerm = ''
 
-    const dispatch = createEventDispatcher();
+        const dispatch = createEventDispatcher()
 
-    // Reactive client-side filtered data
-    $: filteredData = searchTerm
-        ? data.filter(item =>
-            item.language.toLowerCase().includes(searchTerm.toLowerCase())
-        )
-        : data;
+        // Reactive client-side filtered data
+        $: filteredData = searchTerm
+            ? data.filter(item =>
+                item.language.toLowerCase().includes(searchTerm.toLowerCase())
+            )
+            : data
 
-    // Emit filtered data to the parent whenever it changes
-    $: dispatch("filter", filteredData);
+        // Emit filtered data to the parent whenever it changes
+        $: dispatch("filter", filteredData)
 
-    // Emit the full dataset on component load
-    onMount(() => {
-        dispatch("filter", data);
-    });
-</script>
+        // Emit the full dataset on component load
+        onMount(() => {
+            dispatch("filter", data)
+        })
+    </script>
 
 <div class="search-container">
     <!-- Server-side fallback -->

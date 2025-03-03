@@ -1,25 +1,25 @@
 <script>
-    import { goto } from '$app/navigation';
-    import { onMount } from 'svelte';
-    import { Menu, Popup, userState } from '$lib/index';
+    import { goto } from '$app/navigation'
+    import { onMount } from 'svelte'
+    import { Menu, Popup, userState } from '$lib/index'
 
     onMount(() => {
         if (!profileId) {
-            goto('/log-in');
+            goto('/log-in')
         }
-    });
+    })
 
-    export let data;
+    export let data
 
-    let profileId = $userState.profileId;
+    let profileId = $userState.profileId
 
-    let profiles = data.profiles;
+    let profiles = data.profiles
 
-    let selectedProfile = profiles.find(profile => profile.id === profileId);
+    let selectedProfile = profiles.find(profile => profile.id === profileId)
 
-    let popupTitle = selectedProfile ? `Goodmorning ${selectedProfile.name_of_child},` : 'Goodmorning,';
+    let popupTitle = selectedProfile ? `Goodmorning ${selectedProfile.name_of_child},` : 'Goodmorning,'
 
-    let currentPage = 'home';
+    let currentPage = 'home'
 
 </script>
 

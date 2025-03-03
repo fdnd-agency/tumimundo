@@ -1,9 +1,9 @@
 <script>
   // Standard data
-  export let type = 'text';
-  export let placeholder = '';
-  export let value = '';
-  export let name = '';
+  export let type = 'text'
+  export let placeholder = ''
+  export let value = ''
+  export let name = ''
 </script>
 
 <label for={name}>

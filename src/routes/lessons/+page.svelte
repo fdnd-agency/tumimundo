@@ -1,28 +1,27 @@
-
 <script>
-    import { Story, Playlist, Menu, Carousel, Play, Plus } from '$lib/index';
+    import { Story, Playlist, Menu, Carousel, Play, Plus } from '$lib/index'
 
-    let currentPage = 'lessons';
+    let currentPage = 'lessons'
 
     /** @type {import('./$types').PageData} */
-    export let data;
+    export let data
 
-    let storyList;
+    let storyList
 
     function scrollCarousel(direction) {
-        const scrollAmount = storyList.clientWidth; 
+        const scrollAmount = storyList.clientWidth
         storyList.scrollBy({
             left: direction * scrollAmount,
             behavior: 'smooth',
-        });
+        })
     }
     function handleLikeToggle(event) {
-        const { playlistId, isLiked } = event.detail;
+        const { playlistId, isLiked } = event.detail
         data.playlists = data.playlists.map(playlist => 
             playlist.id === playlistId 
                 ? { ...playlist, isLiked: isLiked }
                 : playlist
-        );
+        )
     }
 
 </script>

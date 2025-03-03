@@ -1,10 +1,9 @@
-
-<script>
- // Standard data
-  export let type = 'button';
-  export let label = 'Continue';
-  export let onClick = () => {};
-</script>
+  <script>
+  // Standard data
+    export let type = 'button'
+    export let label = 'Continue'
+    export let onClick = () => {}
+  </script>
 
 
 {#if type === 'button'}

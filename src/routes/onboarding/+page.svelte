@@ -1,41 +1,41 @@
 <script>
-  import { onMount } from 'svelte';
-  import Eclipse from '../../lib/components/svg/eclipse.svelte';
+  import { onMount } from 'svelte'
+  import Eclipse from '../../lib/components/svg/eclipse.svelte'
 
-  let currentSlide = 0;
+  let currentSlide = 0
 
   onMount(() => {
-    const carousel = document.querySelector('.carousel');
-    const indicators = document.querySelectorAll('.indicator');
+    const carousel = document.querySelector('.carousel')
+    const indicators = document.querySelectorAll('.indicator')
 
-    const buttons = document.querySelectorAll('.carousel-button');
+    const buttons = document.querySelectorAll('.carousel-button')
     buttons.forEach(button => {
       button.addEventListener('click', function () {
-        const direction = this.classList.contains('left') ? -1 : 1;
-        scrollCarousel(carousel, direction);
-      });
-    });
+        const direction = this.classList.contains('left') ? -1 : 1
+        scrollCarousel(carousel, direction)
+      })
+    })
 
     function scrollCarousel(carousel, direction) {
-      const scrollAmount = carousel.clientWidth;
+      const scrollAmount = carousel.clientWidth
       carousel.scrollBy({
         left: direction * scrollAmount,
         behavior: 'smooth',
-      });
+      })
 
-      currentSlide = (currentSlide + direction + indicators.length) % indicators.length;
+      currentSlide = (currentSlide + direction + indicators.length) % indicators.length
     }
 
     indicators.forEach(indicator => {
       indicator.addEventListener('click', function () {
-        const targetSlide = Number(this.dataset.slide);
-        const difference = targetSlide - currentSlide;
+        const targetSlide = Number(this.dataset.slide)
+        const difference = targetSlide - currentSlide
 
-        scrollCarousel(carousel, difference);
-        currentSlide = targetSlide;
-      });
-    });
-  });
+        scrollCarousel(carousel, difference)
+        currentSlide = targetSlide
+      })
+    })
+  })
 </script>
 
 <main>

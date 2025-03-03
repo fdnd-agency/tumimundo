@@ -1,44 +1,44 @@
 <script>
   
-  import { Story, fetchApi, Back, Dropdown  } from '$lib/index';
+  import { Story, fetchApi, Back, Dropdown  } from '$lib/index'
 
-  export let data;
+  export let data
   
-  let { playlist: { id, image, title, description, creator, isLiked, likeId, stories } } = data;
-  let playlist = data?.playlist;
+  let { playlist: { id, image, title, description, creator, isLiked, likeId, stories } } = data
+  let playlist = data?.playlist
 
-  let isLoading = !playlist;
-  let error = null;
+  let isLoading = !playlist
+  let error = null
 
   $: {
     if (playlist) {
-      isLoading = false;
+      isLoading = false
     }
   }
 
-  isLiked = playlist?.isLiked || false;
-  let existingLikeId = playlist?.likeId || null;
-  let profileId = 122;
+  isLiked = playlist?.isLiked || false
+  let existingLikeId = playlist?.likeId || null
+  let profileId = 122
  
   async function toggleLike(event) {
-    event.preventDefault();
+    event.preventDefault()
  
-    const endpoint = isLiked ? `/tm_likes/${existingLikeId}` : '/tm_likes';
-    const method = isLiked ? 'DELETE' : 'POST';
+    const endpoint = isLiked ? `/tm_likes/${existingLikeId}` : '/tm_likes'
+    const method = isLiked ? 'DELETE' : 'POST'
  
     try {
       const response = await fetchApi(endpoint, method, {
         playlist: playlist.id,
         profile: profileId
-      });
+      })
  
-      isLiked = !isLiked;
-      existingLikeId = response?.id || null;
-      playlist = { ...playlist, isLiked, likeId: existingLikeId };
+      isLiked = !isLiked
+      existingLikeId = response?.id || null
+      playlist = { ...playlist, isLiked, likeId: existingLikeId }
  
     } catch (err) {
-      console.error('Error toggling like:', err);
-      error = err.message || 'Er is iets fout gegaan';
+      console.error('Error toggling like:', err)
+      error = err.message || 'Er is iets fout gegaan'
     }
   }
 </script>

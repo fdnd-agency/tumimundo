@@ -1,24 +1,24 @@
 <script>
-    import { userState, Edit, AddProfile } from '$lib/index';
-    import { goto } from '$app/navigation';
-    import { onMount } from 'svelte';
+    import { userState, Edit, AddProfile } from '$lib/index'
+    import { goto } from '$app/navigation'
+    import { onMount } from 'svelte'
 
-    export let data;
-    const { profiles = [], profileUsers = [] } = data;
-    let userId = $userState.userId;
-    let filteredProfiles = [];
+    export let data
+    const { profiles = [], profileUsers = [] } = data
+    let userId = $userState.userId
+    let filteredProfiles = []
 
     onMount(() => {
         if (!userId) {
-            goto('/profile-selection');
+            goto('/profile-selection')
         }
-    });
+    })
 
     $: {
         if (userId) {
             filteredProfiles = profiles.filter(({ id }) => 
                 profileUsers.some(({ user_id, profile_id }) => user_id === userId && profile_id === id)
-            );
+            )
         }
     }
 
@@ -26,8 +26,8 @@
         userState.update(state => ({
             ...state,
             profileId
-        }));
-        await goto('/');
+        }))
+        await goto('/')
     }
 </script>
 

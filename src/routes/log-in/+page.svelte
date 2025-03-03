@@ -1,30 +1,30 @@
 <script>
-    export let data;
+    export let data
 
-    import { Input, userState, Close } from '$lib/index';
-    import { goto } from '$app/navigation';
+    import { Input, userState, Close } from '$lib/index'
+    import { goto } from '$app/navigation'
 
-    let users = data.users;
-    let email = '';
-    let password = '';
-    let errorMessage = '';
+    let users = data.users
+    let email = ''
+    let password = ''
+    let errorMessage = ''
 
     async function handleLogin(event) {
-        event.preventDefault();
+        event.preventDefault()
 
         if (!email || !password) {
-            errorMessage = 'Please fill out both fields.';
-            return;
+            errorMessage = 'Please fill out both fields.'
+            return
         }
 
-        const user = users.find((user) => user.email === email && user.password === password);
+        const user = users.find((user) => user.email === email && user.password === password)
 
         if (user) {
-            userState.set({ userId: user.id, profileId: null });
+            userState.set({ userId: user.id, profileId: null })
             
-            await goto('/profile-selection');
+            await goto('/profile-selection')
         } else {
-            errorMessage = 'Invalid email or password.';
+            errorMessage = 'Invalid email or password.'
         }
     }
 </script>

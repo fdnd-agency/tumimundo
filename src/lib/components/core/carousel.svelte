@@ -1,21 +1,20 @@
 <script>
-        import { Story, Back } from '$lib/index';
+    import { Story, Back } from '$lib/index'
 
-let currentPage = 'lessons';
+    let currentPage = 'lessons'
 
-/** @type {import('./$types').PageData} */
-export let data;
+    /** @type {import('./$types').PageData} */
+    export let data
 
-let storyList;
+    let storyList
 
-function scrollCarousel(direction) {
-    const scrollAmount = storyList.clientWidth; 
-    storyList.scrollBy({
-        left: direction * scrollAmount,
-        behavior: 'smooth',
-    });
-}
-
+    function scrollCarousel(direction) {
+        const scrollAmount = storyList.clientWidth 
+        storyList.scrollBy({
+            left: direction * scrollAmount,
+            behavior: 'smooth'
+        })
+    }
 </script>
 
 <section class="all-stories">

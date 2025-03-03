@@ -1,30 +1,30 @@
 <script>
-    import { Story, Search, Back } from '$lib/index';
-    import { writable } from 'svelte/store';
+    import { Story, Search, Back } from '$lib/index'
+    import { writable } from 'svelte/store'
 
     /** @type {import('./$types').PageData} */
-    export let data;
+    export let data
 
-    const { stories: allStories, animals, languages } = data;
+    const { stories: allStories, animals, languages } = data
 
-    let selectedLanguage = writable('languages');
+    let selectedLanguage = writable('languages')
 
     // $: Creates a reactive statement. Its content is automatically updated when the data changes.
-    $: stories = [];
-    $: noStoriesFound = stories.length === 0;
+    $: stories = []
+    $: noStoriesFound = stories.length === 0
 
     $: {
         if ($selectedLanguage !== 'languages') {
             stories = allStories.filter(story => 
                 story.language && story.language.toLowerCase() === $selectedLanguage.toLowerCase()
-            );
+            )
         } else {
-            stories = allStories;
+            stories = allStories
         }
     }
 
     function handleLanguageChange(event) {
-        selectedLanguage.set(event.target.value);
+        selectedLanguage.set(event.target.value)
     }
 </script>
 
