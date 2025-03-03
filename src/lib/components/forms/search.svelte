@@ -3,7 +3,7 @@
     import { createEventDispatcher } from "svelte";
 
     export let data = [];
-    export let searchTerm = "";
+    export let searchTerm = '';
 
     const dispatch = createEventDispatcher();
 

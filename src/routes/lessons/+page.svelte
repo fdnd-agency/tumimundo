@@ -2,7 +2,7 @@
 <script>
     import { Story, Playlist, Menu, Carousel, Play, Plus } from '$lib/index';
 
-    let currentPage = "lessons";
+    let currentPage = 'lessons';
 
     /** @type {import('./$types').PageData} */
     export let data;

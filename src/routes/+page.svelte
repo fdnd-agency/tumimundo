@@ -17,9 +17,9 @@
 
     let selectedProfile = profiles.find(profile => profile.id === profileId);
 
-    let popupTitle = selectedProfile ? `Goodmorning ${selectedProfile.name_of_child},` : "Goodmorning,";
+    let popupTitle = selectedProfile ? `Goodmorning ${selectedProfile.name_of_child},` : 'Goodmorning,';
 
-    let currentPage = "home";
+    let currentPage = 'home';
 
 </script>
 

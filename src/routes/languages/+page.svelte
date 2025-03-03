@@ -7,7 +7,7 @@
 
     const { languages } = data; 
     let filteredLanguages = data.languages;
-    let searchTerm = ""; 
+    let searchTerm = ''; 
 
     data.languages.forEach(language => {
         language.name = language.language;

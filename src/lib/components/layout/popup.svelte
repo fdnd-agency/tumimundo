@@ -1,8 +1,8 @@
 <script>
   import { Close } from '$lib/index';
    // Standard data
-  export let title = "Goodmorning,";
-  export let message = "Shall we start with a story?";
+  export let title = 'Goodmorning,';
+  export let message = 'Shall we start with a story?';
 </script>
 
 <dialog open>
