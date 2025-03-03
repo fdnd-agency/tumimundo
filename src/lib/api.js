@@ -36,6 +36,17 @@ export async function fetchAnimals(fetch) {
         throw error;
     }
 }
+
+export async function fetchSeasons(fetch) {
+    try {
+        const seasons = await fetchCollection(fetch, 'tm_season');
+        return { seasons };
+    } catch (error) {
+        console.error('Error fetching season data:', error);
+        throw error;
+    }
+}
+
 export async function fetchAllData(fetch) {
 
     const [

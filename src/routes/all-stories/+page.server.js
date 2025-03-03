@@ -2,7 +2,7 @@
 /** @type {import('./$types').PageLoad} */
 export let csr = true;
 import { error } from '@sveltejs/kit';
-import { fetchAllData, mapStoriesWithDetails } from '$lib/api';
+import { fetchAllData, mapStoriesWithDetails, fetchSeasons } from '$lib/api';
 import { fetchAnimals } from '../../lib/api';
 /**
  * Loads data for the page, fetching stories, animals, and languages.
@@ -16,7 +16,7 @@ import { fetchAnimals } from '../../lib/api';
  */
 export async function load({ fetch }) {
     try{
-    const [data, animals] = await Promise.all([fetchAllData(fetch),fetchAnimals(fetch)]);
+    const [data, animals, seasons] = await Promise.all([fetchAllData(fetch),fetchAnimals(fetch), fetchSeasons(fetch)]);
 
     const storiesWithDetails = mapStoriesWithDetails(data.stories, data.audios, data.languages);
 
@@ -24,7 +24,8 @@ export async function load({ fetch }) {
         ...data,
         animals,
         stories: storiesWithDetails,
-        languages: data.languages
+        languages: data.languages,
+        seasons: seasons.seasons
     };
 } catch (err) {
     
