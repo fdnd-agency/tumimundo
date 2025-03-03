@@ -5,25 +5,27 @@
     /** @type {import('./$types').PageData} */
     export let data;
 
+    const { stories: allStories, animals, languages } = data;
+
     let selectedLanguage = writable('languages');
-    /** $: zorgt voor een reactive statement. de inhoud hiervan wordt automatisch geupdate wanneer data hierin wordt gewijzigd */
+
+    // $: Creates a reactive statement. Its content is automatically updated when the data changes.
     $: stories = [];
     $: noStoriesFound = stories.length === 0;
 
     $: {
         if ($selectedLanguage !== 'languages') {
-            stories = data.stories.filter(story => 
+            stories = allStories.filter(story => 
                 story.language && story.language.toLowerCase() === $selectedLanguage.toLowerCase()
             );
         } else {
-            stories = data.stories;
+            stories = allStories;
         }
     }
 
     function handleLanguageChange(event) {
         selectedLanguage.set(event.target.value);
     }
-
 </script>
 
 <main>
@@ -34,18 +36,15 @@
             </a>
             <h1>All Stories</h1>
         </div>
-    
         <Search />
-    
         <ul class="nav-ul">
             <li>
                 <select name="animal" id="animal-select" aria-label="Choose an animal">
                     <option value="animal">Animal</option>
-                        {#each data.animals as animal}
-                            <option value="{ animal.animal }">{ animal.animal }</option>
-                        {/each}
+                    {#each animals as { animal }}
+                        <option value="{animal}">{animal}</option>
+                    {/each}
                 </select>
-                
             </li>
             <li>
                 <select name="season" id="season-select" aria-label="Choose a season">
@@ -56,13 +55,13 @@
             <li>
                 <select name="language" id="language" aria-label="Choose a language" on:change={handleLanguageChange}>
                     <option value="languages">Languages</option>
-                    {#each data.languages as language}
-                        <option value="{language.language}">{language.language}</option>
+                    {#each languages as { language }}
+                        <option value="{language}">{language}</option>
                     {/each}
                 </select>
             </li>
             <li>
-                <select name="sorting" id="sorting"aria-label="Choose a sorting">
+                <select name="sorting" id="sorting" aria-label="Choose a sorting">
                     <option value="sorting">Sorting</option>
                     <option value="from a to z">From A - Z</option>
                     <option value="from z to a">From Z to A</option>
@@ -83,6 +82,7 @@
         {/if}
     </section>
 </main>
+
 
 <style>
 main {
@@ -115,10 +115,6 @@ header,
     left: 50%;
     font-size: 1.7em;
     transform: translateX(-50%);
-}
-
-.heading-back {
-    align-self: flex-start;
 }
 
 header {
