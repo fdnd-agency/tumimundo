@@ -1,9 +1,9 @@
 // @author roumaisa el filali
 /** @type {import('./$types').PageLoad} */
-export let csr = true;
-import { error } from '@sveltejs/kit';
-import { fetchAllData, mapStoriesWithDetails } from '$lib/api';
-import { fetchAnimals } from '../../lib/api';
+export let csr = true
+import { error } from '@sveltejs/kit'
+import { fetchAllData, mapStoriesWithDetails } from '$lib/api'
+import { fetchAnimals } from '../../lib/api'
 /**
  * Loads data for the page, fetching stories, animals, and languages.
  *
@@ -16,21 +16,21 @@ import { fetchAnimals } from '../../lib/api';
  */
 export async function load({ fetch }) {
     try{
-    const [data, animals] = await Promise.all([fetchAllData(fetch),fetchAnimals(fetch)]);
+    const [data, animals] = await Promise.all([fetchAllData(fetch),fetchAnimals(fetch)])
 
-    const storiesWithDetails = mapStoriesWithDetails(data.stories, data.audios, data.languages);
+    const storiesWithDetails = mapStoriesWithDetails(data.stories, data.audios, data.languages)
 
     return {
         ...data,
         animals,
         stories: storiesWithDetails,
         languages: data.languages
-    };
+    }
 } catch (err) {
     
-    console.error('Error loading data:', error);
+    console.error('Error loading data:', error)
     throw error(500, {
         message: error.message
-    });
+    })
 }
 }

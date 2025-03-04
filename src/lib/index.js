@@ -15,19 +15,19 @@ export { fetchApi } from '$lib/components/helpers/fetchApi.js'
 export { userState } from '$lib/components/helpers/account.js'
 
 // SVG's
-export { default as Back } from '$lib/components/svg/Back.svelte';
-export { default as Play } from '$lib/components/svg/Play.svelte';
-export { default as Plus } from '$lib/components/svg/Plus.svelte';
-export { default as Close } from '$lib/components/svg/Close.svelte';
-export { default as Eclipse } from '$lib/components/svg/Eclipse.svelte';
-export { default as Edit } from '$lib/components/svg/Edit.svelte';
-export { default as AddProfile } from '$lib/components/svg/AddProfile.svelte';
-export { default as LikeButton } from '$lib/components/svg/LikeButton.svelte';
-export { default as PlayStory } from '$lib/components/svg/PlayStory.svelte';
-export { default as Download } from '$lib/components/svg/Download.svelte';
-export { default as AddStory } from '$lib/components/svg/AddStory.svelte';
-export { default as Home } from '$lib/components/svg/Home.svelte';
-export { default as Test } from '$lib/components/svg/Test.svelte';
-export { default as Lessons } from '$lib/components/svg/Lessons.svelte';
-export { default as Statistics } from '$lib/components/svg/Statistics.svelte';
-export { default as Profile } from '$lib/components/svg/Profile.svelte';
+export { default as Back } from '$lib/components/svg/Back.svelte'
+export { default as Play } from '$lib/components/svg/Play.svelte'
+export { default as Plus } from '$lib/components/svg/Plus.svelte'
+export { default as Close } from '$lib/components/svg/Close.svelte'
+export { default as Eclipse } from '$lib/components/svg/Eclipse.svelte'
+export { default as Edit } from '$lib/components/svg/Edit.svelte'
+export { default as AddProfile } from '$lib/components/svg/AddProfile.svelte'
+export { default as LikeButton } from '$lib/components/svg/LikeButton.svelte'
+export { default as PlayStory } from '$lib/components/svg/PlayStory.svelte'
+export { default as Download } from '$lib/components/svg/Download.svelte'
+export { default as AddStory } from '$lib/components/svg/AddStory.svelte'
+export { default as Home } from '$lib/components/svg/Home.svelte'
+export { default as Test } from '$lib/components/svg/Test.svelte'
+export { default as Lessons } from '$lib/components/svg/Lessons.svelte'
+export { default as Statistics } from '$lib/components/svg/Statistics.svelte'
+export { default as Profile } from '$lib/components/svg/Profile.svelte'

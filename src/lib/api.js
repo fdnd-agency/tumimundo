@@ -1,19 +1,19 @@
-import getDirectusInstance from '$lib/directus';
-import { readItem, readItems } from '@directus/sdk';
-import { PUBLIC_APIURL } from '$env/static/public';
+import getDirectusInstance from '$lib/directus'
+import { readItem, readItems } from '@directus/sdk'
+import { PUBLIC_APIURL } from '$env/static/public'
 
-const assetBaseUrl = `${PUBLIC_APIURL}/assets/`;
+const assetBaseUrl = `${PUBLIC_APIURL}/assets/`
 
 export async function fetchCollection(fetch, collectionName, id = null) {
-    const directus = getDirectusInstance(fetch);
+    const directus = getDirectusInstance(fetch)
 
     if (id) {
         // Haal één specifiek item op als een ID is meegegeven
-        return await directus.request(readItem(collectionName, id));
+        return await directus.request(readItem(collectionName, id))
     }
 
     // Haal een volledige collectie op als er geen ID is meegegeven
-    return await directus.request(readItems(collectionName));
+    return await directus.request(readItems(collectionName))
 }
 /**
  * Fetches a list of animals from the Directus API.
@@ -25,15 +25,15 @@ export async function fetchCollection(fetch, collectionName, id = null) {
  * @throws {Error} If there's an error during the API request.
  */
 export async function fetchAnimals(fetch) {
-    const directus = getDirectusInstance(fetch);
+    const directus = getDirectusInstance(fetch)
     try {
         const animals = await directus.request(readItems('tm_animal', {
             fields: ['id', 'animal']
-        }));
-        return animals;
+        }))
+        return animals
     } catch (error) {
-        console.error('Error fetching animals:', error);
-        throw error;
+        console.error('Error fetching animals:', error)
+        throw error
     }
 }
 export async function fetchAllData(fetch) {
@@ -64,7 +64,7 @@ export async function fetchAllData(fetch) {
         fetchCollection(fetch, 'tm_likes'),
         fetchCollection(fetch, 'tm_playlist_stories'),
         fetchCollection(fetch, 'tm_profile_user')
-    ]);
+    ])
 
     return {
         users,
@@ -79,89 +79,89 @@ export async function fetchAllData(fetch) {
         likes,
         playlistStories,
         profileUsers
-    };
+    }
 }
 
 function retrieveFromAssets(url) {
-    const link = `${assetBaseUrl}${url}`;
+    const link = `${assetBaseUrl}${url}`
     return link
 }
 
 function formatPlaytime(seconds) {
-    const minutes = Math.floor(seconds / 60); // Calculate minutes
-    const remainingSeconds = seconds % 60;   // Calculate remaining seconds
-    return `${minutes} min ${remainingSeconds} sec`;
+    const minutes = Math.floor(seconds / 60) // Calculate minutes
+    const remainingSeconds = seconds % 60   // Calculate remaining seconds
+    return `${minutes} min ${remainingSeconds} sec`
 }
 
 export function mapStoriesWithDetails(stories, audios, languages) {
 
     return stories.map((story) => {
-        const language = languages.find((lang) => lang.id === story.language)?.language || "unknown.svg";
+        const language = languages.find((lang) => lang.id === story.language)?.language || "unknown.svg"
         const storyAudios = story.audio.map((audioId) => {
-            const audioData = audios.find((audio) => audio.id === audioId);
+            const audioData = audios.find((audio) => audio.id === audioId)
             if (audioData) {
-                const audioFile = retrieveFromAssets(audioData.audio_file);
+                const audioFile = retrieveFromAssets(audioData.audio_file)
                 return {
                     id: audioData.id,
                     file: audioFile,
                     voice_colours: audioData.voice_colours,
                     speaker_profile: audioData.speaker_profile
-                };
+                }
             }
-            return null;
-        }).filter(Boolean);
+            return null
+        }).filter(Boolean)
 
         if (story.image) {
-            story.image = retrieveFromAssets(story.image);
+            story.image = retrieveFromAssets(story.image)
         }
 
         if (story.playtime) {
-            story.playtime = formatPlaytime(story.playtime);
+            story.playtime = formatPlaytime(story.playtime)
         }
 
-        story.language = language;
+        story.language = language
 
         return {
             ...story,
             audios: storyAudios
-        };
-    });
+        }
+    })
 }
 
 export function mapPlaylistsWithDetails(playlists, stories, playlistStories) {
-    const storyMap = new Map(stories.map((story) => [story.id, story]));
+    const storyMap = new Map(stories.map((story) => [story.id, story]))
 
     return playlists.map((playlist) => {
         const relatedStoryIds = playlistStories
             .filter((link) => link.playlist_id === playlist.id)
-            .map((link) => link.story_id);
+            .map((link) => link.story_id)
 
         const playlistStoriesData = relatedStoryIds
             .map((storyId) => {
-                const story = storyMap.get(storyId);
-                return story;
+                const story = storyMap.get(storyId)
+                return story
             })
-            .filter(Boolean);
+            .filter(Boolean)
 
         const totalPlaytime = playlistStoriesData.reduce((sum, story) => {
-            return sum + (story.playtime || 0);
-        }, 0);
+            return sum + (story.playtime || 0)
+        }, 0)
 
         if (playlist.image) {
-            playlist.image = retrieveFromAssets(playlist.image);
+            playlist.image = retrieveFromAssets(playlist.image)
         }
 
-        const formattedPlaytime = totalPlaytime > 0 ? formatPlaytime(totalPlaytime) : "0 min 0 sec";
+        const formattedPlaytime = totalPlaytime > 0 ? formatPlaytime(totalPlaytime) : "0 min 0 sec"
 
         const enrichedPlaylist = {
             ...playlist,
             image: playlist.image,
             playtime: formattedPlaytime,
             stories: playlistStoriesData,
-        };
+        }
 
-        return enrichedPlaylist;
-    });
+        return enrichedPlaylist
+    })
 }
 
 
@@ -170,11 +170,11 @@ export function mapProfilesWithImages(profiles) {
     return profiles.map((profile) => {
 
         if (profile.avatar) {
-            profile.avatar = retrieveFromAssets(profile.avatar);
+            profile.avatar = retrieveFromAssets(profile.avatar)
         }
 
         return {
             ...profile
-        };
-    });
+        }
+    })
 }
