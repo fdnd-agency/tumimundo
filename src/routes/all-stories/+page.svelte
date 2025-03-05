@@ -119,10 +119,6 @@ header,
     transform: translateX(-50%);
 }
 
-.heading-back {
-    align-self: flex-start;
-}
-
 header {
     z-index: 10;
     height: 100%;
