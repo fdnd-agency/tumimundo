@@ -20,3 +20,47 @@ Vertaal het reeds bestaande grafische design naar een web applicatie of mobiele 
 
 [Design](https://www.figma.com/file/RDlD4etdXBvcOW9AAqueBz/TuMiMundo_FDND_Prototype?type=design&node-id=0%3A1&mode=design&t=3z8nbpTxTLvGHUIm-1)  
 
+**API Endpoints**
+
+* https://fdnd-agency.directus.app/items/tm_users
+* https://fdnd-agency.directus.app/items/tm_profile
+* https://fdnd-agency.directus.app/items/tm_profile_statistics
+* https://fdnd-agency.directus.app/items/tm_buddy
+* https://fdnd-agency.directus.app/items/tm_language
+* https://fdnd-agency.directus.app/items/tm_audio
+* https://fdnd-agency.directus.app/items/tm_playlist
+* https://fdnd-agency.directus.app/items/tm_speaker_profile
+* https://fdnd-agency.directus.app/items/tm_story
+* https://fdnd-agency.directus.app/items/tm_animal
+* https://fdnd-agency.directus.app/items/tm_season
+* https://fdnd-agency.directus.app/items/tm_likes
+* https://fdnd-agency.directus.app/items/tm_tests
+* https://fdnd-agency.directus.app/items/tm_segments
+* https://fdnd-agency.directus.app/items/tm_events
+* https://fdnd-agency.directus.app/items/tm_results
+
+## Studentenwerk
+
+**Sprint 8: Server-Side Rendering**  
+
+|  |  |  | 
+| :--------------- | :--------------- | :--------------- |
+| Ole | [repository](...) | [live site](...) 
+| Fatima A | [repository](...) | [live site](...) 
+| Iris | [repository](...) | [live site](...) 
+| Süleyman | [repository](...) | [live site](...) 
+| Sidney | [repository](...) | [live site](...) 
+| Rick | [repository](...) | [live site](...) 
+
+
+**Sprint 5: Fix The Flow** 
+
+|  |  |  | 
+| :--------------- | :--------------- | :--------------- |
+| Nadia	| [repository](https://github.com/nadiachaja/fix-the-flow-interactive-website) | [live site](https://nadiachaja.github.io/fix-the-flow-interactive-website/) 
+| Ravi	| [repository](https://github.com/Ravirkt/fix-the-flow-interactive-website) | [live site](https://ravirkt.github.io/fix-the-flow-interactive-website/) 
+| Kate	| [repository](https://github.com/Kitkatisvibing/fix-the-flow-interactive-website) | [live site](https://kitkatisvibing.github.io/fix-the-flow-interactive-website/) 
+| Kerem	| [repository](https://github.com/Keremttc/fix-the-flow-interactive-website)	| [live site](https://keremttc.github.io/fix-the-flow-interactive-website/) 
+| Luuk	| [repository](https://github.com/Lutrian1/fix-the-flow-interactive-website)	| [live site](https://lutrian1.github.io/fix-the-flow-interactive-website/) 
+| Safae	| [repository](https://github.com/Safae-e/fix-the-flow-interactive-website)	| [live site](https://safae-e.github.io/fix-the-flow-interactive-website/)
+
