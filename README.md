@@ -4,44 +4,6 @@ Een innovatieve aanpak om taalontwikkeling bij kinderen te ondersteunen door mid
 
 ![Project Logo](https://github.com/fdnd-agency/tumi-mundo/assets/61702002/6c04d95e-f4ea-480d-9e86-cbf9148e8e15)
 
-**Team Sprint 8**  
-Ole, Fatima(A), Iris, Süleyman, Sidney, Rick
-
-
-**Release Candidate**  
-[Live site](https://tumimundo.agency.fdnd.nl/)
-
-**Studentenwerk Sprint 5: Fix The Flow** 
-
-|  |  |  | 
-| :--------------- | :--------------- | :--------------- |
-| Nadia	| [repository](https://github.com/nadiachaja/fix-the-flow-interactive-website) | [live site](https://nadiachaja.github.io/fix-the-flow-interactive-website/) 
-| Ravi	| [repository](https://github.com/Ravirkt/fix-the-flow-interactive-website) | [live site](https://ravirkt.github.io/fix-the-flow-interactive-website/) 
-| Kate	| [repository](https://github.com/Kitkatisvibing/fix-the-flow-interactive-website) | [live site](https://kitkatisvibing.github.io/fix-the-flow-interactive-website/) 
-| Kerem	| [repository](https://github.com/Keremttc/fix-the-flow-interactive-website)	| [live site](https://keremttc.github.io/fix-the-flow-interactive-website/) 
-| Luuk	| [repository](https://github.com/Lutrian1/fix-the-flow-interactive-website)	| [live site](https://lutrian1.github.io/fix-the-flow-interactive-website/) 
-| Safae	| [repository](https://github.com/Safae-e/fix-the-flow-interactive-website)	| [live site](https://safae-e.github.io/fix-the-flow-interactive-website/)
-
-**API Endpoints**
-
-* https://fdnd-agency.directus.app/items/tm_users
-* https://fdnd-agency.directus.app/items/tm_profile
-* https://fdnd-agency.directus.app/items/tm_profile_statistics
-* https://fdnd-agency.directus.app/items/tm_buddy
-* https://fdnd-agency.directus.app/items/tm_language
-* https://fdnd-agency.directus.app/items/tm_audio
-* https://fdnd-agency.directus.app/items/tm_playlist
-* https://fdnd-agency.directus.app/items/tm_speaker_profile
-* https://fdnd-agency.directus.app/items/tm_story
-* https://fdnd-agency.directus.app/items/tm_animal
-* https://fdnd-agency.directus.app/items/tm_season
-* https://fdnd-agency.directus.app/items/tm_likes
-* https://fdnd-agency.directus.app/items/tm_tests
-* https://fdnd-agency.directus.app/items/tm_segments
-* https://fdnd-agency.directus.app/items/tm_events
-* https://fdnd-agency.directus.app/items/tm_results
-
-
 ## Inhoudsopgave
 
 1. [Introductie](#introductie)
