@@ -1,40 +1,39 @@
 <script>
-    import { Button } from '$lib/index';
-</script>
-
-<main>
+    import { Button } from '$lib/index'
+  
+    export let data
+  </script>
+  
+  <main>
     <section>
         <h1>Choose a buddy</h1>
         <p>During the learning journey your child will have a buddy that learns with them, gives reminders and shows the statistics! Here you can pick a buddy.</p>
-
         <p>Drag left or right, or use the buttons on the side to see all the buddies!</p> 
 
         <form>
             <div class="scroll-container">
-                <ul>
-                    <li>
-                        <img src="/buddys/Raymond.svg">
-                        <h2>Raymond</h2>
-                        <p>The rat</p>
-                    </li>
-                    <li>
-                        <img src="/buddys/Percy.svg">
-                        <h2>Percy</h2>
-                        <p>The penguin</p> 
-                    </li>
-                </ul>
+            <ul>
+                {#each data.buddys as { name, animal }}
+                <li>
+                    <img src="/buddys/{name}.svg" alt="Rat">
+                    <h2>{name}</h2>
+                    <p>{animal}</p>
+                </li>
+                {/each}
+            </ul>
             </div>
-            <Button type="input" variant="primary" />
-        </form>
+        <Button type="input" variant="primary" />
+      </form>
     </section>
-</main>
-
+  </main>
+  
 <style>
+
 main {
     background: var(--bg-image-blue);
     color: white;
     height: 120vh;
-}    
+}
 
 section {
     display: flex;
@@ -99,3 +98,4 @@ form {
     align-items: center;
 }
 </style>
+  
