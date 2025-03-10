@@ -26,13 +26,6 @@
         )
     }
 
-        // Functie om de dialoog te openen
-        let showDialog = false;
-
-function toggleDialog() {
-    showDialog = !showDialog;
-}
-
 </script>
 
 <main>
@@ -70,7 +63,7 @@ function toggleDialog() {
         </ul>
     </section>
 
-    <MakePlaylist/>
+    <MakePlaylist {data}/>
     
     <section class="all-stories">
         <h2>All stories</h2>

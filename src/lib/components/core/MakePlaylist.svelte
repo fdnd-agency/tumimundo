@@ -1,7 +1,25 @@
 <script>
-    import { Input, Story } from '$lib/index'
+    /** @type {import('./$types').PageData} */
 
-    let stories = []
+    import { Input, Story } from '$lib/index'
+    import { writable } from 'svelte/store'
+
+    export let data 
+
+let selectedLanguage = writable('languages');
+/** $: zorgt voor een reactive statement. de inhoud hiervan wordt automatisch geupdate wanneer data hierin wordt gewijzigd */
+$: stories = [];
+$: noStoriesFound = stories.length === 0;
+
+$: {
+    if ($selectedLanguage !== 'languages') {
+        stories = data.stories.filter(story => 
+            story.language && story.language.toLowerCase() === $selectedLanguage.toLowerCase()
+        );
+    } else {
+        stories = data.stories;
+    }
+}
 
 </script>
 
@@ -15,6 +33,20 @@
         
         <h3>Add stories</h3>
         <p>Click on the + to add story to playlist</p>
+
+        <section class="story-list">
+            <ul>
+            {#if noStoriesFound}
+                <p class="no-stories-message">No stories found</p>
+            {:else}
+                {#each stories as story (story.id)}
+                <li>
+                    <Story {story} /> 
+                </li> 
+                {/each}
+            {/if}
+            </ul>
+        </section>
       
         <div class="buttons-container">
             <a href="#create-playlist" class="close-button">Cancel</a>
@@ -26,7 +58,12 @@
 </dialog>
 
 <style>
-
+.story-list {
+    display: grid;          
+    grid-template-rows: repeat(3, auto); 
+    max-height: 16em;         
+    overflow-y: auto;     
+}
 .popup {
     background-color: rgba(0, 0, 0, 0.8);
     opacity: 0;
@@ -52,7 +89,7 @@
     position: fixed; 
     top: 50%; 
     left: 50%; 
-    height: 60%; 
+    height: 80%; 
     border: none; 
     border-radius: var(--border-radius); 
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
@@ -108,6 +145,11 @@ h3{
 }
 .popup:target .popup__content {
     opacity: 1;
+}
+@media only screen and (min-width: 600px) {
+    .story-list {
+        height: 10em;
+    }
 }
 
 </style>
