@@ -1,6 +1,6 @@
 
 <script>
-    import { Story, Playlist, Menu, Carousel, Play, Plus, MakePlaylist } from '$lib/index';
+    import { Story, Playlist, Menu, Carousel, Play, Plus, Input, MakePlaylist } from '$lib/index';
 
 
     let currentPage = "lessons";
@@ -23,8 +23,15 @@
             playlist.id === playlistId 
                 ? { ...playlist, isLiked: isLiked }
                 : playlist
-        );
+        )
     }
+
+        // Functie om de dialoog te openen
+        let showDialog = false;
+
+function toggleDialog() {
+    showDialog = !showDialog;
+}
 
 </script>
 
@@ -54,15 +61,17 @@
                     </small>
             </li>
             <li class="create-playlist">
-                <Plus/>
-                <h3>Make a playlist !</h3>
-                <small><a href="/create-playlist">Add your favorite stories in one playlist</a></small>
+                <a href="#popup">
+                   <Plus/>
+                    <h3>Make a playlist !</h3>
+                    <small>Add your favorite stories in one playlist</small> 
+                </a>
             </li>
         </ul>
     </section>
 
     <MakePlaylist/>
-
+    
     <section class="all-stories">
         <h2>All stories</h2>
 
@@ -143,6 +152,9 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+    }
+    .create-playlist > a{
+        color: white;
     }
     
     .playlist-1 {
