@@ -50,7 +50,9 @@
             <li>
                 <select name="season" id="season-select" aria-label="Choose a season">
                     <option value="season">Season</option>
-                    <option value="summer">Summer</option>
+                    {#each data.seasons as season}
+                        <option value="{season.id}">{season.season}</option>
+                    {/each}
                 </select>
             </li>
             <li>
@@ -115,10 +117,6 @@ header,
     left: 50%;
     font-size: 1.7em;
     transform: translateX(-50%);
-}
-
-.heading-back {
-    align-self: flex-start;
 }
 
 header {
