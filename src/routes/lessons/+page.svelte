@@ -1,6 +1,7 @@
 
 <script>
-    import { Story, Playlist, Menu, Carousel, Play, Plus } from '$lib/index';
+    import { Story, Playlist, Menu, Carousel, Play, Plus, MakePlaylist } from '$lib/index';
+
 
     let currentPage = "lessons";
 
@@ -59,6 +60,8 @@
             </li>
         </ul>
     </section>
+
+    <MakePlaylist/>
 
     <section class="all-stories">
         <h2>All stories</h2>

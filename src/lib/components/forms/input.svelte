@@ -12,7 +12,7 @@
   {:else if type === 'password'}
     Password
   {:else}
-    Name
+    {name}
   {/if}
 </label>
 
