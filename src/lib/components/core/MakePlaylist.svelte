@@ -101,6 +101,9 @@ $: {
     border-radius: var(--border-radius); 
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
+li{
+    margin-bottom: .2em;
+}
 h3, p{
     text-align: left;
 }
@@ -128,8 +131,6 @@ h3{
 .close-button{
     color: black;
     background-color: #fff;
-    /* border: 1px solid black; */
-    /* font-weight: 600; */
 }
 .create-button{
     color: white;
