@@ -2,7 +2,7 @@
 /** @type {import('./$types').PageLoad} */
 export let csr = true;
 import { error } from '@sveltejs/kit';
-import { fetchAllData, mapStoriesWithDetails, fetchSeasons } from '$lib/api';
+import { fetchAllData, mapStoriesWithDetails, fetchSeasons, SeasonDetailInStories } from '$lib/api';
 import { fetchAnimals } from '../../lib/api';
 /**
  * Loads data for the page, fetching stories, animals, and languages.
@@ -16,19 +16,19 @@ import { fetchAnimals } from '../../lib/api';
  */
 export async function load({ fetch }) {
     try{
-    const [data, animals, seasons] = await Promise.all([fetchAllData(fetch),fetchAnimals(fetch), fetchSeasons(fetch)]);
+    const [data, animals, seasonsData] = await Promise.all([fetchAllData(fetch),fetchAnimals(fetch), fetchSeasons(fetch)]);
 
-    const storiesWithDetails = mapStoriesWithDetails(data.stories, data.audios, data.languages);
+    let storiesWithDetails =  mapStoriesWithDetails(data.stories, data.audios, data.languages)
+        storiesWithDetails = SeasonDetailInStories(storiesWithDetails, seasonsData.seasons)
 
     return {
         ...data,
         animals,
         stories: storiesWithDetails,
         languages: data.languages,
-        seasons: seasons.seasons
+        seasons: seasonsData.seasons
     };
 } catch (err) {
-    
     console.error('Error loading data:', error);
     throw error(500, {
         message: error.message

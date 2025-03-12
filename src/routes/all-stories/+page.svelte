@@ -6,22 +6,29 @@
     export let data;
 
     let selectedLanguage = writable('languages');
+    let selectedSeason = writable('seasons');
     /** $: zorgt voor een reactive statement. de inhoud hiervan wordt automatisch geupdate wanneer data hierin wordt gewijzigd */
     $: stories = [];
     $: noStoriesFound = stories.length === 0;
 
     $: {
-        if ($selectedLanguage !== 'languages') {
-            stories = data.stories.filter(story => 
-                story.language && story.language.toLowerCase() === $selectedLanguage.toLowerCase()
-            );
-        } else {
-            stories = data.stories;
-        }
+        stories = data.stories.filter(story => {
+            const languageMatch = $selectedLanguage === 'languages' ||
+                (story.language === $selectedLanguage);
+            
+            const seasonMatch = $selectedSeason === 'seasons' ||
+                (story.season === $selectedSeason);
+ 
+            return languageMatch && seasonMatch;
+        });
     }
 
     function handleLanguageChange(event) {
         selectedLanguage.set(event.target.value);
+    }
+
+    function handleSeasonChange(event) {
+        selectedSeason.set(event.target.value === 'season' ? 'seasons' : event.target.value);
     }
 
 </script>
@@ -48,10 +55,10 @@
                 
             </li>
             <li>
-                <select name="season" id="season-select" aria-label="Choose a season">
+                <select name="season" id="season-select" aria-label="Choose a season"  on:change={handleSeasonChange}>
                     <option value="season">Season</option>
                     {#each data.seasons as season}
-                        <option value="{season.id}">{season.season}</option>
+                        <option value="{season.season}">{season.season}</option>
                     {/each}
                 </select>
             </li>

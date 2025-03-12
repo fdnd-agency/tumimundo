@@ -48,7 +48,6 @@ export async function fetchSeasons(fetch) {
 }
 
 export async function fetchAllData(fetch) {
-
     const [
         users,
         profiles,
@@ -105,7 +104,6 @@ function formatPlaytime(seconds) {
 }
 
 export function mapStoriesWithDetails(stories, audios, languages) {
-
     return stories.map((story) => {
         const language = languages.find((lang) => lang.id === story.language)?.language || "unknown.svg";
         const storyAudios = story.audio.map((audioId) => {
@@ -131,7 +129,6 @@ export function mapStoriesWithDetails(stories, audios, languages) {
         }
 
         story.language = language;
-
         return {
             ...story,
             audios: storyAudios
@@ -139,6 +136,13 @@ export function mapStoriesWithDetails(stories, audios, languages) {
     });
 }
 
+export function SeasonDetailInStories(stories, seasons) {
+    return stories.map(story => ({
+        ...story,
+        season: seasons.find((s) => s.id === story.season)?.season || null
+    }));
+}
+ 
 export function mapPlaylistsWithDetails(playlists, stories, playlistStories) {
     const storyMap = new Map(stories.map((story) => [story.id, story]));
 
@@ -177,7 +181,6 @@ export function mapPlaylistsWithDetails(playlists, stories, playlistStories) {
 
 
 export function mapProfilesWithImages(profiles) {
-
     return profiles.map((profile) => {
 
         if (profile.avatar) {
