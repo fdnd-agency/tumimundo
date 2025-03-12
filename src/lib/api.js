@@ -36,6 +36,15 @@ export async function fetchAnimals(fetch) {
         throw error;
     }
 }
+export async function fetchSeasons(fetch) {
+    try {
+        const seasons = await fetchCollection(fetch, 'tm_season');
+        return { seasons };
+    } catch (error) {
+        console.error('Error fetching season data:', error);
+        throw error;
+    }
+}
 export async function fetchAllData(fetch) {
 
     const [
@@ -94,7 +103,6 @@ function formatPlaytime(seconds) {
 }
 
 export function mapStoriesWithDetails(stories, audios, languages) {
-
     return stories.map((story) => {
         const language = languages.find((lang) => lang.id === story.language)?.language || "unknown.svg";
         const storyAudios = story.audio.map((audioId) => {
@@ -124,6 +132,25 @@ export function mapStoriesWithDetails(stories, audios, languages) {
         return {
             ...story,
             audios: storyAudios
+        };
+    });
+}
+
+export function AnimalsInStories(stories, animals) {
+    return stories.map(story => {
+        const animal = animals?.find((a) => a.id === story.animal)?.animal || null;
+        return {
+            ...story,
+            animal: animal
+        };
+    });
+}
+export function SeasonDetailInStories(stories, seasons) {
+    return stories.map(story => {
+        const season = seasons?.find((s) => s.id === story.season)?.season || null;
+        return {
+            ...story,
+            season: season
         };
     });
 }

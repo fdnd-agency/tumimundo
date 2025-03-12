@@ -6,24 +6,32 @@
     export let data;
 
     let selectedLanguage = writable('languages');
+    let selectedAnimal = writable('animal');
+
     /** $: zorgt voor een reactive statement. de inhoud hiervan wordt automatisch geupdate wanneer data hierin wordt gewijzigd */
     $: stories = [];
     $: noStoriesFound = stories.length === 0;
 
     $: {
-        if ($selectedLanguage !== 'languages') {
-            stories = data.stories.filter(story => 
-                story.language && story.language.toLowerCase() === $selectedLanguage.toLowerCase()
-            );
-        } else {
-            stories = data.stories;
-        }
+        stories = data.stories.filter(story => {
+            const languageMatch = $selectedLanguage === 'languages' ||
+                (story.language && story.language.toLowerCase() === $selectedLanguage.toLowerCase());
+
+            // Add animal filtering
+            const animalMatch = $selectedAnimal === 'animal' ||
+                (story.animal && story.animal.toLowerCase() === $selectedAnimal.toLowerCase());
+
+            return languageMatch && animalMatch;
+        });
     }
 
     function handleLanguageChange(event) {
         selectedLanguage.set(event.target.value);
     }
 
+    function handleAnimalChange(event) {
+        selectedAnimal.set(event.target.value === 'animal' ? 'animal' : event.target.value);
+    }
 </script>
 
 <main>
@@ -34,23 +42,25 @@
             </a>
             <h1>All Stories</h1>
         </div>
-    
+
         <Search />
-    
+
         <ul class="nav-ul">
             <li>
-                <select name="animal" id="animal-select" aria-label="Choose an animal">
+                <select name="animal" id="animal-select" aria-label="Choose an animal" on:change={handleAnimalChange}>
                     <option value="animal">Animal</option>
-                        {#each data.animals as animal}
-                            <option value="{ animal.animal }">{ animal.animal }</option>
-                        {/each}
+                    {#each data.animals as animal}
+                        <option value="{animal.animal}">{animal.animal}</option>
+                    {/each}
                 </select>
-                
+
             </li>
-            <li>
+             <li>
                 <select name="season" id="season-select" aria-label="Choose a season">
                     <option value="season">Season</option>
-                    <option value="summer">Summer</option>
+                    {#each data.seasons as season}
+                        <option value="{season.id}">{season.season}</option>
+                    {/each}
                 </select>
             </li>
             <li>
@@ -62,7 +72,7 @@
                 </select>
             </li>
             <li>
-                <select name="sorting" id="sorting"aria-label="Choose a sorting">
+                <select name="sorting" id="sorting" aria-label="Choose a sorting">
                     <option value="sorting">Sorting</option>
                     <option value="from a to z">From A - Z</option>
                     <option value="from z to a">From Z to A</option>
@@ -72,7 +82,7 @@
             </li>
         </ul>
     </header>
-    
+
     <section class="story-list">
         {#if noStoriesFound}
             <p class="no-stories-message">No stories found</p>
@@ -88,7 +98,7 @@
 main {
     background-image: var(--bg-image-purple);
     color: var(--color-white);
-    min-height: 100vh; 
+    min-height: 100vh;
 }
 
 .heading,
@@ -107,7 +117,7 @@ header,
     justify-content: space-between;
     margin: 1em 0;
     padding: 1em;
-    position: relative; 
+    position: relative;
 }
 
 .heading > h1 {
@@ -117,14 +127,10 @@ header,
     transform: translateX(-50%);
 }
 
-.heading-back {
-    align-self: flex-start;
-}
-
 header {
     z-index: 10;
     height: 100%;
-    justify-content: space-between; 
+    justify-content: space-between;
     padding: 0.625em 1.25em;
     background-color: transparent;
 }
@@ -147,7 +153,7 @@ header {
 
 select {
     background-color: transparent;
-    overflow-x: auto; 
+    overflow-x: auto;
     border: none;
     color: var(--color-white);
 }
