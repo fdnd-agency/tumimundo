@@ -27,8 +27,8 @@ $: {
     <div class="popup__content">
         <h2>Make a playlist!</h2>
       
-      <form action="#" class="form" method="POST">
-        <Input name="Name" placeholder="Playlist name"/>
+      <form action="/lessons" class="form" method="POST">
+        <Input name="Name" type="text" placeholder="Playlist name"/>
         <Input name="Description" type="text" placeholder="Playlist description"/>
         
         <h3>Add stories</h3>
@@ -50,7 +50,7 @@ $: {
       
         <div class="buttons-container">
             <a href="#create-playlist" class="close-button">Cancel <SmallCross/></a>
-            <button class="create-button">Create <Check/></button>
+            <button type="submit" class="create-button">Create <Check/></button>
         </div>
 
       </form>
@@ -91,7 +91,6 @@ $: {
     background-color: #fff;
     padding: 1em;
     width: 30em;
-    /* width: 100vw; */
     position: fixed; 
     top: 50%; 
     left: 50%; 
