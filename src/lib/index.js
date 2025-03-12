@@ -32,3 +32,5 @@ export { default as Test } from '$lib/components/svg/Test.svelte';
 export { default as Lessons } from '$lib/components/svg/Lessons.svelte';
 export { default as Statistics } from '$lib/components/svg/Statistics.svelte';
 export { default as Profile } from '$lib/components/svg/Profile.svelte';
+export { default as Check } from '$lib/components/svg/Check.svelte';
+export { default as SmallCross } from '$lib/components/svg/SmallCross.svelte';

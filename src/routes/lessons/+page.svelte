@@ -1,6 +1,6 @@
 
 <script>
-    import { Story, Playlist, Menu, Carousel, Play, Plus, Input, MakePlaylist } from '$lib/index';
+    import { Playlist, Menu, Carousel, Play, Plus, Input, MakePlaylist } from '$lib/index';
 
 
     let currentPage = "lessons";
@@ -103,193 +103,183 @@
 
 
 <style>
-    :root {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-    
-    main {
-        height: 100%;
-        color: var(--color-text-light);
-        background-image: var(--bg-image-purple);
-        display: flex;
-        flex-direction: column;
-        padding-bottom: 5em;
-    }
-    
-    section {
-        padding: var(--space-md);
-    }
-    
-    h1 {
-        margin-top: var(--space-lg);
-        margin-bottom: var(--space-md);
-    }
-    
-    h2 {
-        font-size: var(--font-size-lg);
-        margin-bottom: var(--space-sm);
-    }
-    
-    header {
-        margin-bottom: var(--space-lg);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    
-    /* Styling for "own playlist" section */
-    .create-playlist, .playlist-1 {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-    .create-playlist > a{
-        color: white;
-    }
-    
-    .playlist-1 {
-        background-color: var(--color-text-light);
-        color: var(--color-text);
-    }
-    
-    .playlist-1 > a small {
-        color: var(--color-text);
-    }
-    
-    .playlist-1 > h3 {
-        font-weight: var(--font-weight-bold);
-        color: var(--color-text);
-    }
-    
-    .own-playlist {
-        display: flex;
-        flex-direction: column;
-    }
-    
-    .own-playlist > ul {
-        display: flex;
-        gap: var(--space-sm);
-        overflow-x: auto;
-    }
-    
-    .own-playlist > ul > li {
-        height: 12.5rem;
-        width: 9rem;
-        color: var(--color-text);
-        border-radius: var(--border-radius);
-        padding: var(--space-md);
-    }
-    
-    /* Styling for "all stories" section & carousel nav */
-    .all-stories {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    }
-    
-    .all-stories > h2 {
-        align-self: start;
-        margin: 0;
-    }
-    
-    nav {
-        display: flex;
-        margin-top: var(--space-md);
-        align-items: center;
-        justify-content: center;
-    }
+:root {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-    .story-img {
-        width: 100%; 
-        max-width: 100%; 
-        height: auto;
-    }
-    .language-filter {
-        display: flex;
+main {
+    height: 100%;
+    color: var(--color-text-light);
+    background-image: var(--bg-image-purple);
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 5em;
+}
+
+section {
+    padding: var(--space-md);
+}
+
+h1 {
+    margin-top: var(--space-lg);
+    margin-bottom: var(--space-md);
+}
+
+h2 {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--space-sm);
+}
+
+header {
+    margin-bottom: var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Styling for "own playlist" section */
+.create-playlist, .playlist-1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.create-playlist > a{
+    color: white;
+}
+
+.playlist-1 {
+    background-color: var(--color-text-light);
+    color: var(--color-text);
+}
+
+.playlist-1 > a small {
+    color: var(--color-text);
+}
+
+.playlist-1 > h3 {
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text);
+}
+
+.own-playlist {
+    display: flex;
+    flex-direction: column;
+}
+
+.own-playlist > ul {
+    display: flex;
+    gap: var(--space-sm);
+    overflow-x: auto;
+}
+
+.own-playlist > ul > li {
+    height: 12.5rem;
+    width: 9rem;
+    color: var(--color-text);
+    border-radius: var(--border-radius);
+    padding: var(--space-md);
+}
+
+/* Styling for "all stories" section & carousel nav */
+.all-stories {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.all-stories > h2 {
+    align-self: start;
+    margin: 0;
+}
+
+nav {
+    display: flex;
+    margin-top: var(--space-md);
+    align-items: center;
+    justify-content: center;
+}
+.story-img {
+    width: 100%; 
+    max-width: 100%; 
+    height: auto;
+}
+.language-filter {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.language-filter > a {
+    margin-left: auto;
+    color: var(--color-white);
+}
+
+.language-filter > a:hover {
+    text-decoration: underline;
+}
+
+label {
+    display: flex;
+    align-items: center;
+    padding: var(--space-xs);
+    padding-right: var(--space-sm);
+    background-color: hsla(263, 21%, 62%, 1);
+    color: var(--color-text);
+    border-radius: var(--border-radius);
+}
+
+label:nth-of-type(1) {
+    margin-right: var(--space-md);
+}
+
+input[type=checkbox] {
+    opacity: 0;
+    position: absolute;
+}
+
+input[type=checkbox]:checked + label {
+    background-color: var(--color-text-light);
+    font-weight: var(--font-weight-bold);
+}
+
+label > img {
+    height: 1.5em;
+    width: auto;
+    margin-right: var(--space-sm);
+}
+
+/* Styling for "create playlist" section */
+.create-playlist {
+    background-color: hsla(248, 27%, 36%, 1);
+    text-align: center;
+    color: var(--color-text-light);
+}
+
+
+
+.playlist-1 > small {
+    align-self: start;
+    margin-top: auto;
+}
+
+/* Styling for suggested playlist page */
+section.playlist-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-lg);
+    overflow-x: auto;
+    padding-bottom: var(--space-md);
+    scroll-snap-type: x mandatory;
+}
+
+@media only screen and (min-width: 600px) {
+    main {
         align-items: center;
-        width: 100%;
     }
-    
-    .language-filter > a {
-        margin-left: auto;
-        color: var(--color-white);
-    }
-    
-    .language-filter > a:hover {
-        text-decoration: underline;
-    }
-    
-    label {
-        display: flex;
-        align-items: center;
-        padding: var(--space-xs);
-        padding-right: var(--space-sm);
-        background-color: hsla(263, 21%, 62%, 1);
-        color: var(--color-text);
-        border-radius: var(--border-radius);
-    }
-    
-    label:nth-of-type(1) {
-        margin-right: var(--space-md);
-    }
-    
-    input[type=checkbox] {
-        opacity: 0;
-        position: absolute;
-    }
-    
-    input[type=checkbox]:checked + label {
-        background-color: var(--color-text-light);
-        font-weight: var(--font-weight-bold);
-    }
-    
-    label > img {
-        height: 1.5em;
-        width: auto;
-        margin-right: var(--space-sm);
-    }
-    
-    /* Styling for "create playlist" section */
-    .create-playlist {
-        background-color: hsla(248, 27%, 36%, 1);
-        text-align: center;
-        color: var(--color-text-light);
-    }
-    
-    .create-playlist > h3 {
-        margin-bottom: var(--space-md);
-        color: var(--color-text-light);
-        font-weight: var(--font-weight-bold);
-        font-size: var(--font-size-md);
-    }
-    
-    .create-playlist > small {
-        color: var(--color-text-light);
-    }
-    
-    .playlist-1 > small {
-        align-self: start;
-        margin-top: auto;
-    }
-    
-    /* Styling for suggested playlist page */
-    section.playlist-list {
-        display: flex;
-        flex-wrap: wrap;
-        gap: var(--space-lg);
-        overflow-x: auto;
-        padding-bottom: var(--space-md);
-        scroll-snap-type: x mandatory;
-    }
-    
-    @media only screen and (min-width: 600px) {
-        main {
-            align-items: center;
-        }
-    }
+}
     </style>
     

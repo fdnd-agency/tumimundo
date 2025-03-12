@@ -1,7 +1,7 @@
 <script>
     /** @type {import('./$types').PageData} */
 
-    import { Input, Story } from '$lib/index'
+    import { Input, Story, Check, SmallCross } from '$lib/index'
     import { writable } from 'svelte/store'
 
     export let data 
@@ -49,8 +49,8 @@ $: {
         </section>
       
         <div class="buttons-container">
-            <a href="#create-playlist" class="close-button">Cancel</a>
-            <button class="create-button">Create</button>
+            <a href="#create-playlist" class="close-button">Cancel <SmallCross/></a>
+            <button class="create-button">Create <Check/></button>
         </div>
 
       </form>
@@ -62,7 +62,13 @@ $: {
     display: grid;          
     grid-template-rows: repeat(3, auto); 
     max-height: 16em;         
-    overflow-y: auto;     
+    overflow-y: auto;  
+    flex-grow: 1;
+    max-height: 40vh;
+    min-height: 10em;   
+    overflow-y: auto;
+    padding-bottom: 1em;
+    text-align: left;
 }
 .popup {
     background-color: rgba(0, 0, 0, 0.8);
@@ -74,7 +80,6 @@ $: {
     left: 50%;
     display: flex;
     transform: translate(-50%, -50%);
-    padding: 1em;
     width: 100%;
     height: 110vh;
     border: none;
@@ -86,10 +91,13 @@ $: {
     background-color: #fff;
     padding: 1em;
     width: 30em;
+    /* width: 100vw; */
     position: fixed; 
     top: 50%; 
     left: 50%; 
     height: 80%; 
+    max-height: 90%;
+    overflow: hidden;
     border: none; 
     border-radius: var(--border-radius); 
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
@@ -113,11 +121,16 @@ h3{
     border-radius: var(--border-radius);
     font-size: 1em;
     border: none;
+    display: flex;
+    align-items: center;
+    gap: .2em;
+    box-shadow: 1px 3px 3px grey;
 }
 .close-button{
     color: black;
-    background-color: fff;
-    border: 1px solid black;
+    background-color: #fff;
+    /* border: 1px solid black; */
+    /* font-weight: 600; */
 }
 .create-button{
     color: white;
@@ -136,7 +149,7 @@ h3{
 }
 @media (max-width: 37.5em) {
   .popup__content {
-    width: 90%;
+    width: 96%;
   }
 }
 .popup:target {
@@ -148,8 +161,14 @@ h3{
 }
 @media only screen and (min-width: 600px) {
     .story-list {
-        height: 10em;
+        height: 15em;
     }
 }
+@media only screen and (max-width: 600px) {
+    .story-list {
+        min-height: 12em;
+    }
+}
+
 
 </style>
