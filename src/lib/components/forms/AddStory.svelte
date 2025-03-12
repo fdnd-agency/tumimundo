@@ -3,7 +3,7 @@
 </script>
 
 <label class="story-checkbox">
-  <input type="checkbox" bind:checked class="hidden-checkbox" required/>
+  <input type="checkbox" bind:checked class="hidden-checkbox" aria-label="Selecteer dit verhaal" required tabindex="0"/>
     {#if checked}
 
     <!-- Check SVG -->
@@ -26,11 +26,20 @@
 
 <style>
 .hidden-checkbox {
-  position: absolute;
-  opacity: 0;
-  width: 0;
-  height: 0;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
+.hidden-checkbox:focus + svg {
+  outline: 2px solid #256639;
+  border-radius: 50%;
+}
+
 
 .story-checkbox {
   cursor: pointer;
