@@ -90,7 +90,7 @@ input[type=radio] {
     scroll-snap-type: x mandatory;
     padding: var(--space-md) 0;
     width: 100%;
-    max-width: 22em;
+    max-width: 23em;
     box-sizing: border-box;
 }
     
