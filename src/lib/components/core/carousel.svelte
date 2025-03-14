@@ -89,7 +89,8 @@ input[type=radio] {
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     padding: var(--space-md) 0;
-    width: 24em;
+    width: 100%;
+    max-width: 22em;
     box-sizing: border-box;
 }
     
@@ -105,7 +106,7 @@ input[type=radio] {
     .story-list {
         grid-template-columns: repeat(2, 1fr);
         grid-template-rows: repeat(4, auto);
-        width: 48em;
+        max-width: 44em;
     }
 }
 
