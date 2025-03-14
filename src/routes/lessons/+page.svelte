@@ -157,11 +157,15 @@ header {
 
 .playlist-1 > a small {
     color: var(--color-text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .playlist-1 > h3 {
     font-weight: var(--font-weight-bold);
     color: var(--color-text);
+    margin-bottom: .5em;
 }
 
 .own-playlist {
@@ -176,11 +180,19 @@ header {
 }
 
 .own-playlist > ul > li {
-    height: 12.5rem;
-    width: 9rem;
+    height: 14rem;
+    width: 10em;
     color: var(--color-text);
     border-radius: var(--border-radius);
-    padding: var(--space-md);
+    padding: .75em;
+    justify-content: center;
+}
+
+.playlist-1 > small {
+    display: flex;
+    gap: .3em;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Styling for "all stories" section & carousel nav */
