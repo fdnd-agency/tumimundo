@@ -13,10 +13,11 @@ export { default as Playlist } from '$lib/components/layout/playlist.svelte'
 export { default as Popup } from '$lib/components/layout/popup.svelte'
 export { default as Story } from '$lib/components/layout/story.svelte'
 
+
 // Helpers
-export { default as fetchJson } from '$lib/components/helpers/fetch-json.js'
-export { fetchApi } from '$lib/components/helpers/fetchApi.js'
-export { userState } from '$lib/components/helpers/account.js'
+export { default as fetchJson } from '$lib/components/helpers/Fetch-json.js'
+export { fetchApi } from '$lib/components/helpers/FetchApi.js'
+export { userState } from '$lib/components/helpers/Account.js'
 
 // SVG's
 export { default as Back } from '$lib/components/svg/Back.svelte';
