@@ -44,9 +44,16 @@
         <ul>
             <li class="playlist-1">
                 <picture>
-                    <source srcset="https://fdnd-agency.directus.app/assets/263e541a-9dd8-4978-8ad0-9a6e5b9dfe1a.webp" type="image/webp">
-                    <img src="https://fdnd-agency.directus.app/assets/263e541a-9dd8-4978-8ad0-9a6e5b9dfe1a" class="story-img" alt="story">
-                </picture>
+                    <source srcset="https://fdnd-agency.directus.app/assets/263e541a-9dd8-4978-8ad0-9a6e5b9dfe1a?width=300&format=avif" type="image/avif">
+                    <source srcset="https://fdnd-agency.directus.app/assets/263e541a-9dd8-4978-8ad0-9a6e5b9dfe1a?width=300&format=webp" type="image/webp">
+                    <img 
+                      src="https://fdnd-agency.directus.app/assets/263e541a-9dd8-4978-8ad0-9a6e5b9dfe1a?width=300" 
+                      class="story-img" 
+                      alt="story" 
+                      width="300" 
+                      height="300"
+                    >
+                  </picture>
                 <h3>The octopus who was very hungry</h3>
                     <small> 
                         <Play/>  
@@ -69,10 +76,10 @@
         <h2>All stories</h2>
 
         <nav class="language-filter">
-            <label for="checkbox-nl"><img src="/languages/Dutch.svg" alt="dutch">Dutch</label>
+            <label for="checkbox-nl"><img src="/languages/Dutch.svg" alt="dutch" width="20" height="20">Dutch</label>
             <input type="checkbox" id="checkbox-nl">
 
-            <label for="checkbox-en"><img src="/languages/English.svg" alt="english">English</label>
+            <label for="checkbox-en"><img src="/languages/English.svg" alt="english" width="20" height="20">English</label>
             <input type="checkbox" id="checkbox-en">
 
             <a href="/all-stories">Show all</a>
@@ -201,6 +208,7 @@ header {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    min-height: 31.25em ;
 }
 
 .all-stories > h2 {
