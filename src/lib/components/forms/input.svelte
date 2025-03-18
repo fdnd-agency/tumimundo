@@ -12,7 +12,7 @@
   {:else if type === 'password'}
     Password
   {:else}
-    Name
+    {name}
   {/if}
 </label>
 
@@ -24,6 +24,7 @@
     placeholder={placeholder}
     aria-label={name}
     bind:value={value}
+    required
   />
 {:else if type === 'password'}
   <input
@@ -33,6 +34,7 @@
     placeholder={placeholder}
     aria-label={name}
     bind:value={value}
+    required
   />
 {:else}
   <input
@@ -42,6 +44,7 @@
     placeholder={placeholder}
     aria-label={name}
     bind:value={value}
+    required
   />
 {/if}
 
