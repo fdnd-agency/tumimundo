@@ -3,6 +3,7 @@
 
   export let data
   let buddyList
+  let currentIndex = 1
 
   function scrollCarousel(direction) {
     if (!buddyList) return
@@ -13,6 +14,8 @@
         left: direction * scrollAmount,
         behavior: 'smooth'
     })
+
+    currentIndex = Math.max(1, Math.min(data.buddys.length, currentIndex + direction))
 }
 </script>
 
@@ -40,7 +43,7 @@
           <button type="button" aria-label="Previous" on:click={() => scrollCarousel(-1)}>
               <Back color="white" height="32"/>
           </button>
-          <h2><strong>1</strong></h2>
+          <h2><strong>{currentIndex}</strong></h2>
           <button type="button" aria-label="Next" on:click={() => scrollCarousel(1)}>
               <Back color="white" flipped={true} height="32"/>
           </button>            
@@ -49,28 +52,7 @@
 </main>
 
 <style>
-button{
-  background-color: var(--button-blue);
-  border: none;
-  padding-left: .3em;
-  /* width: 4em; */
-  /* border-radius: 1em; */
-}
-nav{
-  display: flex;
-  gap: 3em;
-}
-nav > button {
-    border: none;
-    border-radius: var(--border-radius);
-    padding: var(--space-sm);
-    height: 2.5em;
-    width: 4em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    /* background-color: #9264F4; */
-}
+
 main {
   background: var(--bg-image-blue);
   color: white;
@@ -96,6 +78,23 @@ h1 {
 p {
   max-width: 30em;
   margin-bottom: 1em;
+}
+
+nav{
+  display: flex;
+  gap: 3em;
+}
+
+nav > button {
+    border: none;
+    border-radius: var(--border-radius);
+    padding: var(--space-sm);
+    height: 2.5em;
+    width: 4em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--button-blue);
 }
 
 .scroll-container {
