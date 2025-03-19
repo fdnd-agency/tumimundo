@@ -1,37 +1,50 @@
 // @author roumaisa el filali
+// @author Marjam Lodien
 /** @type {import('./$types').PageLoad} */
 export let csr = true;
 import { error } from '@sveltejs/kit';
 import { fetchAllData, mapStoriesWithDetails, fetchSeasons, SeasonDetailInStories } from '$lib/api';
 import { fetchAnimals } from '../../lib/api';
 /**
- * Loads data for the page, fetching stories, animals, and languages.
- *
+ * Loads data for the page, fetching stories, animals, languages and seasons.
  * @async
  * @function load
- * @param {Object} context - The context object provided by SvelteKit's `load` function.
  * @param {fetch} context.fetch - The fetch function for making HTTP requests.
- * @returns {Promise<Object>} A promise that resolves to an object containing stories, animals, and languages.
+ * @param {url} context.url - The current page URL object.
+ * @returns {Promise<Object>} A promise that resolves to an object containing stories, animals, languages seasons and selected filters.
  * @throws {Error} If there's an error during data fetching.
  */
-export async function load({ fetch }) {
-    try{
-    const [data, animals, seasonsData] = await Promise.all([fetchAllData(fetch),fetchAnimals(fetch), fetchSeasons(fetch)]);
+export async function load({ fetch, url }) {
+    try {
+      const [data, animals, seasonsData] = await Promise.all([
+        fetchAllData(fetch),
+        fetchAnimals(fetch),
+        fetchSeasons(fetch)
+      ]);
+  
+      let storiesWithDetails = mapStoriesWithDetails(data.stories, data.audios, data.languages);
+      storiesWithDetails = SeasonDetailInStories(storiesWithDetails, seasonsData.seasons);
+  
+      const selectedSeason = url.searchParams.get('season') || '';
+      const selectedLanguage = url.searchParams.get('language') || '';
 
-    let storiesWithDetails =  mapStoriesWithDetails(data.stories, data.audios, data.languages)
-        storiesWithDetails = SeasonDetailInStories(storiesWithDetails, seasonsData.seasons)
-
-    return {
-        ...data,
+      const filteredStories = storiesWithDetails.filter(story => 
+        (!selectedSeason || story.season === selectedSeason) &&
+        (!selectedLanguage || story.language === selectedLanguage)
+      );
+  
+      return {
+        stories: filteredStories,
         animals,
-        stories: storiesWithDetails,
         languages: data.languages,
-        seasons: seasonsData.seasons
-    };
-} catch (err) {
-    console.error('Error loading data:', error);
-    throw error(500, {
-        message: error.message
-    });
-}
-}
+        seasons: seasonsData.seasons,
+        selectedSeason,
+        selectedLanguage
+      };
+    } catch (err) {
+      console.error('Error loading data:', err);
+      throw error(500, {
+        message: err.message
+      });
+    }
+  }
