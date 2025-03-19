@@ -38,35 +38,59 @@
 
       <nav class="carousel-nav">
           <button type="button" aria-label="Previous" on:click={() => scrollCarousel(-1)}>
-              <Back color="white"/>
+              <Back color="white" height="32"/>
           </button>
+          <h2><strong>1</strong></h2>
           <button type="button" aria-label="Next" on:click={() => scrollCarousel(1)}>
-              <Back color="white" flipped={true}/>
+              <Back color="white" flipped={true} height="32"/>
           </button>            
       </nav>
   </form>
 </main>
 
 <style>
-
+button{
+  background-color: var(--button-blue);
+  border: none;
+  padding-left: .3em;
+  /* width: 4em; */
+  /* border-radius: 1em; */
+}
+nav{
+  display: flex;
+  gap: 3em;
+}
+nav > button {
+    border: none;
+    border-radius: var(--border-radius);
+    padding: var(--space-sm);
+    height: 2.5em;
+    width: 4em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* background-color: #9264F4; */
+}
 main {
   background: var(--bg-image-blue);
   color: white;
   height: 120vh;
   box-sizing: border-box;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 section {
   display: flex;
   flex-direction: column;
-  align-items: center;
   padding: 1em;
-  width: 100%;
 }
 
 h1 {
-  margin: 2em 0;
+  margin: auto;
+  margin-bottom: 2em;
 }
 
 p {
@@ -90,8 +114,8 @@ ul {
   overflow-x: auto ;
   display: flex;
   gap: 1em;
-  padding: 0;
-  margin: 0;
+  padding: 1em;
+  margin: auto;
   list-style: none;
   width: max-content;
   scroll-snap-type: x mandatory;
@@ -121,12 +145,8 @@ form {
   align-items: center;
   justify-content: center;
 }
-
+/* 
 @media (max-width: 600px) {
-  .scroll-container {
-      padding-left: 10%;
-      padding-right: 10%;
-  }
 
   li {
       width: 100%; 
@@ -141,5 +161,5 @@ form {
       font-size: 1em;
       margin-bottom: 0.5em;
   }
-}
+} */
 </style>
