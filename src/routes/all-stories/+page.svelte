@@ -4,7 +4,7 @@
     /** @type {import('./$types').PageData} */
     export let data;
   
-    $: ({ stories, seasons, languages, selectedSeason, selectedLanguage } = data);
+    $: ({ stories, seasons, languages, animals, selectedSeason, selectedLanguage, selectedAnimal } = data);
     $: noStoriesFound = stories.length === 0;
   </script>
   
@@ -21,16 +21,18 @@
     <div class="filters">
       <Filter 
         {seasons} 
-        {languages}  
+        {languages}
+        {animals}  
         selectedSeason={selectedSeason} 
         selectedLanguage={selectedLanguage}
+        selectedAnimal={selectedAnimal}
       />
-      <select name="animal" id="animal-select" aria-label="Choose an animal">
+      <!-- <select name="animal" id="animal-select" aria-label="Choose an animal">
         <option value="animal">Select an animal</option>
         {#each data.animals as animal}
           <option value="{ animal.animal }">{ animal.animal }</option>
         {/each}
-      </select>
+      </select> -->
       <select name="sorting" id="sorting" aria-label="Choose a sorting">
         <option value="sorting">Sorting</option>
         <option value="from a to z">From A - Z</option>

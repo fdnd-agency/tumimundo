@@ -3,7 +3,7 @@
 /** @type {import('./$types').PageLoad} */
 export let csr = true;
 import { error } from '@sveltejs/kit';
-import { fetchAllData, mapStoriesWithDetails, fetchSeasons, SeasonDetailInStories } from '$lib/api';
+import { fetchAllData, mapStoriesWithDetails, fetchSeasons, SeasonDetailInStories, AnimalDetailInStories } from '$lib/api';
 import { fetchAnimals } from '../../lib/api';
 /**
  * Loads data for the page, fetching stories, animals, languages and seasons.
@@ -16,7 +16,7 @@ import { fetchAnimals } from '../../lib/api';
  */
 export async function load({ fetch, url }) {
     try {
-      const [data, animals, seasonsData] = await Promise.all([
+      const [data, animalData, seasonsData] = await Promise.all([
         fetchAllData(fetch),
         fetchAnimals(fetch),
         fetchSeasons(fetch)
@@ -24,22 +24,26 @@ export async function load({ fetch, url }) {
   
       let storiesWithDetails = mapStoriesWithDetails(data.stories, data.audios, data.languages);
       storiesWithDetails = SeasonDetailInStories(storiesWithDetails, seasonsData.seasons);
+      storiesWithDetails = AnimalDetailInStories(storiesWithDetails, animalData); 
   
       const selectedSeason = url.searchParams.get('season') || '';
       const selectedLanguage = url.searchParams.get('language') || '';
+      const selectedAnimal = url.searchParams.get('animal') || ''
 
       const filteredStories = storiesWithDetails.filter(story => 
         (!selectedSeason || story.season === selectedSeason) &&
-        (!selectedLanguage || story.language === selectedLanguage)
+        (!selectedLanguage || story.language === selectedLanguage) &&
+        (!selectedAnimal || story.animal === selectedAnimal)
       );
   
       return {
         stories: filteredStories,
-        animals,
+        animals: animalData,
         languages: data.languages,
         seasons: seasonsData.seasons,
         selectedSeason,
-        selectedLanguage
+        selectedLanguage,
+        selectedAnimal
       };
     } catch (err) {
       console.error('Error loading data:', err);

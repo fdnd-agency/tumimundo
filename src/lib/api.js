@@ -142,6 +142,16 @@ export function SeasonDetailInStories(stories, seasons) {
         season: seasons.find((s) => s.id === story.season)?.season || null
     }));
 }
+
+export function AnimalDetailInStories(stories, animals) {
+    return stories.map(story => {
+        const animal = animals?.find((a) => a.id === story.animal)?.animal || null;
+        return {
+            ...story,
+            animal: animal
+        };
+    });
+}
  
 export function mapPlaylistsWithDetails(playlists, stories, playlistStories) {
     const storyMap = new Map(stories.map((story) => [story.id, story]));

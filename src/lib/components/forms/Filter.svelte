@@ -5,8 +5,10 @@
   
     export let seasons = [];
     export let languages = [];
+    export let animals = [];
     export let selectedSeason = '';
     export let selectedLanguage = '';
+    export let selectedAnimal = '';
   
     let form;
   
@@ -28,6 +30,7 @@
         </option>
       {/each}
     </select>
+
     <select name="language" id="language" aria-label="Choose a language">
       <option value="">Select a language</option>
       {#each languages as language}
@@ -36,6 +39,16 @@
         </option>
       {/each}
     </select>
+
+    <select name="animal" id="animal" aria-label="Choose a animal">
+      <option value="">Select a animal</option>
+      {#each animals as animal}
+        <option value="{animal.animal}" selected={selectedAnimal === animal.animal}>
+          {animal.animal}
+        </option>
+      {/each}
+    </select>
+
     {#if !browser}
       <button type="submit">Apply Filters</button>
     {/if}
