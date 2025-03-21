@@ -27,12 +27,7 @@
         selectedLanguage={selectedLanguage}
         selectedAnimal={selectedAnimal}
       />
-      <!-- <select name="animal" id="animal-select" aria-label="Choose an animal">
-        <option value="animal">Select an animal</option>
-        {#each data.animals as animal}
-          <option value="{ animal.animal }">{ animal.animal }</option>
-        {/each}
-      </select> -->
+      
       <select name="sorting" id="sorting" aria-label="Choose a sorting">
         <option value="sorting">Sorting</option>
         <option value="from a to z">From A - Z</option>
