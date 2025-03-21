@@ -147,10 +147,6 @@
         color: var(--color-text);
     }
     
-    .playlist-1 > a small {
-        color: var(--color-text);
-    }
-    
     .playlist-1 > h3 {
         font-weight: var(--font-weight-bold);
         color: var(--color-text);

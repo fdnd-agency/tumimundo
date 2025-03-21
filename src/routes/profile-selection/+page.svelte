@@ -40,7 +40,7 @@
         <button class="edit-button">
             <Edit/>
             <p>Edit</p>
-        <button>
+        </button>
     </section>
     <ul>
         {#each filteredProfiles as profile}

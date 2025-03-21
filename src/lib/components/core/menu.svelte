@@ -70,12 +70,9 @@
         justify-content: center;
         flex-direction: column;
     }
-    .active a svg path, .active a svg rect, .active a svg circle, .active a p {
+    .active a p {
         stroke: #599AE7;
         color: #599AE7;
-    }
-    .active a svg.fill path {
-        fill: #599AE7;
     }
     .active a {
         border-bottom: 3px solid #599AE7;

@@ -94,9 +94,6 @@ input[type=radio] {
 }
     
 @media only screen and (min-width: 600px) {
-    main {
-        align-items: center;
-    }
     .story-list {
         grid-template-rows: repeat(4, auto);
     }

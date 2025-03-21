@@ -138,10 +138,6 @@
     justify-content: flex-end;
   }
 
-  .playlist-playtime svg:hover circle {
-    fill: #3A54DE;
-  }
-
   .playlist-icons button {
     background: none;
     color: inherit;
@@ -150,10 +146,6 @@
     font: inherit;
     cursor: pointer;
     outline: inherit;
-  }
-
-  .playlist-icons button svg:hover, .playlist-icons button svg:hover path {
-    stroke: #F33232;
   }
 
   @keyframes scale {

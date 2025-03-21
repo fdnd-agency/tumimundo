@@ -193,11 +193,6 @@ a {
     margin-left: auto;
 }
 
-.close-div svg {
-    cursor: pointer;
-    margin-right: -.6em;
-}
-
 .close-div label {
     cursor: pointer;
     color: hsla(0, 0%, 20%, 1);
