@@ -10,13 +10,6 @@
 
     let storyList;
 
-    function scrollCarousel(direction) {
-        const scrollAmount = storyList.clientWidth; 
-        storyList.scrollBy({
-            left: direction * scrollAmount,
-            behavior: 'smooth',
-        });
-    }
     function handleLikeToggle(event) {
         const { playlistId, isLiked } = event.detail;
         data.playlists = data.playlists.map(playlist => 
