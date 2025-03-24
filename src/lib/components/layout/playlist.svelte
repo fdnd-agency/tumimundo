@@ -1,8 +1,7 @@
 <script>
   
-  import { fetchApi, Play, LikeButton} from '$lib/index';
+  import { FetchApi, Play, LikeButton} from '$lib/index';
   import { createEventDispatcher } from 'svelte';
-
 
   export let playlist;
   const { image, title, playtime, stories, isLiked: initialIsLiked, likeId: initialLikeId } = playlist;
@@ -21,7 +20,7 @@
     const method = isLiked ? 'DELETE' : 'POST';
 
     try {
-      const response = await fetchApi(endpoint, method, {
+      const response = await FetchApi(endpoint, method, {
         playlist: playlist.id,
         profile: profileId
       });

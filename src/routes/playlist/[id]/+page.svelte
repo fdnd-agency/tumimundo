@@ -1,6 +1,6 @@
 <script>
   
-  import { Story, fetchApi, Dropdown  } from '$lib/index';
+  import { Story, FetchApi, Dropdown  } from '$lib/index';
 
   export let data;
  
@@ -26,7 +26,7 @@
     const method = isLiked ? 'DELETE' : 'POST';
  
     try {
-      const response = await fetchApi(endpoint, method, {
+      const response = await FetchApi(endpoint, method, {
         playlist: playlist.id,
         profile: profileId
       });

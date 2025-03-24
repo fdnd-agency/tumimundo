@@ -1,6 +1,6 @@
 // playlist/+page.server.js
 import { fetchAllData, mapPlaylistsWithDetails, mapStoriesWithDetails } from '$lib/api';
-import { fetchApi } from '$lib/index';
+import { FetchApi } from '$lib/index';
 
 export async function load({ locals }) {
     const profileId = 122; // NEEDS TO BE CONNECTED TO ACCOUNT.JS
@@ -9,7 +9,7 @@ export async function load({ locals }) {
     const storiesWithDetails = mapStoriesWithDetails(data.stories, data.audios, data.languages);
     const enrichedPlaylists = await Promise.all(
         mapPlaylistsWithDetails(data.playlists, data.stories, data.playlistStories).map(async (playlist) => {
-            const likes = await fetchApi(`/tm_likes?filter[playlist][_eq]=${playlist.id}&filter[profile][_eq]=${profileId}`);
+            const likes = await FetchApi(`/tm_likes?filter[playlist][_eq]=${playlist.id}&filter[profile][_eq]=${profileId}`);
             return {
                 ...playlist,
                 isLiked: likes?.length > 0,

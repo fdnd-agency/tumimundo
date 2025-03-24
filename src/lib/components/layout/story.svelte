@@ -6,7 +6,6 @@
   
   // SELECT THE FIRST AUDIO FILE, BECAUSE THERE ARE MULTIPLE AUDIOS TO 1 STORY.
   const firstAudio = audios?.[0]?.file || null;
-
 </script>
 
 <article>

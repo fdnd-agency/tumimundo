@@ -44,7 +44,6 @@ function scrollCarousel(direction) {
 
 </section>
 
-
 <style>
 
 
