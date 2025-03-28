@@ -9,6 +9,7 @@
     export let selectedSeason = '';
     export let selectedLanguage = '';
     export let selectedAnimal = '';
+    export let selectedSorting = ''
   
     let form;
   
@@ -47,6 +48,14 @@
           {animal.animal}
         </option>
       {/each}
+    </select>
+
+    <select name="sorting" id="sorting" aria-label="Choose a sorting">
+      <option value="">Sorting</option>
+      <option value="A-Z" selected={selectedSorting === 'A-Z'}>From A - Z</option>
+      <option value="Z-A" selected={selectedSorting === 'Z-A'}>From Z to A</option>
+      <option value="short-long" selected={selectedSorting === 'short-long'}>Short to long playtime</option>
+      <option value="long-short" selected={selectedSorting === 'long-short'}>Long to short playtime</option>
     </select>
 
     {#if !browser}

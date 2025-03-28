@@ -125,6 +125,7 @@ export function mapStoriesWithDetails(stories, audios, languages) {
         }
 
         if (story.playtime) {
+            story.playtimeSeconds = story.playtime;
             story.playtime = formatPlaytime(story.playtime);
         }
 
