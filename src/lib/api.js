@@ -13,7 +13,18 @@ export async function fetchCollection(fetch, collectionName, id = null) {
  
     return await directus.request(readItems(collectionName));
 }
- 
+  
+/**
+ * Creates a new playlist in Directus and links it with selected stories.
+ *
+ * @async
+ * @function createPlaylistWithStories
+ * @param {Function} fetch - The fetch function for making API requests.
+ * @param {Object} playlistData - Data for the new playlist, including title, description, and user ID.
+ * @param {Array<number>} storyIds - Array of story IDs to link with the playlist.
+ * @returns {Promise<Object>} A promise that resolves to the newly created playlist object.
+ */
+
 export async function createPlaylistWithStories(fetch, { title, description, user_created }, storyIds) {
     const directus = getDirectusInstance(fetch);
 
