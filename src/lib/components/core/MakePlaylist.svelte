@@ -1,11 +1,33 @@
 <script>
-    import { Input, Story, Check, SmallCross,AddStory } from '$lib/index'
+        /**
+     * Represents a popup dialog for creating a new playlist and selecting stories.
+     *
+     * Props:
+     *   @prop {Object} data - Data required for rendering stories and playlists.
+     *
+     * Reactive Variables:
+     *   $selectedLanguage: Tracks which language is selected for filtering stories.
+     *
+     * Methods:
+     *   toggleStory(event):
+     *     Toggles selection of stories in the playlist.
+     *
+     *   closePopup():
+     *     Closes the popup dialog and resets form fields.
+     *
+     * Behavior:
+     *   On successful form submission, resets fields and closes popup after a delay.
+     *
+     */
+    import { Input, Story, Check, SmallCross, AddStory } from '$lib/index'
     import { enhance } from '$app/forms';
     import { writable } from 'svelte/store';
-    
+    import { invalidateAll } from '$app/navigation';
+
     export let data
     let formError = '';
     let formSuccess = false;
+    let formElement;
  
     let selectedLanguage = writable('languages');
     let selectedStories = writable([]);
@@ -23,10 +45,16 @@
         } else {
             selectedStories.update(ids => ids.filter(id => id !== storyId));
         }
-        function closePopup() {
-        document.getElementById('popup').close();
-        dispatch('close');
-     }
+    }
+
+    function closePopup() {
+        window.location.hash = 'create-playlist';
+        if (formElement) {
+            formElement.reset();
+        }
+        selectedStories.set([]);
+        formError = '';
+        formSuccess = false;
     }
 </script>
  
@@ -35,21 +63,28 @@
         <h2>Make a playlist!</h2>
      
         <form
+        bind:this={formElement}
         action="?/createPlaylist"
         class="form"
         method="POST"
-        use:enhance={async({result}) => {
+        use:enhance={async ({ formElement }) => {
             return async ({ result }) => {
               if (result.type === 'success') {
                 formSuccess = true;
                 formError = '';
-                closePopup();
+                formElement.reset();
+                selectedStories.set([]);
+                await invalidateAll();
+                setTimeout(() => {
+                  closePopup();
+                }, 1000);
               } else if (result.type === 'failure') {
                 formError = result.data.error;
               }
             };
           }}
       >
+
         <Input name="Name" type="text" placeholder="Playlist name"/>
         <Input name="Description" type="text" placeholder="Playlist description"/>
        
@@ -83,7 +118,7 @@
                 <p class="success">Playlist created successfully!</p>
             {/if}
         <div class="buttons-container">
-            <a href="#create-playlist" class="close-button">Cancel <SmallCross/></a>
+            <a href="#create-playlist" class="close-button" on:click={closePopup}>Cancel <SmallCross/></a>
             <button type="submit" class="create-button">Create <Check/></button>
         </div>
  
@@ -91,6 +126,10 @@
     </div>
 </dialog>
 <style>
+.story-item {
+    display: flex;
+}
+
 .story-list {
     display: grid;          
     grid-template-rows: repeat(3, auto);

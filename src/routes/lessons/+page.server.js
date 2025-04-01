@@ -25,7 +25,22 @@ export async function load({ fetch }) {
         languages: data.languages
     };
 }
-
+/**
+ * Creates a new playlist with the given title, description, and selected stories.
+ *
+ * @async
+ * @function createPlaylist
+ * @param {Object} options - The options object.
+ * @param {Request} options.request - The request object containing form data.
+ * @param {Object} options.locals - The locals object containing user information.
+ * @param {Function} options.fetch - The fetch function for making API requests.
+ * @returns {Promise<Object>} A promise that resolves to:
+ *   - success {boolean} - Indicates if the playlist was created successfully.
+ *   - playlists {Array} - Updated playlists after creation.
+ *   - stories {Array} - Updated stories after creation.
+ *   - error {string} - Error message if creation failed.
+ *   - errors {Object} - Validation errors if any.
+ */
 export const actions = {
     createPlaylist: async ({ request, locals, fetch }) => {
         const formData = await request.formData();
@@ -35,7 +50,6 @@ export const actions = {
 
         console.log('Formuliergegevens:', { title, description, stories });
 
-        // Backend validatie
         const errors = {};
         if (!title || title.trim() === '') {
             errors.title = 'Title is required';
@@ -51,7 +65,6 @@ export const actions = {
             errors.stories = 'At least one story must be selected';
         }
 
-        // Als er fouten zijn, return een fail response
         if (Object.keys(errors).length > 0) {
             return fail(400, {
                 error: 'Validation failed',
