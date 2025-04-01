@@ -75,8 +75,7 @@
       display: contents;
     }
   
-    .filters :global(select),
-    .filters select {
+    .filters :global(select){
       background-color: hsla(266, 72%, 35%, 1);
       color: var(--color-white);
       border: none;
@@ -86,8 +85,7 @@
       width: 100%;
     }
   
-    .filters :global(option),
-    .filters option {
+    .filters :global(option){
       color: black;
     }
   
