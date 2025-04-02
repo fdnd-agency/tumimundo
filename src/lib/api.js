@@ -151,14 +151,12 @@ export function mapStoriesWithDetails(stories, audios, languages) {
         }
  
         story.language = language;
- 
         return {
             ...story,
             audios: storyAudios
         };
     });
 }
- 
 export function mapPlaylistsWithDetails(playlists, stories) {
     return playlists.map((playlist) => {
         const playlistStoriesData = (playlist.stories || [])
