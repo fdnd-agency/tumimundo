@@ -55,7 +55,7 @@ const {
 
   <div class="story-icons flex-items">
     <Download/>
-    <AddStory/>
+    <!-- <AddStory/> -->
   </div>
   
 </article>

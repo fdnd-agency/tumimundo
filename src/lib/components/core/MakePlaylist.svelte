@@ -1,39 +1,96 @@
 <script>
-    /** @type {import('./$types').PageData} */
+        /**
+     * Represents a popup dialog for creating a new playlist and selecting stories.
+     *
+     * Props:
+     *   @prop {Object} data - Data required for rendering stories and playlists.
+     *
+     * Reactive Variables:
+     *   $selectedLanguage: Tracks which language is selected for filtering stories.
+     *
+     * Methods:
+     *   toggleStory(event):
+     *     Toggles selection of stories in the playlist.
+     *
+     *   closePopup():
+     *     Closes the popup dialog and resets form fields.
+     *
+     * Behavior:
+     *   On successful form submission, resets fields and closes popup after a delay.
+     *
+     */
+    import { Input, Story, Check, SmallCross, AddStory } from '$lib/index'
+    import { enhance } from '$app/forms';
+    import { writable } from 'svelte/store';
+    import { invalidateAll } from '$app/navigation';
 
-    import { Input, Story, Check, SmallCross } from '$lib/index'
-    import { writable } from 'svelte/store'
-
-    export let data 
-
-let selectedLanguage = writable('languages');
-/** $: zorgt voor een reactive statement. de inhoud hiervan wordt automatisch geupdate wanneer data hierin wordt gewijzigd */
-$: stories = [];
-$: noStoriesFound = stories.length === 0;
-
-$: {
-    if ($selectedLanguage !== 'languages') {
-        stories = data.stories.filter(story => 
-            story.language && story.language.toLowerCase() === $selectedLanguage.toLowerCase()
-        );
-    } else {
-        stories = data.stories;
+    export let data
+    let formError = '';
+    let formSuccess = false;
+    let formElement;
+ 
+    let selectedLanguage = writable('languages');
+    let selectedStories = writable([]);
+    
+    $: stories = $selectedLanguage !== 'languages'
+        ? data.stories.filter(story => story.language && story.language.toLowerCase() === $selectedLanguage.toLowerCase())
+        : data.stories;
+    
+    $: noStoriesFound = stories.length === 0;
+ 
+    function toggleStory(event) {
+        const { storyId, checked } = event.detail;
+        if (checked) {
+            selectedStories.update(ids => [...ids, storyId]);
+        } else {
+            selectedStories.update(ids => ids.filter(id => id !== storyId));
+        }
     }
-}
 
+    function closePopup() {
+        window.location.hash = 'create-playlist';
+        if (formElement) {
+            formElement.reset();
+        }
+        selectedStories.set([]);
+        formError = '';
+        formSuccess = false;
+    }
 </script>
-
+ 
 <dialog class="popup" id="popup">
     <div class="popup__content">
         <h2>Make a playlist!</h2>
-      
-      <form action="/lessons" class="form" method="POST">
+     
+        <form
+        bind:this={formElement}
+        action="?/createPlaylist"
+        class="form"
+        method="POST"
+        use:enhance={async ({ formElement }) => {
+            return async ({ result }) => {
+              if (result.type === 'success') {
+                formSuccess = true;
+                formError = '';
+                formElement.reset();
+                selectedStories.set([]);
+                await invalidateAll();
+                setTimeout(() => {
+                  closePopup();
+                }, 1000);
+              } else if (result.type === 'failure') {
+                formError = result.data.error;
+              }
+            };
+          }}
+      >
+
         <Input name="Name" type="text" placeholder="Playlist name"/>
         <Input name="Description" type="text" placeholder="Playlist description"/>
-        
+       
         <h3>Add stories</h3>
         <p>Click on the + to add story to playlist</p>
-
+ 
         <section class="story-list">
             <ul>
             {#if noStoriesFound}
@@ -41,31 +98,46 @@ $: {
             {:else}
                 {#each stories as story (story.id)}
                 <li>
-                    <Story {story} /> 
-                </li> 
+                    <div class="story-item">
+                        <Story {story} />
+                        <AddStory
+                            storyId={story.id}
+                            checked={$selectedStories.includes(story.id)}
+                            on:toggle={(event) => toggleStory({ detail: { storyId: story.id, checked: event.detail.checked } })}
+                        />
+                    </div>
+                </li>
                 {/each}
             {/if}
             </ul>
         </section>
-      
+        {#if formError}
+                <p class="error">{formError}</p>
+            {/if}
+            {#if formSuccess}
+                <p class="success">Playlist created successfully!</p>
+            {/if}
         <div class="buttons-container">
-            <a href="#create-playlist" class="close-button">Cancel <SmallCross/></a>
+            <a href="#create-playlist" class="close-button" on:click={closePopup}>Cancel <SmallCross/></a>
             <button type="submit" class="create-button">Create <Check/></button>
         </div>
-
+ 
       </form>
     </div>
 </dialog>
-
 <style>
+.story-item {
+    display: flex;
+}
+
 .story-list {
     display: grid;          
-    grid-template-rows: repeat(3, auto); 
-    max-height: 16em;         
+    grid-template-rows: repeat(3, auto);
+    max-height: 16em;        
     overflow-y: auto;  
     flex-grow: 1;
     max-height: 40vh;
-    min-height: 10em;   
+    min-height: 10em;  
     overflow-y: auto;
     padding-bottom: 1em;
     text-align: left;
@@ -91,14 +163,14 @@ $: {
     background-color: #fff;
     padding: 1em;
     width: 30em;
-    position: fixed; 
-    top: 50%; 
-    left: 50%; 
-    height: 80%; 
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    height: 80%;
     max-height: 90%;
     overflow: hidden;
-    border: none; 
-    border-radius: var(--border-radius); 
+    border: none;
+    border-radius: var(--border-radius);
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 li{
@@ -115,8 +187,8 @@ h3{
     justify-content: center;
     gap: .5em;
     position: absolute;
-    bottom: 1rem; 
-    right: 1rem; 
+    bottom: 1rem;
+    right: 1rem;
 }
 .close-button, .create-button {
     padding: .5em;
@@ -169,6 +241,6 @@ h3{
         min-height: 12em;
     }
 }
-
-
+ 
+ 
 </style>

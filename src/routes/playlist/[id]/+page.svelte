@@ -60,7 +60,7 @@
         <source srcset="{playlist.image}?width=448" type="image/jpeg">
         <img 
           src="{playlist.image}?width=64" 
-          alt="playlist image"
+          alt="playlist"
           height="380" 
           width="448" 
           class="playlist-image"
@@ -74,20 +74,20 @@
     <p>{playlist.description}</p>
 
     <div class="meta-info">
-      <img src="/icons/profile-icon.svg" alt="profile picture" height="30">
+      <img src="/icons/profile-icon.svg" alt="profile" height="30">
       <p>Made by <strong>User { playlist.creator }</strong></p>
       <img src="/icons/clock.svg" alt="time" height="20">
       <p>2u 11m</p>
-    </div>
+      </div>
 
      <div class="meta-play">
-        <a><img src="/icons/download.svg" alt="download" height="27"></a>
+        <a href="/download"><img src="/icons/download.svg" alt="download" height="27"></a>
         <button on:click={toggleLike} class="heart-svg" aria-label="{isLiked ? 'Unlike' : 'Like'}">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class:liked={isLiked}>
             <path d="M11.6536 7.15238C11.8471 7.33832 12.1529 7.33832 12.3464 7.15238C13.1829 6.34871 14.326 5.75 15.6 5.75C18.1489 5.75 20.25 7.64769 20.25 10.0298C20.25 11.7261 19.4577 13.1809 18.348 14.428C17.2397 15.6736 15.7972 16.7316 14.4588 17.6376L12.1401 19.207C12.0555 19.2643 11.9445 19.2643 11.8599 19.207L9.54125 17.6376C8.20278 16.7316 6.76035 15.6736 5.65201 14.428C4.54225 13.1809 3.75 11.7261 3.75 10.0298C3.75 7.64769 5.85106 5.75 8.4 5.75C9.67403 5.75 10.8171 6.34871 11.6536 7.15238Z" stroke="#C4C4C4" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </button>
-        <a><img src="/icons/play.svg" alt="play" height="60"></a>
+        <a href="/play"><img src="/icons/play.svg" alt="play" height="60"></a>
     </div>
   </section>
 

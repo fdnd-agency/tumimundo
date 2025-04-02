@@ -1,29 +1,52 @@
 import getDirectusInstance from '$lib/directus';
-import { readItem, readItems } from '@directus/sdk';
+import { readItem, readItems, createItem } from '@directus/sdk';
 import { PUBLIC_APIURL } from '$env/static/public';
-
+ 
 const assetBaseUrl = `${PUBLIC_APIURL}/assets/`;
-
+ 
 export async function fetchCollection(fetch, collectionName, id = null) {
     const directus = getDirectusInstance(fetch);
-
+ 
     if (id) {
-        // Haal één specifiek item op als een ID is meegegeven
         return await directus.request(readItem(collectionName, id));
     }
-
-    // Haal een volledige collectie op als er geen ID is meegegeven
+ 
     return await directus.request(readItems(collectionName));
 }
+  
 /**
- * Fetches a list of animals from the Directus API.
+ * Creates a new playlist in Directus and links it with selected stories.
  *
  * @async
- * @function fetchAnimals
- * @param {fetch} fetch - The fetch function provided by SvelteKit's `load` function.
- * @returns {Promise<Array<Object>>} A promise that resolves to an array of animal objects.
- * @throws {Error} If there's an error during the API request.
+ * @function createPlaylistWithStories
+ * @param {Function} fetch - The fetch function for making API requests.
+ * @param {Object} playlistData - Data for the new playlist, including title, description, and user ID.
+ * @param {Array<number>} storyIds - Array of story IDs to link with the playlist.
+ * @returns {Promise<Object>} A promise that resolves to the newly created playlist object.
  */
+
+export async function createPlaylistWithStories(fetch, { title, description, user_created }, storyIds) {
+    const directus = getDirectusInstance(fetch);
+
+    try {
+        // Maak een nieuwe playlist aan met de stories direct erin
+        const newPlaylist = await directus.request(
+            createItem('tm_playlist', {
+                title,
+                description,
+                user_created,
+                stories: storyIds // Dit voegt de stories direct toe aan de playlist
+            })
+        );
+
+        console.log('New Playlist Created:', newPlaylist);
+
+        return newPlaylist;
+    } catch (error) {
+        console.error('Error creating playlist with stories:', error);
+        throw error;
+    }
+}
 export async function fetchAnimals(fetch) {
     const directus = getDirectusInstance(fetch);
     try {
@@ -36,7 +59,7 @@ export async function fetchAnimals(fetch) {
         throw error;
     }
 }
-
+ 
 export async function fetchSeasons(fetch) {
     try {
         const seasons = await fetchCollection(fetch, 'tm_season');
@@ -46,7 +69,7 @@ export async function fetchSeasons(fetch) {
         throw error;
     }
 }
-
+ 
 export async function fetchAllData(fetch) {
     const [
         users,
@@ -75,7 +98,7 @@ export async function fetchAllData(fetch) {
         fetchCollection(fetch, 'tm_playlist_stories'),
         fetchCollection(fetch, 'tm_profile_user')
     ]);
-
+ 
     return {
         users,
         profiles,
@@ -91,18 +114,17 @@ export async function fetchAllData(fetch) {
         profileUsers
     };
 }
-
+ 
 function retrieveFromAssets(url) {
-    const link = `${assetBaseUrl}${url}`;
-    return link
+    return `${assetBaseUrl}${url}`;
 }
-
+ 
 function formatPlaytime(seconds) {
-    const minutes = Math.floor(seconds / 60); // Calculate minutes
-    const remainingSeconds = seconds % 60;   // Calculate remaining seconds
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
     return `${minutes} min ${remainingSeconds} sec`;
 }
-
+ 
 export function mapStoriesWithDetails(stories, audios, languages) {
     return stories.map((story) => {
         const language = languages.find((lang) => lang.id === story.language)?.language || "unknown.svg";
@@ -119,15 +141,15 @@ export function mapStoriesWithDetails(stories, audios, languages) {
             }
             return null;
         }).filter(Boolean);
-
+ 
         if (story.image) {
             story.image = retrieveFromAssets(story.image);
         }
-
+ 
         if (story.playtime) {
             story.playtime = formatPlaytime(story.playtime);
         }
-
+ 
         story.language = language;
         return {
             ...story,
@@ -135,37 +157,10 @@ export function mapStoriesWithDetails(stories, audios, languages) {
         };
     });
 }
-
-export function SeasonDetailInStories(stories, seasons) {
-    return stories.map(story => ({
-        ...story,
-        season: seasons.find((s) => s.id === story.season)?.season || null
-    }));
-}
-
-export function AnimalDetailInStories(stories, animals) {
-    return stories.map(story => {
-        const animal = animals?.find((a) => a.id === story.animal)?.animal || null;
-        return {
-            ...story,
-            animal: animal
-        };
-    });
-}
- 
-export function mapPlaylistsWithDetails(playlists, stories, playlistStories) {
-    const storyMap = new Map(stories.map((story) => [story.id, story]));
-
+export function mapPlaylistsWithDetails(playlists, stories) {
     return playlists.map((playlist) => {
-        const relatedStoryIds = playlistStories
-            .filter((link) => link.playlist_id === playlist.id)
-            .map((link) => link.story_id);
-
-        const playlistStoriesData = relatedStoryIds
-            .map((storyId) => {
-                const story = storyMap.get(storyId);
-                return story;
-            })
+        const playlistStoriesData = (playlist.stories || [])
+            .map(storyId => stories.find(story => story.id === storyId))
             .filter(Boolean);
 
         const totalPlaytime = playlistStoriesData.reduce((sum, story) => {
@@ -178,27 +173,34 @@ export function mapPlaylistsWithDetails(playlists, stories, playlistStories) {
 
         const formattedPlaytime = totalPlaytime > 0 ? formatPlaytime(totalPlaytime) : "0 min 0 sec";
 
-        const enrichedPlaylist = {
+        return {
             ...playlist,
             image: playlist.image,
             playtime: formattedPlaytime,
             stories: playlistStoriesData,
         };
-
-        return enrichedPlaylist;
     });
-}
-
-
+} 
+ 
 export function mapProfilesWithImages(profiles) {
     return profiles.map((profile) => {
-
         if (profile.avatar) {
             profile.avatar = retrieveFromAssets(profile.avatar);
         }
-
+ 
         return {
             ...profile
         };
     });
+}
+ 
+export async function fetchApi(fetch, endpoint) {
+    const directus = getDirectusInstance(fetch);
+    try {
+        const response = await directus.request(readItems(endpoint));
+        return response;
+    } catch (error) {
+        console.error('Error in fetchApi:', error);
+        throw error;
+    }
 }
