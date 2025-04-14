@@ -1,14 +1,15 @@
 <script>
-  import { Back } from '$lib/index'
+  import { Back, Button } from '$lib/index'
 
   export let data
   let buddyList
-  let currentIndex = 1
+  let currentIndex = 1 
+  let selectedBuddy = data.buddys[0]?.name; // first buddy standard selected
 
   function scrollCarousel(direction) {
     if (!buddyList) return
 
-    const scrollAmount = buddyList.clientWidth;
+    const scrollAmount = buddyList.clientWidth
 
     buddyList.scrollBy({
         left: direction * scrollAmount,
@@ -16,6 +17,7 @@
     })
 
     currentIndex = Math.max(1, Math.min(data.buddys.length, currentIndex + direction))
+    selectedBuddy = data.buddys[currentIndex - 1]?.name // Update selected buddy
 }
 </script>
 
@@ -26,14 +28,17 @@
       <p>Drag left or right, or use the buttons to see all the buddies!</p> 
   </section>
 
-  <form>
+  <form method="POST">
     <div class="scroll-container">
         <ul bind:this={buddyList}>
             {#each data.buddys as { name, animal }}
                 <li>
-                    <img src={`/buddys/${name}.svg`} alt="{name} the {animal}">
-                    <h2>{name}</h2>
-                    <p>The {animal}</p>
+                    <label>
+                        <input type="radio" name="buddy" value={name} bind:group={selectedBuddy} required>
+                        <img src={`/buddys/${name}.svg`} alt="{name} the {animal}">
+                        <h2>{name}</h2>
+                        <p>The {animal}</p>
+                    </label>
                 </li>
             {/each}
         </ul>
@@ -43,20 +48,30 @@
           <button type="button" aria-label="Previous" on:click={() => scrollCarousel(-1)}>
               <Back color="white" height="32"/>
           </button>
+
           <h2><strong>{currentIndex}</strong></h2>
+
           <button type="button" aria-label="Next" on:click={() => scrollCarousel(1)}>
               <Back color="white" flipped={true} height="32"/>
           </button>            
       </nav>
+
+      <Button type="input"/>
+
   </form>
 </main>
 
 <style>
-
+input[type="submit"], button {
+  position: relative;
+}
+input[type="radio"]{
+  /* display: none; */
+}
 main {
   background: var(--bg-image-blue);
   color: white;
-  height: 120vh;
+  height: 100vh;
   box-sizing: border-box;
   width: 100%;
   display: flex;
@@ -86,15 +101,15 @@ nav{
 }
 
 nav > button {
-    border: none;
-    border-radius: var(--border-radius);
-    padding: var(--space-sm);
-    height: 2.5em;
-    width: 4em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--button-blue);
+  border: none;
+  border-radius: var(--border-radius);
+  padding: var(--space-sm);
+  height: 2.5em;
+  width: 4em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--button-blue);
 }
 
 .scroll-container {
@@ -110,21 +125,22 @@ nav > button {
 }
 
 ul {
-  overflow-x: auto ;
+  overflow-x: auto;
   display: flex;
-  gap: 1em;
   padding: 1em;
   margin: auto;
   list-style: none;
   width: max-content;
   scroll-snap-type: x mandatory;
+  padding-left: calc(50% - 9.375em);
+  padding-right: calc(50% - 9.375em);
 }
 
 li {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  flex: 0 0 22em;
+  flex: 0 0 auto;
   text-align: center;
   padding: 0.3em;
   border-radius: 10px;
@@ -144,21 +160,15 @@ form {
   align-items: center;
   justify-content: center;
 }
-/* 
-@media (max-width: 600px) {
 
-  li {
-      width: 100%; 
-      padding: 2em;
+@media (max-height: 680px) {
+  main{
+    height: 130vh;
   }
-
-  h1 {
-      font-size: 1.5em;
+}
+@media (min-width: 680px) {
+  main{
+    height: 120vh;
   }
-
-  p {
-      font-size: 1em;
-      margin-bottom: 0.5em;
-  }
-} */
+}
 </style>
