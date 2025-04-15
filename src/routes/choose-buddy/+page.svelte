@@ -95,7 +95,7 @@
       </button>            
     </nav>
   {/if}
-    <Button type="input" />
+  <Button type="input"/>
   </form>
 </main>
 
@@ -116,7 +116,7 @@ input[type="radio"].hidden {
 main {
   background: var(--bg-image-blue);
   color: white;
-  height: 100vh;
+  min-height: 100vh;
   box-sizing: border-box;
   width: 100%;
   display: flex;
@@ -202,9 +202,10 @@ form {
   width: 100%;
   max-width: 30em;
   display: flex;
+  flex-grow: 1;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
 }
 
 @media (max-height: 680px) {

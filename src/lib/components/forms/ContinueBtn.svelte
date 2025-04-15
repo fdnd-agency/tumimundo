@@ -19,13 +19,13 @@
   }
 
   input[type="submit"], button {
+    margin-top: auto;
     width: 85%;
     max-width: 31.25em;
     padding: .8em;
     border-radius: .4em;
     border: none;
     font-size: 1.1em;
-    position: fixed;
     bottom: 0;
     margin-bottom: 2.5em;
     cursor: pointer;
