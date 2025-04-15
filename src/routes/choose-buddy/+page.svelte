@@ -1,71 +1,103 @@
 <script>
   import { Back, Button } from '$lib/index'
-
+  
   export let data
   let buddyList
-  let currentIndex = 1 
-  let selectedBuddy = data.buddys[0]?.name; // first buddy standard selected
+  let currentIndex = 1
+  let selectedBuddy = data.buddys[0]?.name // first buddy standard selected
 
   function scrollCarousel(direction) {
     if (!buddyList) return
 
-    const scrollAmount = buddyList.clientWidth
+    const item = buddyList.querySelector('li')
+    if (!item) return
+
+    const itemWidth = item.clientWidth + parseInt(getComputedStyle(item).marginRight || 0)
 
     buddyList.scrollBy({
-        left: direction * scrollAmount,
-        behavior: 'smooth'
-    })
+      left: direction * itemWidth,
+      behavior: 'smooth'
+    });
 
-    currentIndex = Math.max(1, Math.min(data.buddys.length, currentIndex + direction))
-    selectedBuddy = data.buddys[currentIndex - 1]?.name // Update selected buddy
-}
+    setTimeout(updateSelectedOnScroll, 300);
+  }
+
+  function updateSelectedOnScroll() {
+    if (!buddyList) return
+
+    const containerRect = buddyList.getBoundingClientRect()
+    const centerX = containerRect.left + containerRect.width / 2
+
+    let closestIndex = 0
+    let closestDistance = Infinity
+
+    const items = Array.from(buddyList.querySelectorAll('li'))
+
+    items.forEach((item, index) => {
+      const itemRect = item.getBoundingClientRect()
+      const itemCenter = itemRect.left + itemRect.width / 2
+      const distance = Math.abs(centerX - itemCenter)
+
+      if (distance < closestDistance) {
+        closestDistance = distance
+        closestIndex = index
+      }
+    });
+
+    currentIndex = closestIndex + 1
+    selectedBuddy = data.buddys[closestIndex]?.name
+  }
 </script>
+
 
 <main>
   <section>
-      <h1>Choose a buddy</h1>
-      <p>During the learning journey your child will have a buddy that learns with them, gives reminders and shows the statistics! Here you can pick a buddy.</p>
-      <p>Drag left or right, or use the buttons to see all the buddies!</p> 
+    <h1>Choose a buddy</h1>
+    <p>During the learning journey your child will have a buddy that learns with them, gives reminders and shows the statistics! Here you can pick a buddy.</p>
+    <p>Drag left or right, or use the buttons to see all the buddies!</p> 
   </section>
 
   <form method="POST">
     <div class="scroll-container">
-        <ul bind:this={buddyList}>
-            {#each data.buddys as { name, animal }}
-                <li>
-                    <label>
-                        <input type="radio" name="buddy" value={name} bind:group={selectedBuddy} required>
-                        <img src={`/buddys/${name}.svg`} alt="{name} the {animal}">
-                        <h2>{name}</h2>
-                        <p>The {animal}</p>
-                    </label>
-                </li>
-            {/each}
-        </ul>
+      <ul bind:this={buddyList} on:scroll={updateSelectedOnScroll}>
+        {#each data.buddys as { name, animal }}
+          <li>
+            <label>
+              <img src={`/buddys/${name}.svg`} alt="{name} the {animal}">
+              <input type="radio" name="buddy" value={name} bind:group={selectedBuddy} required>
+              <h2>{name}</h2>
+              <p>The {animal}</p>
+            </label>
+          </li>
+        {/each}
+      </ul>
     </div>
 
-      <nav class="carousel-nav">
-          <button type="button" aria-label="Previous" on:click={() => scrollCarousel(-1)}>
-              <Back color="white" height="32"/>
-          </button>
+  <nav class="carousel-nav">
+    <button type="button" aria-label="Previous" on:click={() => scrollCarousel(-1)}>
+      <Back color="white" height="32" />
+    </button>
 
-          <h2><strong>{currentIndex}</strong></h2>
+    <h2><strong>{currentIndex}</strong></h2>
 
-          <button type="button" aria-label="Next" on:click={() => scrollCarousel(1)}>
-              <Back color="white" flipped={true} height="32"/>
-          </button>            
-      </nav>
+    <button type="button" aria-label="Next" on:click={() => scrollCarousel(1)}>
+      <Back color="white" flipped={true} height="32" />
+    </button>            
+  </nav>
 
-      <Button type="input"/>
-
+    <Button type="input" />
   </form>
 </main>
 
 <style>
+label{
+  display: flex;
+  flex-direction: column;
+}
 input[type="submit"], button {
   position: relative;
 }
-input[type="radio"]{
+input[type="radio"] {
   /* display: none; */
 }
 main {
@@ -90,14 +122,15 @@ h1 {
   margin-bottom: 2em;
 }
 
-p {
+p:first-of-type {
   max-width: 30em;
   margin-bottom: 1em;
 }
 
-nav{
+nav {
   display: flex;
   gap: 3em;
+  padding: 1em;
 }
 
 nav > button {
@@ -162,13 +195,15 @@ form {
 }
 
 @media (max-height: 680px) {
-  main{
-    height: 130vh;
+  main {
+    /* height: 130vh; */
+    height: 100%;
   }
 }
 @media (min-width: 680px) {
-  main{
-    height: 120vh;
+  main {
+    /* height: 120vh; */
+    height: 100%;
   }
 }
 </style>
