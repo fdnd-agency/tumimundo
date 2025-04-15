@@ -1,10 +1,16 @@
 <script>
   import { Back, Button } from '$lib/index'
+  import { onMount } from 'svelte'
   
+  let jsEnabled = false
   export let data
   let buddyList
   let currentIndex = 1
   let selectedBuddy = data.buddys[0]?.name // first buddy standard selected
+
+  onMount(() => {
+    jsEnabled = true
+  });
 
   function scrollCarousel(direction) {
     if (!buddyList) return
@@ -19,7 +25,7 @@
       behavior: 'smooth'
     });
 
-    setTimeout(updateSelectedOnScroll, 300);
+    setTimeout(updateSelectedOnScroll, 300)
   }
 
   function updateSelectedOnScroll() {
@@ -42,13 +48,12 @@
         closestDistance = distance
         closestIndex = index
       }
-    });
+    })
 
     currentIndex = closestIndex + 1
     selectedBuddy = data.buddys[closestIndex]?.name
   }
 </script>
-
 
 <main>
   <section>
@@ -64,7 +69,7 @@
           <li>
             <label>
               <img src={`/buddys/${name}.svg`} alt="{name} the {animal}">
-              <input type="radio" name="buddy" value={name} bind:group={selectedBuddy} required>
+              <input type="radio" name="buddy" value={name} bind:group={selectedBuddy} required class:hidden={jsEnabled}/>
               <h2>{name}</h2>
               <p>The {animal}</p>
             </label>
@@ -73,18 +78,23 @@
       </ul>
     </div>
 
-  <nav class="carousel-nav">
-    <button type="button" aria-label="Previous" on:click={() => scrollCarousel(-1)}>
-      <Back color="white" height="32" />
-    </button>
+    <noscript>
+      <p>Swipe and click on a buddy to select!</p>
+    </noscript>
+    
+  {#if jsEnabled}
+    <nav class="carousel-nav">
+      <button type="button" aria-label="Previous" on:click={() => scrollCarousel(-1)}>
+        <Back color="white" height="32" />
+      </button>
 
-    <h2><strong>{currentIndex}</strong></h2>
+      <h2><strong>{currentIndex}</strong></h2>
 
-    <button type="button" aria-label="Next" on:click={() => scrollCarousel(1)}>
-      <Back color="white" flipped={true} height="32" />
-    </button>            
-  </nav>
-
+      <button type="button" aria-label="Next" on:click={() => scrollCarousel(1)}>
+        <Back color="white" flipped={true} height="32" />
+      </button>            
+    </nav>
+  {/if}
     <Button type="input" />
   </form>
 </main>
@@ -99,6 +109,9 @@ input[type="submit"], button {
 }
 input[type="radio"] {
   /* display: none; */
+}
+input[type="radio"].hidden {
+  visibility: hidden;;
 }
 main {
   background: var(--bg-image-blue);
