@@ -68,7 +68,7 @@
         {#each data.buddys as { name, animal }}
           <li>
             <label>
-              <img src={`/buddys/${name}.svg`} alt="{name} the {animal}">
+              <img src={`/buddys/${name}.svg`} alt="image of {name} the {animal}">
               <input type="radio" name="buddy" value={name} bind:group={selectedBuddy} required class:hidden={jsEnabled}/>
               <h2>{name}</h2>
               <p>The {animal}</p>

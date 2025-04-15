@@ -33,12 +33,12 @@
   }
 
   .primary {
-    background-color: var(--button-blue);
+    background-color: var(--button-darker-blue);
     color: var(--primary-text);
   }
 
   .primary:hover, .primary:focus {
-    background-color: var(--primary-hover);
+    background-color: #1A3B4C;
   }
 
   .secondary {
