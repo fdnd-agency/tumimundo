@@ -55,7 +55,7 @@
   </ul>
 </div>
 
-  <style>
+<style>
 
 /* Styling for dots button*/
 .dots-container {

@@ -67,7 +67,6 @@
         />
       </picture>
     </header>
-    
 
    <section class="meta-section">
     <h1>{playlist.title}</h1>
@@ -112,11 +111,73 @@
     </section>
   {/if}
   </article>
+
+
+    <dialog>
+      <div class="delete-content">
+        <h2 class="black-text">Delete this playlist?</h2>
+        <p class="black-text">It will be permanently removed from your profile, and you won't be able to recover it.</p>
+        <div class="delete-btns">
+          <a href="#" class="black-text">Cancel</a>
+          <a href="#" class="black-text">delete</a>
+        </div>
+      </div>
+      test
+    </dialog>
+
+
 </main>
 
 <style>
+
 * {
   color: var(--color-text-light);
+}
+
+dialog{
+  background-color: rgba(0, 0, 0, 0.8);
+    /* opacity: 0; */
+    /* visibility: hidden; */
+    transition: all 0.3s;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    display: flex;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 110vh;
+    border: none;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+.delete-content{
+  transform: translate(-50%, -50%);
+    text-align: center;
+    background-color: #fff;
+    padding: 1em;
+    width: 30em;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    height: 15em;
+    max-height: 90%;
+    overflow: hidden;
+    border: none;
+    border-radius: var(--border-radius);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+.delete-content > h2{
+  margin-bottom: 1em;
+}
+.delete-btns{
+  margin-top: auto;
+  margin-left: auto;
+}
+.black-text{
+  color: black;
 }
 main{
   display: flex;
