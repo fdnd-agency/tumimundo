@@ -113,7 +113,7 @@
   </article>
 
 
-    <dialog>
+    <dialog id="delete">
       <div class="delete-content">
         <h2 class="black-text">Delete this playlist?</h2>
         <p class="black-text">It will be permanently removed from your profile, and you won't be able to recover it.</p>
@@ -136,8 +136,8 @@
 
 dialog{
   background-color: rgba(0, 0, 0, 0.8);
-    /* opacity: 0; */
-    /* visibility: hidden; */
+    opacity: 0;
+    visibility: hidden;
     transition: all 0.3s;
     position: fixed;
     top: 50%;
@@ -178,6 +178,14 @@ dialog{
 }
 .black-text{
   color: black;
+}
+
+dialog:target {
+  opacity: 1;
+  visibility: visible;
+}
+dialog:target .delete-content {
+  opacity: 1;
 }
 main{
   display: flex;
