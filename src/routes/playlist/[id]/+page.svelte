@@ -165,6 +165,7 @@ dialog{
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   z-index: 9999;
 }
+
 .delete-content{
   transform: translate(-50%, -50%);
   text-align: center;
@@ -183,32 +184,40 @@ dialog{
   flex-direction: column;
   text-align: left;
 }
+
 .delete-content > h2{
   margin-bottom: 1em;
 }
+
 .popup-btns{
   margin-top: auto;
   margin-left: auto;
   display: flex;
 }
+
 .black-text{
   color: black;
 }
+
 dialog:target {
   opacity: 1;
   visibility: visible;
 }
+
 dialog:target .delete-content {
   opacity: 1;
 }
+
 .cancel-btn, .delete-btn{
   padding: .5em .7em .5em .7em;
   border-radius: var(--border-radius);
   font-weight: var(--font-weight-normal);
 }
+
 .cancel-btn{
   box-shadow:  1px 3px 4px 1px grey;
 }
+
 .delete-btn{
   margin-left: .5em;
   background-color: #D51D1D;
@@ -217,10 +226,16 @@ dialog:target .delete-content {
   gap: .3em;
   border: none;
 }
+
+.delete-btn:hover{
+  cursor: pointer;
+}
+
 .popup-btns a {
   display: flex;
   align-items: center;
 }
+
 main{
   display: flex;
   background-image: var(--bg-image-playlist);
@@ -230,17 +245,21 @@ main{
 .view-all{
   text-decoration: underline;
 }
+
 .go-back-btn{
   z-index: 10;
 }
+
 nav, .meta-section {
   padding: var(--space-md);
 }
+
 nav, .meta-section, .meta-info, .meta-play {
   max-width: 31.25em;
   width: 100%;
   flex-wrap: wrap;
 }
+
 .playlist-image-container {
   z-index: 0;
   height: auto; 
@@ -255,6 +274,7 @@ nav, .meta-section, .meta-info, .meta-play {
   justify-content: center;
   width: 100%;
 }
+
 .playlist-image {
   height: calc(100% - 5em); 
   width: calc(100% - 5em); 
@@ -263,6 +283,7 @@ nav, .meta-section, .meta-info, .meta-play {
   display: block; 
   border-radius: var(--border-radius);
 }
+
 article {
   margin: 0 auto;
   height: max-content;
@@ -272,6 +293,7 @@ article {
   align-items: start;
   justify-content: center;
 }
+
 header{
   width: 100%;
   display: flex;
@@ -279,6 +301,7 @@ header{
   justify-content: space-between;
   align-items: center;
 }
+
 nav{
   position: absolute;
   width: 100%;
@@ -287,26 +310,33 @@ nav{
   justify-content: space-between;
   align-items: center;
 }
+
 a {
   z-index: 0;
 }
+
 /* styling for meta info */
 .meta-info, .meta-play {
   display: flex;
   align-items: center;
 }
+
 .meta-info {
   margin-top: 1em;
 }
+
 .meta-info > p:nth-of-type(1) {
   margin-right: auto;
 }
+
 .meta-info > img {
   padding-right: .3em;
 }
+
 .heart-svg {
   margin: 0 auto 0 .5em;
 }
+
 /* styling for stories section */
 .stories-section {
   height: 25em; 
@@ -314,12 +344,14 @@ a {
   width: 100%; 
   scrollbar-width: none;
 }
+
 .stories-section > ul {
   display: flex;
   align-items: center;
   flex-direction: column;
   gap: 0.625em;
 }
+
 .no-playlist{
   position: relative;
   display: flex;
@@ -330,36 +362,36 @@ a {
   height: 10em; 
 }
 
-  .heart-svg {
+.heart-svg {
   background: none;
   border: none;
   cursor: pointer;
   padding: 0;
   margin: 0 auto 0 .5em;
-  }
-  
-  .heart-svg svg {
+}
+
+.heart-svg svg {
   width: 24px;
   height: 24px;
-  }
-  
-  .heart-svg svg.liked {
+}
+
+.heart-svg svg.liked {
   fill: #F33232;
   stroke: #F33232;
-  }
-  
-  @keyframes scale {
+}
+
+@keyframes scale {
   0%, 100% {
   transform: scale(1);
   }
   50% {
   transform: scale(1.4);
   }
-  }
-  
+}
 
-  .heart-svg svg.liked {
+
+.heart-svg svg.liked {
   animation: scale .5s ease-in;
-  }
-  </style>
+}
+</style>
 
