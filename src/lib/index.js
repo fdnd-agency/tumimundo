@@ -38,3 +38,4 @@ export { default as Statistics } from '$lib/components/svg/Statistics.svelte';
 export { default as Profile } from '$lib/components/svg/Profile.svelte';
 export { default as Check } from '$lib/components/svg/Check.svelte';
 export { default as SmallCross } from '$lib/components/svg/SmallCross.svelte';
+export { default as DeleteSVG } from '$lib/components/svg/DeleteSVG.svelte';

@@ -1,6 +1,7 @@
 <script>
   
-  import { Story, fetchApi, Back, Dropdown  } from '$lib/index';
+  import { Story, fetchApi, Back, Dropdown, DeleteSVG  } from '$lib/index';
+  import DeleteSvg from '../../../lib/components/svg/DeleteSVG.svelte';
 
   export let data;
  
@@ -46,11 +47,7 @@
   <article>
       <header>
       <nav>
-          <a href="/lessons" aria-label="go back" class="go-back-btn">
-            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M26.3398 8.55508C27.0797 9.29502 27.0797 10.4947 26.3398 11.2346L17.5743 20.0001L26.3398 28.7656C27.0797 29.5055 27.0797 30.7052 26.3398 31.4452C25.5998 32.1851 24.4002 32.1851 23.6602 31.4452L13.555 21.3399C12.815 20.6 12.815 19.4003 13.555 18.6603L23.6602 8.55508C24.4002 7.81514 25.5998 7.81514 26.3398 8.55508Z" fill="black"/>
-            </svg>
-          </a>
+        <a href="/lessons" aria-label="go back" class="go-back-btn"><Back/></a>
         <Dropdown/>
       </nav>
 
@@ -90,7 +87,7 @@
     </div>
   </section>
 
-    {#if isLoading}
+  {#if isLoading}
     <div class="loading">Loading playlist...</div>
   {:else if error}
     <p class="error">Error loading playlist: {error}</p>
@@ -113,17 +110,16 @@
   </article>
 
 
-    <dialog id="delete">
-      <div class="delete-content">
-        <h2 class="black-text">Delete this playlist?</h2>
-        <p class="black-text">It will be permanently removed from your profile, and you won't be able to recover it.</p>
-        <div class="delete-btns">
-          <a href="#" class="black-text">Cancel</a>
-          <a href="#" class="black-text">delete</a>
-        </div>
+  <dialog id="delete">
+    <div class="delete-content">
+      <h2 class="black-text">Delete this playlist?</h2>
+      <p class="black-text">It will be permanently removed from your profile, and you won't be able to recover it.</p>
+      <div class="popup-btns">
+        <a href="#" class="black-text cancel-btn">Cancel</a>
+        <a href="#" class="delete-btn">Delete <DeleteSvg/></a>
       </div>
-      test
-    </dialog>
+    </div>
+  </dialog>
 
 
 </main>
@@ -136,50 +132,49 @@
 
 dialog{
   background-color: rgba(0, 0, 0, 0.8);
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    display: flex;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    height: 110vh;
-    border: none;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 110vh;
+  border: none;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  z-index: 9999;
 }
 .delete-content{
   transform: translate(-50%, -50%);
-    text-align: center;
-    background-color: #fff;
-    padding: 1em;
-    width: 30em;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    height: 15em;
-    max-height: 90%;
-    overflow: hidden;
-    border: none;
-    border-radius: var(--border-radius);
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-
-    display: flex;
-    flex-direction: column;
-    text-align: left;
+  text-align: center;
+  background-color: #fff;
+  padding: 1em;
+  max-width: 25em;
+  width: 90%;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  height: 15em;
+  overflow: hidden;
+  border: none;
+  border-radius: var(--border-radius);
+  display: flex;
+  flex-direction: column;
+  text-align: left;
 }
 .delete-content > h2{
   margin-bottom: 1em;
 }
-.delete-btns{
+.popup-btns{
   margin-top: auto;
   margin-left: auto;
+  display: flex;
 }
 .black-text{
   color: black;
 }
-
 dialog:target {
   opacity: 1;
   visibility: visible;
@@ -187,11 +182,31 @@ dialog:target {
 dialog:target .delete-content {
   opacity: 1;
 }
+.cancel-btn, .delete-btn{
+  padding: .5em .7em .5em .7em;
+  border-radius: var(--border-radius);
+  font-weight: var(--font-weight-normal);
+}
+.cancel-btn{
+  box-shadow:  1px 3px 4px 1px grey;
+}
+.delete-btn{
+  margin-left: .5em;
+  background-color: #D51D1D;
+  display: flex;
+  align-items: center;
+  gap: .3em;
+}
+.popup-btns a {
+  display: flex;
+  align-items: center;
+}
 main{
   display: flex;
   background-image: var(--bg-image-playlist);
   min-height: 100vh;
 }
+
 .view-all{
   text-decoration: underline;
 }
