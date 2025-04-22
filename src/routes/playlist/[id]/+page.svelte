@@ -215,6 +215,7 @@ dialog:target .delete-content {
   display: flex;
   align-items: center;
   gap: .3em;
+  border: none;
 }
 .popup-btns a {
   display: flex;
