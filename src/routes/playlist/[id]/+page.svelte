@@ -1,7 +1,6 @@
 <script>
-  
   import { Story, fetchApi, Back, Dropdown, DeleteSVG  } from '$lib/index';
-  import DeleteSvg from '../../../lib/components/svg/DeleteSVG.svelte';
+  import { deleteFromCollection } from '$lib/api.js';
 
   export let data;
  
@@ -20,6 +19,7 @@
   let existingLikeId = playlist?.likeId || null;
   let profileId = 122;
  
+// Like playlist function
   async function toggleLike(event) {
     event.preventDefault();
  
@@ -41,6 +41,25 @@
       error = err.message || 'Er is iets fout gegaan';
     }
   }
+
+// Delete playlist function
+  async function deletePlaylist(event) {
+    event.preventDefault();
+
+    if (!playlist?.id) {
+      console.error('Geen playlist ID gevonden.');
+      return;
+    }
+
+    try {
+      await deleteFromCollection(fetch, 'tm_playlist', playlist.id);
+      window.location.href = '/lessons';
+    } catch (err) {
+      console.error('Error deleting playlist:', err);
+      error = err.message || 'Er is iets fout gegaan bij verwijderen.';
+    }
+  }
+
 </script>
 
 <main>
@@ -116,7 +135,7 @@
       <p class="black-text">It will be permanently removed from your profile, and you won't be able to recover it.</p>
       <div class="popup-btns">
         <a href="#" class="black-text cancel-btn">Cancel</a>
-        <a href="#" class="delete-btn">Delete <DeleteSvg/></a>
+        <button on:click={deletePlaylist} class="delete-btn">Delete <DeleteSVG/> </button>
       </div>
     </div>
   </dialog>
