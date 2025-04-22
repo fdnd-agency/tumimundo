@@ -1,7 +1,16 @@
 <script>
-  import { Back, Button } from '$lib/index'
+  import { Back, Button, BennySVG, MiloSVG, DaisySVG, PercySVG, RaymondSVG } from '$lib/index'
   import { onMount } from 'svelte'
   
+    // Maak een mapping van buddy-namen naar hun SVG-inhoud
+    const buddyMap = {
+    Percy: PercySVG,
+    Raymond: RaymondSVG,
+    Benny: BennySVG,
+    Milo: MiloSVG,
+    Daisy: DaisySVG
+  };
+
   let jsEnabled = false
   export let data
   let buddyList
@@ -67,9 +76,27 @@
       <ul bind:this={buddyList} on:scroll={updateSelectedOnScroll}>
         {#each data.buddys as { name, animal }}
           <li>
-            <label>
-              <img src={`/buddys/${name}.svg`} alt="image of {name} the {animal}">
-              <input type="radio" name="buddy" value={name} bind:group={selectedBuddy} required class:hidden={jsEnabled}/>
+            <label for={name} aria-labelledby={`buddy-name-${name}`}>
+              {#if name === 'Percy'}
+                <PercySVG alt={`image of ${name} the ${animal}`} />
+              {:else if name === 'Raymond'}
+                <RaymondSVG alt={`image of ${name} the ${animal}`} />
+              {:else if name === 'Benny'}
+                <BennySVG alt={`image of ${name} the ${animal}`} />
+              {:else if name === 'Milo'}
+                <MiloSVG alt={`image of ${name} the ${animal}`} />
+              {:else if name === 'Daisy'}
+                <DaisySVG alt={`image of ${name} the ${animal}`} />
+              {/if}
+
+              <input 
+              type="radio" 
+              name="buddy" 
+              value={name} 
+              bind:group={selectedBuddy} 
+              required 
+              class:hidden={jsEnabled}/>
+
               <h2>{name}</h2>
               <p>The {animal}</p>
             </label>
@@ -100,19 +127,16 @@
 </main>
 
 <style>
+
 label{
   display: flex;
   flex-direction: column;
 }
-input[type="submit"], button {
-  position: relative;
-}
-input[type="radio"] {
-  /* display: none; */
-}
+
 input[type="radio"].hidden {
-  visibility: hidden;;
+  visibility: hidden;
 }
+
 main {
   background: var(--bg-image-blue);
   color: white;
@@ -128,6 +152,7 @@ section {
   display: flex;
   flex-direction: column;
   padding: 1em;
+  margin-bottom: 1em;
 }
 
 h1 {
@@ -159,6 +184,7 @@ nav > button {
 }
 
 .scroll-container {
+  min-height: 26.75em;
   width: 100%;
   max-width: 720px;
   scroll-snap-type: x mandatory;
@@ -193,14 +219,10 @@ li {
   scroll-snap-align: center;
 }
 
-li img {
-  height: auto;
-  border-radius: 10px;
-}
-
 form {
   width: 100%;
   max-width: 30em;
+  min-height: 20em;
   display: flex;
   flex-grow: 1;
   flex-direction: column;
@@ -210,13 +232,11 @@ form {
 
 @media (max-height: 680px) {
   main {
-    /* height: 130vh; */
     height: 100%;
   }
 }
 @media (min-width: 680px) {
   main {
-    /* height: 120vh; */
     height: 100%;
   }
 }

@@ -30,3 +30,10 @@ export { default as Test } from '$lib/components/svg/Test.svelte';
 export { default as Lessons } from '$lib/components/svg/Lessons.svelte';
 export { default as Statistics } from '$lib/components/svg/Statistics.svelte';
 export { default as Profile } from '$lib/components/svg/Profile.svelte';
+
+// Buddys
+export { default as PercySVG } from '$lib/components/svg/Buddys/PercySVG.svelte';
+export { default as RaymondSVG } from '$lib/components/svg/Buddys/RaymondSVG.svelte';
+export { default as BennySVG } from '$lib/components/svg/Buddys/BennySVG.svelte';
+export { default as MiloSVG } from '$lib/components/svg/Buddys/MiloSVG.svelte';
+export { default as DaisySVG } from '$lib/components/svg/Buddys/DaisySVG.svelte';

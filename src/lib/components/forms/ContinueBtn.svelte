@@ -20,6 +20,7 @@
 
   input[type="submit"], button {
     margin-top: auto;
+    min-height: 3em;
     width: 85%;
     max-width: 31.25em;
     padding: .8em;
