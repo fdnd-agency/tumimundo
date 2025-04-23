@@ -133,13 +133,16 @@
     <div class="delete-content">
       <h2 class="black-text">Delete this playlist?</h2>
       <p class="black-text">It will be permanently removed from your profile, and you won't be able to recover it.</p>
+
       <div class="popup-btns">
         <a href="#" class="black-text cancel-btn">Cancel</a>
-        <button on:click={deletePlaylist} class="delete-btn">Delete <DeleteSVG/> </button>
+        <form method="POST" action={`/lessons/delete/${playlist.id}`} on:submit|preventDefault={deletePlaylist}>
+          <button type="submit" class="delete-btn">Delete <DeleteSVG/></button>
+        </form>
       </div>
+
     </div>
   </dialog>
-
 
 </main>
 
