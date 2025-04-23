@@ -227,6 +227,7 @@ dialog:target .delete-content {
   display: flex;
   align-items: center;
   gap: .3em;
+  font-size: 1em;
   border: none;
 }
 
