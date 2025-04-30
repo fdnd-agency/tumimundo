@@ -1,8 +1,8 @@
 <div class="dots-container">
   <button class="dots" aria-expanded="false" aria-label="More options">
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
+    <span class="dot"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
   </button>
   <ul class="dropdown">
     <li>
