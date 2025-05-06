@@ -77,16 +77,8 @@
         {#each data.buddys as { name, animal }}
           <li>
             <label for={name} aria-labelledby={`buddy-name-${name}`}>
-              {#if name === 'Percy'}
-                <PercySVG alt={`image of ${name} the ${animal}`} />
-              {:else if name === 'Raymond'}
-                <RaymondSVG alt={`image of ${name} the ${animal}`} />
-              {:else if name === 'Benny'}
-                <BennySVG alt={`image of ${name} the ${animal}`} />
-              {:else if name === 'Milo'}
-                <MiloSVG alt={`image of ${name} the ${animal}`} />
-              {:else if name === 'Daisy'}
-                <DaisySVG alt={`image of ${name} the ${animal}`} />
+              {#if buddyMap[name]}
+                <svelte:component this={buddyMap[name]} alt={`image of ${name} the ${animal}`} />
               {/if}
 
               <input 
