@@ -41,7 +41,11 @@
 
 <article>
   <div class="playlist-image flex-items">
-    <img src="{image}" alt="">
+    <picture>
+      <source srcset="{image}?width=128&format=avif" type="image/avif">
+      <source srcset="{image}?width=128&format=webp" type="image/webp">
+      <img src="{image}?width=128" alt="{title}">
+    </picture>
   </div>
 
   <h3 class="playlist-title">
@@ -112,7 +116,6 @@
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
-    line-clamp: 2;
     overflow: hidden;
   }
 

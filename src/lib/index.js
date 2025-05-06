@@ -1,17 +1,24 @@
 // Components
-export { default as Menu } from '$lib/components/core/Menu.svelte'
-export { default as Carousel } from '$lib/components/core/Carousel.svelte'
+export { default as MakePlaylist } from '$lib/components/core/MakePlaylist.svelte'
+export { default as Menu } from '$lib/components/core/menu.svelte'
+export { default as Carousel } from '$lib/components/core/carousel.svelte'
+export { default as Dropdown } from '$lib/components/core/dropdown.svelte'
+
 export { default as Button } from '$lib/components/forms/ContinueBtn.svelte'
-export { default as Input } from '$lib/components/forms/Input.svelte'
-export { default as Search } from '$lib/components/forms/Search.svelte'
-export { default as Playlist } from '$lib/components/layout/Playlist.svelte'
-export { default as Popup } from '$lib/components/layout/Popup.svelte'
-export { default as Story } from '$lib/components/layout/Story.svelte'
+export { default as Filter } from '$lib/components/forms/Filter.svelte'
+export { default as Input } from '$lib/components/forms/input.svelte'
+export { default as Search } from '$lib/components/forms/search.svelte'
+export { default as AddStory } from '$lib/components/forms/AddStory.svelte';
+
+export { default as Playlist } from '$lib/components/layout/playlist.svelte'
+export { default as Popup } from '$lib/components/layout/popup.svelte'
+export { default as Story } from '$lib/components/layout/story.svelte'
+
 
 // Helpers
-export { default as fetchJson } from '$lib/components/helpers/fetch-json.js'
-export { fetchApi } from '$lib/components/helpers/fetchApi.js'
-export { userState } from '$lib/components/helpers/account.js'
+export { default as fetchJson } from '$lib/components/helpers/Fetch-json.js'
+export { fetchApi } from '$lib/components/helpers/FetchApi.js'
+export { userState } from '$lib/components/helpers/Account.js'
 
 // SVG's
 export { default as Back } from '$lib/components/svg/Back.svelte';
@@ -24,16 +31,19 @@ export { default as AddProfile } from '$lib/components/svg/AddProfile.svelte';
 export { default as LikeButton } from '$lib/components/svg/LikeButton.svelte';
 export { default as PlayStory } from '$lib/components/svg/PlayStory.svelte';
 export { default as Download } from '$lib/components/svg/Download.svelte';
-export { default as AddStory } from '$lib/components/svg/AddStory.svelte';
 export { default as Home } from '$lib/components/svg/Home.svelte';
 export { default as Test } from '$lib/components/svg/Test.svelte';
 export { default as Lessons } from '$lib/components/svg/Lessons.svelte';
 export { default as Statistics } from '$lib/components/svg/Statistics.svelte';
 export { default as Profile } from '$lib/components/svg/Profile.svelte';
+export { default as Check } from '$lib/components/svg/Check.svelte';
+export { default as SmallCross } from '$lib/components/svg/SmallCross.svelte';
+export { default as DeleteSVG } from '$lib/components/svg/DeleteSVG.svelte';
 
-// Buddys
+// Buddy icons
 export { default as PercySVG } from '$lib/components/svg/Buddys/PercySVG.svelte';
 export { default as RaymondSVG } from '$lib/components/svg/Buddys/RaymondSVG.svelte';
 export { default as BennySVG } from '$lib/components/svg/Buddys/BennySVG.svelte';
 export { default as MiloSVG } from '$lib/components/svg/Buddys/MiloSVG.svelte';
 export { default as DaisySVG } from '$lib/components/svg/Buddys/DaisySVG.svelte';
+
