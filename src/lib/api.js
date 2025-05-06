@@ -1,5 +1,5 @@
 import getDirectusInstance from '$lib/directus';
-import { readItem, readItems, createItem } from '@directus/sdk';
+import { readItem, readItems, createItem, deleteItem } from '@directus/sdk';
 import { PUBLIC_APIURL } from '$env/static/public';
  
 const assetBaseUrl = `${PUBLIC_APIURL}/assets/`;
@@ -201,6 +201,16 @@ export async function fetchApi(fetch, endpoint) {
         return response;
     } catch (error) {
         console.error('Error in fetchApi:', error);
+        throw error;
+    }
+}
+
+export async function deleteFromCollection(fetch, collectionName, id) {
+    const directus = getDirectusInstance(fetch);
+    try {
+        return await directus.request(deleteItem(collectionName, id));
+    } catch (error) {
+        console.error('Error deleting item:', error);
         throw error;
     }
 }
