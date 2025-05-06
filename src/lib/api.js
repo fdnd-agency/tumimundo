@@ -159,6 +159,24 @@ export function mapStoriesWithDetails(stories, audios, languages) {
         };
     });
 }
+
+export function SeasonDetailInStories(stories, seasons) {
+    return stories.map(story => ({
+        ...story,
+        season: seasons.find((s) => s.id === story.season)?.season || null
+    }));
+}
+
+export function AnimalDetailInStories(stories, animals) {
+    return stories.map(story => {
+        const animal = animals?.find((a) => a.id === story.animal)?.animal || null;
+        return {
+            ...story,
+            animal: animal
+        };
+    });
+}
+
 export function mapPlaylistsWithDetails(playlists, stories) {
     return playlists.map((playlist) => {
         const playlistStoriesData = (playlist.stories || [])
