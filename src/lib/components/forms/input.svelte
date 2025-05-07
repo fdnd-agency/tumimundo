@@ -13,6 +13,7 @@
     Password
   {:else}
     {name}
+    Name
   {/if}
 </label>
 

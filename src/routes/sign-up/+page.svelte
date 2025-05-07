@@ -13,10 +13,10 @@ import { Input, Back } from '$lib/index';
             <h1>Sign up</h1> 
         </div>
     
-        <form action="/profile-selection">
-                <Input type="text"/>
-                <Input type="email"/>
-                <Input type="password"/>
+        <form method="POST" action="/sign-up">
+                <Input type="text" name="name" placeholder="Your name"/>
+                <Input type="email" name="email" placeholder="Your email"/>
+                <Input type="password" name="password" placeholder="Your password"/>
 
             <article>
                 <div>
