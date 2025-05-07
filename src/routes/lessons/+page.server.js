@@ -66,7 +66,7 @@ export const actions = {
         }
 
         if (Object.keys(errors).length > 0) {
-            return fail(400, {
+            return fail(400, {  // Use fail from @sveltejs/kit
                 error: 'Validation failed',
                 errors,
                 values: { title, description }
@@ -74,22 +74,35 @@ export const actions = {
         }
 
         try {
-            const newPlaylist = await createPlaylistWithStories(fetch,
+            const result = await createPlaylistWithStories(fetch,
                 { title, description, user_created: locals.user?.id },
                 stories.map(id => parseInt(id, 10))
             );
 
-            const data = await fetchAllData(fetch);
-            const enrichedPlaylists = mapPlaylistsWithDetails(data.playlists, data.stories, data.playlistStories);
+            console.log('New Playlist Created Result:', result);  // Log the result
 
-            return {
-                success: true,
-                playlists: enrichedPlaylists,
-                stories: mapStoriesWithDetails(data.stories, data.audios, data.languages)
-            };
+            if (result.status === 201) {
+                // Success: Redirect to the new playlist's page
+                return {
+                    status: 201,
+                    redirect: `/playlist/${result.data.id}`,
+                    success: true,
+                };
+            } else {
+                // Error
+                return {
+                    status: result.status || 500,
+                    error: result.error || 'Failed to create playlist',
+                    values: { title, description }
+                };
+            }
         } catch (error) {
             console.error('Error creating playlist:', error);
-            return fail(500, { error: 'Failed to create playlist', values: { title, description } });
+            return {
+                status: 500,
+                error: 'Failed to create playlist',
+                values: { title, description }
+            };
         }
     }
 };

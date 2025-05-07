@@ -41,10 +41,19 @@ export async function createPlaylistWithStories(fetch, { title, description, use
 
         console.log('New Playlist Created:', newPlaylist);
 
-        return newPlaylist;
+        return {
+            status: 201, 
+            data: newPlaylist
+        };
     } catch (error) {
         console.error('Error creating playlist with stories:', error);
-        throw error;
+
+        // Retourneer een foutstatus en foutmelding
+        return {
+            status: 500, // Status 500 betekent "Internal Server Error"
+            error: 'Failed to create playlist',
+            details: error.message
+        };
     }
 }
 export async function fetchAnimals(fetch) {
