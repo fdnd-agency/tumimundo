@@ -28,13 +28,25 @@ export async function load({ fetch, url }) {
   
       const selectedSeason = url.searchParams.get('season') || '';
       const selectedLanguage = url.searchParams.get('language') || '';
-      const selectedAnimal = url.searchParams.get('animal') || ''
+      const selectedAnimal = url.searchParams.get('animal') || '';
+      const selectedSorting = url.searchParams.get('sorting') || ''
 
       const filteredStories = storiesWithDetails.filter(story => 
         (!selectedSeason || story.season === selectedSeason) &&
         (!selectedLanguage || story.language === selectedLanguage) &&
         (!selectedAnimal || story.animal === selectedAnimal)
       );
+
+      const sortingOptions = {
+        'A-Z': (a, b) => a.title.localeCompare(b.title),
+        'Z-A': (a, b) => b.title.localeCompare(a.title),
+        'short-long': (a, b) => a.playtimeSeconds - b.playtimeSeconds,
+        'long-short': (a, b) => b.playtimeSeconds - a.playtimeSeconds,
+      };
+
+      if (selectedSorting && sortingOptions[selectedSorting]) {
+        filteredStories.sort(sortingOptions[selectedSorting]);
+      }
   
       return {
         stories: filteredStories,
@@ -43,7 +55,8 @@ export async function load({ fetch, url }) {
         seasons: seasonsData.seasons,
         selectedSeason,
         selectedLanguage,
-        selectedAnimal
+        selectedAnimal,
+        selectedSorting
       };
     } catch (err) {
       console.error('Error loading data:', err);

@@ -60,7 +60,8 @@
         {:else}
             <p>No languages found.</p>
         {/if}
-        <Button type="button"/>
+
+        <Button type="input" variant="secondary"/>
     </section>
 </main>
 
@@ -94,9 +95,10 @@
     section {
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: space-between;
+        height: 100dvh;
         align-items: center;
-        margin: 1.25em;
+        padding: 1.25em;
         position: relative;
     }
 
@@ -113,7 +115,9 @@
         height: 70vh;
         display: flex;
         flex-direction: column;
-        overflow-y: scroll;
+        overflow-y: auto;
+        margin-bottom: 1em;
+        flex-grow: 1;
     }
 
     h1, p {

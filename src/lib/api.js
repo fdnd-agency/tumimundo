@@ -1,5 +1,5 @@
 import getDirectusInstance from '$lib/directus';
-import { readItem, readItems, createItem } from '@directus/sdk';
+import { readItem, readItems, createItem, deleteItem } from '@directus/sdk';
 import { PUBLIC_APIURL } from '$env/static/public';
  
 const assetBaseUrl = `${PUBLIC_APIURL}/assets/`;
@@ -156,16 +156,36 @@ export function mapStoriesWithDetails(stories, audios, languages) {
         }
  
         if (story.playtime) {
+            story.playtimeSeconds = story.playtime;
             story.playtime = formatPlaytime(story.playtime);
         }
  
         story.language = language;
+ 
         return {
             ...story,
             audios: storyAudios
         };
     });
 }
+
+export function SeasonDetailInStories(stories, seasons) {
+    return stories.map(story => ({
+        ...story,
+        season: seasons.find((s) => s.id === story.season)?.season || null
+    }));
+}
+
+export function AnimalDetailInStories(stories, animals) {
+    return stories.map(story => {
+        const animal = animals?.find((a) => a.id === story.animal)?.animal || null;
+        return {
+            ...story,
+            animal: animal
+        };
+    });
+}
+
 export function mapPlaylistsWithDetails(playlists, stories) {
     return playlists.map((playlist) => {
         const playlistStoriesData = (playlist.stories || [])
@@ -210,6 +230,16 @@ export async function fetchApi(fetch, endpoint) {
         return response;
     } catch (error) {
         console.error('Error in fetchApi:', error);
+        throw error;
+    }
+}
+
+export async function deleteFromCollection(fetch, collectionName, id) {
+    const directus = getDirectusInstance(fetch);
+    try {
+        return await directus.request(deleteItem(collectionName, id));
+    } catch (error) {
+        console.error('Error deleting item:', error);
         throw error;
     }
 }

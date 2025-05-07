@@ -4,7 +4,7 @@
     /** @type {import('./$types').PageData} */
     export let data;
   
-    $: ({ stories, seasons, languages, animals, selectedSeason, selectedLanguage, selectedAnimal } = data);
+    $: ({ stories, seasons, languages, animals, selectedSeason, selectedLanguage, selectedAnimal, selectedSorting } = data);
     $: noStoriesFound = stories.length === 0;
   </script>
   
@@ -26,15 +26,8 @@
         selectedSeason={selectedSeason} 
         selectedLanguage={selectedLanguage}
         selectedAnimal={selectedAnimal}
+        selectedSorting={selectedSorting}
       />
-      
-      <select name="sorting" id="sorting" aria-label="Choose a sorting">
-        <option value="sorting">Sorting</option>
-        <option value="from a to z">From A - Z</option>
-        <option value="from z to a">From Z to A</option>
-        <option value="short to long playtime">Short to long playtime</option>
-        <option value="long to short playtime">Long to short playtime</option>
-      </select>
     </div>
     
     <section class="story-list">
@@ -82,8 +75,7 @@
       display: contents;
     }
   
-    .filters :global(select),
-    .filters select {
+    .filters :global(select){
       background-color: hsla(266, 72%, 35%, 1);
       color: var(--color-white);
       border: none;
@@ -93,8 +85,7 @@
       width: 100%;
     }
   
-    .filters :global(option),
-    .filters option {
+    .filters :global(option){
       color: black;
     }
   

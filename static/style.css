@@ -89,6 +89,9 @@
     --button-padding: 0.75em 1.5em;
     --button-border-radius: var(--border-radius);
     --button-font-size: var(--font-size-sm);
+    --button-blue: hsl(200, 52%, 46%);
+    --button-darker-blue: hsl(200, 49%, 26%);
+    --button-grey: hsl(0, 0%, 75%);
     
     /* ------------------------------- */
     /* Hover States */
