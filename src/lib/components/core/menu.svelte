@@ -41,6 +41,7 @@
 </header>
 
 <style>
+    
     header {
         height: 5em;
         width: 100%;
@@ -50,6 +51,9 @@
         transform: translate(-50%);
         background-color: #292929;
         color: #fff;
+
+        z-index: 1000;
+        isolation: isolate;
     }
     nav, ul {
         height: 100%;

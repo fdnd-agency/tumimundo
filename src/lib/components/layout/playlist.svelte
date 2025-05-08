@@ -81,6 +81,11 @@
 
 
 <style>
+  h1 > a {
+  position: relative;
+  isolation: isolate;
+  z-index: 0;
+}
   :root {
     --small-space: .5em;
     --color-text: black;
