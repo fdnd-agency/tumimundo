@@ -85,7 +85,9 @@
     </header>
 
    <section class="meta-section">
-    <h1>{playlist.title}</h1>
+    <h1 style="view-transition-name:playlist-title-{playlist.id};">
+      {playlist.title}
+    </h1>
     <p>{playlist.description}</p>
 
     <div class="meta-info">
@@ -146,7 +148,7 @@
 </main>
 
 <style>
-
+  
 * {
   color: var(--color-text-light);
 }

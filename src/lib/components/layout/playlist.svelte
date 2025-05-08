@@ -48,9 +48,13 @@
     </picture>
   </div>
 
-  <h3 class="playlist-title">
-    <a href={`/playlist/${playlist.id}`} aria-label="Go to playlist page">{title}</a>
-  </h3>
+  <h3
+  class="playlist-title"
+  style="view-transition-name:playlist-title-{playlist.id};"
+>
+  <a href={`/playlist/${playlist.id}`} aria-label="Go to playlist">
+    {title}
+  </a>
 
   <div class="playlist-playtime flex-items">
     <Play/>
@@ -177,4 +181,20 @@
     animation: scale .5s ease-in;
   }
 
+/* view transition for title */
+::view-transition-old(playlist-title-*),
+::view-transition-new(playlist-title-*) {
+  animation: fade-slide 0.4s ease;
+}
+
+@keyframes fade-slide {
+  from {
+    opacity: 0;
+    transform: translateY(0.5em);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 </style>
