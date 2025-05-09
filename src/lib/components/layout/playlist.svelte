@@ -75,7 +75,10 @@
         <input type="hidden" name="profileId" value="{profileId}">
       {/if}
       
-      <button type="submit" class="playlist-icons" aria-label="{isLiked ? 'Unlike' : 'Like'}">
+      <button type="submit" 
+        class="playlist-icons" 
+        aria-label="{isLiked ? 'Unlike' : 'Like'}">
+        style="view-transition-name:playlist-like-{playlist.id};"
         <LikeButton {isLiked} />
       </button>
     </form>
