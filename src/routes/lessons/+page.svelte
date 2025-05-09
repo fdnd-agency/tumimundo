@@ -84,18 +84,24 @@
     <section class="own-playlist">
         <h2>Liked playlists</h2>
         <section class="playlist-list">
-            {#each data.playlists.filter(playlist => playlist.isLiked) as playlist (playlist.id)}
-                <Playlist {playlist} on:likeToggle={handleLikeToggle} />
-            {/each}
+            <ul class="playlist-scroll-list">
+                {#each data.playlists.filter(playlist => playlist.isLiked) as playlist (playlist.id)}
+                    <li><Playlist {playlist} on:likeToggle={handleLikeToggle} /></li>
+                {/each}
+            </ul>
+            
         </section>
     </section>
 
     <section class="own-playlist suggested-playlist">
         <h2>Suggested playlists</h2>
         <section class="playlist-list">
-            {#each data.playlists.filter(playlist => !playlist.isLiked) as playlist (playlist.id)}
-                <Playlist {playlist} on:likeToggle={handleLikeToggle} />
-            {/each}
+            <ul class="playlist-scroll-list">
+                {#each data.playlists.filter(playlist => !playlist.isLiked) as playlist (playlist.id)}
+                    <li><Playlist {playlist} on:likeToggle={handleLikeToggle} /></li>
+                {/each}
+            </ul>
+            
         </section>
     </section>
 
@@ -282,11 +288,17 @@ label > img {
 /* Styling for suggested playlist page */
 section.playlist-list {
     display: flex;
+    flex-direction: row;
     flex-wrap: wrap;
     gap: var(--space-lg);
     overflow-x: auto;
     padding-bottom: var(--space-md);
     scroll-snap-type: x mandatory;
+}
+.playlist-scroll-list{
+    display: flex;
+    flex-direction: row ;
+    gap: 1em;
 }
 
 @media only screen and (min-width: 600px) {
