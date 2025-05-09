@@ -80,6 +80,7 @@
           height="380" 
           width="448" 
           class="playlist-image"
+          style="view-transition-name:playlist-image-{playlist.id};"
         />
       </picture>
     </header>

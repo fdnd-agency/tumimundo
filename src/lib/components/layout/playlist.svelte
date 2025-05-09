@@ -44,7 +44,11 @@
     <picture>
       <source srcset="{image}?width=128&format=avif" type="image/avif">
       <source srcset="{image}?width=128&format=webp" type="image/webp">
-      <img src="{image}?width=128" alt="{title}">
+      <img
+      src="{image}?width=128"
+      alt="{title}"
+      style="view-transition-name:playlist-image-{playlist.id};"
+      />
     </picture>
   </div>
 
