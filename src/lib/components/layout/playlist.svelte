@@ -60,7 +60,7 @@
     {title}
   </a>
 
-  <div class="playlist-playtime flex-items">
+  <div class="playlist-playtime flex-items"  style="view-transition-name:playlist-play-{playlist.id};">
     <Play/>
     <p>{playtime}</p>
   </div>

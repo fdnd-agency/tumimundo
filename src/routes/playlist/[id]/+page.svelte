@@ -98,7 +98,7 @@
       <p>2u 11m</p>
       </div>
 
-     <div class="meta-play">
+     <div class="meta-play"  style="view-transition-name:playlist-play-{playlist.id};">
         <a href="/download"><img src="/icons/download.svg" alt="download" height="27"></a>
         <button on:click={toggleLike} class="heart-svg" aria-label="{isLiked ? 'Unlike' : 'Like'}">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class:liked={isLiked}>
