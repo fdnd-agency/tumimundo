@@ -51,34 +51,32 @@ export async function createUser(fetch, userData) {
 export async function createPlaylistWithStories(fetch, { title, description, user_created }, storyIds) {
     const directus = getDirectusInstance(fetch);
 
-    try {
-        // Maak een nieuwe playlist aan met de stories direct erin
-        const newPlaylist = await directus.request(
-            createItem('tm_playlist', {
-                title,
-                description,
-                user_created,
-                stories: storyIds // Dit voegt de stories direct toe aan de playlist
-            })
-        );
-
-        console.log('New Playlist Created:', newPlaylist);
-
-        return {
-            status: 201, 
-            data: newPlaylist
-        };
-    } catch (error) {
-        console.error('Error creating playlist with stories:', error);
-
-        // Retourneer een foutstatus en foutmelding
-        return {
-            status: 500, // Status 500 betekent "Internal Server Error"
-            error: 'Failed to create playlist',
-            details: error.message
-        };
+    let image = null;
+    if (storyIds.length > 0) {
+        const firstStory = await directus.request(readItem('tm_story', storyIds[0]));
+        if (firstStory && firstStory.image) {
+            image = firstStory.image; // bijv. 'blue.png'
+        }
     }
-}
+   
+
+    const newPlaylist = await directus.request(
+        createItem('tm_playlist', {
+            title,
+            description,
+            user_created,
+            stories: storyIds,
+            image
+        })
+    );
+
+    return {
+        status: 201,
+        data: newPlaylist
+    };
+} 
+
+
 export async function fetchAnimals(fetch) {
     const directus = getDirectusInstance(fetch);
     try {
@@ -209,30 +207,27 @@ export function AnimalDetailInStories(stories, animals) {
     });
 }
 
+
+
 export function mapPlaylistsWithDetails(playlists, stories) {
     return playlists.map((playlist) => {
         const playlistStoriesData = (playlist.stories || [])
             .map(storyId => stories.find(story => story.id === storyId))
             .filter(Boolean);
 
-        const totalPlaytime = playlistStoriesData.reduce((sum, story) => {
-            return sum + (story.playtime || 0);
-        }, 0);
-
-        if (playlist.image) {
-            playlist.image = retrieveFromAssets(playlist.image);
-        }
-
-        const formattedPlaytime = totalPlaytime > 0 ? formatPlaytime(totalPlaytime) : "0 min 0 sec";
+        let imageUrl = playlist.image
+            ? `${PUBLIC_APIURL}/assets/${playlist.image}`
+            : undefined;
 
         return {
             ...playlist,
-            image: playlist.image,
-            playtime: formattedPlaytime,
-            stories: playlistStoriesData,
+            image: imageUrl,
+            stories: playlistStoriesData
         };
     });
-} 
+}
+
+
  
 export function mapProfilesWithImages(profiles) {
     return profiles.map((profile) => {
