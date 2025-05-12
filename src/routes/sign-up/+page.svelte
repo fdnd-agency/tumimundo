@@ -13,13 +13,13 @@ import { Input, Back } from '$lib/index';
             <h1>Sign up</h1> 
         </div>
     
-        <form action="/profile-selection">
-                <Input type="text"/>
-                <Input type="email"/>
-                <Input type="password"/>
+        <form method="POST" action="/sign-up">
+                <Input type="text" name="name" placeholder="Enter your full name"/>
+                <Input type="email" name="email" placeholder="email@example.com"/>
+                <Input type="password" name="password" placeholder="Enter your password"/>
 
             <article>
-                <div>
+                <div class="toggle-row">
                     <label class="switch">
                         <input type="checkbox" aria-label="toggle-button">
                         <span class="slider round"></span>
@@ -28,7 +28,7 @@ import { Input, Back } from '$lib/index';
                     <p>Agree to the terms of services and the privacy policy <a href="/click" class="click-here">(click here for more information)</a></p>
                 </div>
         
-                <div>
+                <div class="toggle-row">
                     <label class="switch">
                         <input type="checkbox" aria-label="toggle-button">
                         <span class="slider round"></span>
@@ -115,7 +115,7 @@ div{
 
 /* Styling for toggle button */
 .switch {
-  position: relative;
+  position: absolute;
   display: inline-block;
   width: 5em;
   height: 1.25em;
@@ -126,6 +126,17 @@ div{
   width: 0;
   height: 0;
 }
+
+.toggle-row {
+  position: relative;
+  margin-bottom: 1.25em;
+}
+
+.toggle-row p {
+  margin: 0;
+  margin-left: 3.5em;
+  line-height: 1.4;
+}
 .slider {
   position: absolute;
   cursor: pointer;
@@ -134,7 +145,7 @@ div{
   right: 0;
   bottom: 0;
   width: 2em;
-  background-color: var(--color-white);
+  background-color: grey;
   -webkit-transition: .4s;
   transition: .4s;
 }
@@ -158,7 +169,7 @@ input:focus + .slider {
 input:checked + .slider:before {
   -webkit-transform: translateX(1.25em);
   -ms-transform: translateX(1.25em);
-  transform: translateX(1.25em);
+  transform: translateX(0.80em);
 }
 .slider.round {
   border-radius: 1em;
@@ -179,6 +190,11 @@ input:checked + .slider:before {
     text-decoration: none; 
     margin-top: auto;  
     margin-bottom: 3.75em;
+    cursor: pointer;
+}
+
+.sign-upbtn:hover {
+    background-color: var(--color-login-bg-hover);
 }
 .click-here{
     color: hsla(217, 75%, 65%, 1);
