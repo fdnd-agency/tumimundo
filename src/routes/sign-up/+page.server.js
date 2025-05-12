@@ -6,9 +6,9 @@ import { createItem } from '@directus/sdk';
 export const actions = {
   default: async ({ request, fetch }) => {
     const formData = await request.formData();
-    const name = formData.get('name')?.toString().trim();
-    const email = formData.get('email')?.toString().trim();
-    const password = formData.get('password')?.toString();
+    const name = formData.get('name')?.trim();
+    const email = formData.get('email')?.trim();
+    const password = formData.get('password')
 
     const directus = getDirectusInstance(fetch);
 
