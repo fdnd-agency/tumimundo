@@ -156,6 +156,7 @@
     height: 110vh;
     border: none;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    z-index: 9999;
 }
 .popup__content {
     transform: translate(-50%, -50%);
@@ -172,6 +173,8 @@
     border: none;
     border-radius: var(--border-radius);
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    z-index: 10000;
+    position: relative;
 }
 li{
     margin-bottom: .2em;

@@ -44,15 +44,23 @@
     <picture>
       <source srcset="{image}?width=128&format=avif" type="image/avif">
       <source srcset="{image}?width=128&format=webp" type="image/webp">
-      <img src="{image}?width=128" alt="{title}">
+      <img
+      src="{image}?width=128"
+      alt="{title}"
+      style="view-transition-name:playlist-image-{playlist.id};"
+      />
     </picture>
   </div>
 
-  <h3 class="playlist-title">
-    <a href={`/playlist/${playlist.id}`} aria-label="Go to playlist page">{title}</a>
-  </h3>
+  <h3
+  class="playlist-title"
+  style="view-transition-name:playlist-title-{playlist.id};"
+>
+  <a href={`/playlist/${playlist.id}`} aria-label="Go to playlist">
+    {title}
+  </a>
 
-  <div class="playlist-playtime flex-items">
+  <div class="playlist-playtime flex-items"  style="view-transition-name:playlist-play-{playlist.id};">
     <Play/>
     <p>{playtime}</p>
   </div>
@@ -67,7 +75,10 @@
         <input type="hidden" name="profileId" value="{profileId}">
       {/if}
       
-      <button type="submit" class="playlist-icons" aria-label="{isLiked ? 'Unlike' : 'Like'}">
+      <button type="submit" 
+        class="playlist-icons" 
+        aria-label="{isLiked ? 'Unlike' : 'Like'}">
+        style="view-transition-name:playlist-like-{playlist.id};"
         <LikeButton {isLiked} />
       </button>
     </form>
@@ -77,6 +88,11 @@
 
 
 <style>
+  h1 > a {
+  position: relative;
+  isolation: isolate;
+  z-index: 0;
+}
   :root {
     --small-space: .5em;
     --color-text: black;
@@ -177,4 +193,20 @@
     animation: scale .5s ease-in;
   }
 
+/* view transition for title */
+::view-transition-old(playlist-title-*),
+::view-transition-new(playlist-title-*) {
+  animation: fade-slide 0.4s ease;
+}
+
+@keyframes fade-slide {
+  from {
+    opacity: 0;
+    transform: translateY(0.5em);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 </style>
