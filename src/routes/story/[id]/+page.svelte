@@ -1,10 +1,15 @@
 <script>
 import { Back } from '$lib/index';
+
+export let data;
+const { story } = data;
+const audioSrc = story.audios?.[0]?.file || '';
+
 </script>
 
 <main>
   <header>
-    <a href="/" aria-label="Go back"><Back color="white"/></a>
+    <a href="/lessons" aria-label="Go back"><Back color="white"/></a>
     <div class="actions">
       <button aria-label="Dark mode">Moon svg</button>
       <button aria-label="Visuals off">TV svg</button>
@@ -12,22 +17,23 @@ import { Back } from '$lib/index';
   </header>
 
   <section class="visuals">
-    <img src="/" alt="Foxes in forest" />
+    <img src="{story.image}" alt="Foxes in forest" />
   </section>
 
   <section class="story-text">
-    <p>
-      The wild foxes<br />
-      jump over<br />
-      the hedge<br />
-      into the forest
-    </p>
+    <h1>{story.title}</h1>
+    <p>{story.summary}</p>
   </section>
 
   <section class="player">
-    <audio controls>
-      <source src="/audio/example.mp3" type="audio/mpeg" />
-    </audio>
+    {#if audioSrc}
+      <audio controls>
+        <source src={audioSrc} type="audio/mpeg" />
+        Your browser does not support the audio element.
+      </audio>
+    {:else}
+      <p>No audio available</p>
+    {/if}
   </section>
 </main>
 
@@ -94,6 +100,7 @@ header a {
 
 .player {
   margin-top: 1em;
+  height: 8em;
   padding: 1em;
   background: #42275a;
   border-top-left-radius: 2em;
