@@ -50,16 +50,23 @@ main {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: space-between;
   position: relative;
 }
 
-header, .visuals, .story-text{
+header, .visuals, .story-text, .player{
   padding: 1em;
+  max-width: 31.25em;
+}
+.visuals, .story-text{
+  margin: auto;
 }
 
 header {
   display: flex;
+  width: 100%;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
@@ -77,18 +84,15 @@ header a {
   font-size: 1.2em;
   margin-left: 0.5em;
 }
-
+.visuals{
+  margin: auto;
+}
 .story-text {
   text-align: center;
   font-size: 1.4em;
   font-weight: bold;
   margin-top: 1em;
   line-height: 1.4;
-}
-
-.player {
-  position: relative;
-  margin-top: 2em;
 }
 
 .wave-bg {
@@ -99,7 +103,9 @@ header a {
 }
 
 .player {
-  margin-top: 1em;
+  position: relative;
+  margin-top: 2em;
+  width: 100%;
   height: 8em;
   padding: 1em;
   background: #42275a;
