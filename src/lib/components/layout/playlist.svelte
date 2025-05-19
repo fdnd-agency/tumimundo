@@ -92,10 +92,6 @@
     --color-text: black;
   }
 
-  p {
-    font-size: var(--small-space);
-  }
-
   .playlist-card {
     display: flex;
     flex-direction: column;
