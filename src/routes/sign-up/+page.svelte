@@ -1,69 +1,165 @@
 <script>
 import { Input, Back } from '$lib/index';
+export let form;
 
+let password = '';
+let showPassword = false;
+let showCriteria = false;
+
+const criteria = [
+  {
+    label: 'A lowercase letter',
+    test: pw => /[a-z]/.test(pw)
+  },
+  {
+    label: 'An uppercase letter',
+    test: pw => /[A-Z]/.test(pw)
+  },
+  {
+    label: 'A number',
+    test: pw => /\d/.test(pw)
+  },
+  {
+    label: 'Minimum 8 characters',
+    test: pw => pw.length >= 8
+  }
+];
 </script>
 
-<title>sign-up</title>
 <main>
-    <section>
-        <div class="heading">
-            <a href="/onboarding">
-                <Back color="black"/>
-            </a>
-            <h1>Sign up</h1> 
+  <section>
+    <div class="heading">
+      <a href="/onboarding">
+          <Back color="black"/>
+      </a>
+      <h1>Sign up</h1> 
+    </div>
+  
+    <form method="POST" action="/sign-up">
+      <Input 
+        inputClass={form?.errors?.name ? 'is-invalid' : ''}
+        type="text" 
+        name="name" 
+        placeholder="Enter your full name"
+        value={form?.values?.name ?? ''}
+      />
+      {#if form?.errors?.name}
+          <div class="field-error">{form.errors.name}</div>
+      {/if}
+            
+      <Input 
+        inputClass={form?.errors?.email ? 'is-invalid' : ''}
+        type="email" 
+        name="email" 
+        placeholder="email@example.com"
+        value={form?.values?.email ?? ''}
+      />
+      {#if form?.errors?.email}
+          <div class="field-error">{form.errors.email}</div>
+      {/if}
+
+      <Input 
+          type="password" 
+          name="password" 
+          placeholder="Enter your password"
+          bind:value={password}
+          on:focus={() => showCriteria = true}
+          on:blur={() => showCriteria = false}
+          inputClass={form?.errors?.password ? 'is-invalid' : ''}
+      />
+      {#if form?.errors?.password}
+          <div class="field-error">{form.errors.password}</div>
+      {/if}
+
+      {#if showCriteria || password.length > 0}
+        <div class="password-criteria">
+          <h3>Password must contain the following:</h3>
+          <ul>
+            {#each criteria as item}
+            <li class={item.test(password) ? 'valid' : 'invalid'}>
+              {#if item.test(password)}
+                <svg width="16" height="16" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M27 9L13 23L6 16" stroke="#2ecc40" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              {:else}
+                <svg width="16" height="16" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 6L14 14M14 6L6 14" stroke="#d32f2f" stroke-width="3" stroke-linecap="round"/>
+                </svg>
+              {/if}
+              {item.label}
+            </li>
+            {/each}
+          </ul>
         </div>
+      {/if}
+
+        <Input 
+          inputClass={form?.errors?.passwordConfirm ? 'is-invalid' : ''}
+          type="password" 
+          name="passwordConfirm" 
+          placeholder="Confirm your password"
+          label="Confirm password"
+        />
+        {#if form?.errors?.passwordConfirm}
+          <div class="field-error">{form.errors.passwordConfirm}</div>
+        {/if}
+
+        <article>
+          {#if form?.errors?.terms}
+            <div class="terms-error">{form.errors.terms}</div>
+          {/if}
+          <div class="toggle-row">
+            <label class="switch {form?.errors?.terms ? 'is-invalid' : ''}">
+              <input 
+                  type="checkbox" 
+                  aria-label="toggle-button"
+                  name="terms"
+              >
+              <span class="slider round"></span>
+            </label>
+            <p>Agree to the terms of services and the privacy policy <a href="/click" class="click-here">(click here for more information)</a>*</p>
+          </div>
     
-        <form method="POST" action="/sign-up">
-                <Input type="text" name="name" placeholder="Enter your full name"/>
-                <Input type="email" name="email" placeholder="email@example.com"/>
-                <Input type="password" name="password" placeholder="Enter your password"/>
+          <div class="toggle-row">
+            <label class="switch">
+                <input type="checkbox" aria-label="toggle-button">
+                <span class="slider round"></span>
+            </label>
 
-            <article>
-                <div class="toggle-row">
-                    <label class="switch">
-                        <input type="checkbox" aria-label="toggle-button">
-                        <span class="slider round"></span>
-                    </label>
+            <p>Agree to share data with research universities and participate in research <a href="/" class="click-here">(click here for more information)</a></p>
+          </div>
+        </article>
 
-                    <p>Agree to the terms of services and the privacy policy <a href="/click" class="click-here">(click here for more information)</a></p>
-                </div>
-        
-                <div class="toggle-row">
-                    <label class="switch">
-                        <input type="checkbox" aria-label="toggle-button">
-                        <span class="slider round"></span>
-                    </label>
-
-                    <p>Agree to share data with research universities and participate in research <a href="/" class="click-here">(click here for more information)</a></p>
-                </div>
-            </article>
-
-            <input type="submit" value="Sign up!" class="sign-upbtn">
-        </form>
-    </section>
+        <input type="submit" value="Sign up!" class="sign-upbtn">
+    </form>
+  </section>
 </main>
-
 
 <style>
 *{
     padding: 0;
     margin: 0;
 }
+
 section, form, main{
     display: flex;
     flex-direction: column;
 }
+
 main{
     align-items: center;
 }
+
 section {
     padding: 1.25em;
     max-width: 30em ;
     height: 100dvh; 
 }
+
 form {
     flex-grow: 1;
 }
+
 .heading {
     display: flex;
     align-items: center;
@@ -89,9 +185,45 @@ form {
     align-items: center;
 }
 
+.field-error {
+  color: #d32f2f;
+  margin-top: -0.8em;
+  margin-bottom: 0.8em;
+}
+
+.terms-error {
+  color: #d32f2f;
+  margin-bottom: 0.4em; 
+  margin-top: 0.5em;
+}
+
+.password-criteria {
+  background: #f7fafd;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.6em;
+  padding: 1em;
+  flex-direction: column ;
+}
+
+.password-criteria h3 {
+  font-size: 1em;
+  margin-bottom: 0.5em;
+}
+
+.password-criteria li.valid {
+  color: #2ecc40;
+  font-weight: 500;
+}
+
+.password-criteria li.invalid {
+  color: #d32f2f;
+  font-weight: 400;
+}
+
 label{
     font-size: 1.25em;
 }                                                                                
+
 p{
     max-width: 40ch;
 }
@@ -104,9 +236,11 @@ input{
     margin-bottom: 1.25em ;
     font-size: 1em;
 }
+
 label{
     margin-bottom: .6em;
 }
+
 div{
     display: flex;
     flex-direction: row;
@@ -121,6 +255,7 @@ div{
   height: 1.25em;
   margin-right: .6em;
 }
+
 .switch input {
   opacity: 0;
   width: 0;
@@ -137,6 +272,7 @@ div{
   margin-left: 3.5em;
   line-height: 1.4;
 }
+
 .slider {
   position: absolute;
   cursor: pointer;
@@ -149,6 +285,7 @@ div{
   -webkit-transition: .4s;
   transition: .4s;
 }
+
 .slider:before {
   position: absolute;
   content: "";
@@ -160,23 +297,29 @@ div{
   -webkit-transition: .4s;
   transition: .4s;
 }
+
 input:checked + .slider {
   background-color: hsla(217, 91%, 60%, 1);;
 }
+
 input:focus + .slider {
   box-shadow: 0 0 1px hsla(217, 91%, 60%, 1);
 }
+
 input:checked + .slider:before {
   -webkit-transform: translateX(1.25em);
   -ms-transform: translateX(1.25em);
   transform: translateX(0.80em);
 }
+
 .slider.round {
   border-radius: 1em;
 }
+
 .slider.round:before {
   border-radius: 50%;
 }
+
 .sign-upbtn{
     align-self: center;
     bottom: 0;
@@ -196,6 +339,7 @@ input:checked + .slider:before {
 .sign-upbtn:hover {
     background-color: var(--color-login-bg-hover);
 }
+
 .click-here{
     color: hsla(217, 75%, 65%, 1);
 }

@@ -8,7 +8,26 @@ export const actions = {
     const formData = await request.formData();
     const name = formData.get('name')?.trim();
     const email = formData.get('email')?.trim();
-    const password = formData.get('password')
+    const password = formData.get('password');
+    const passwordConfirm = formData.get('passwordConfirm');
+    const termsAccepted = formData.get('terms');
+
+    const errors = {};
+    if (!name) errors.name = "Please fill out this field";
+    if (!email) errors.email = "Please fill out this field";
+    if (!password) errors.password = "Please fill out this field";
+    if (!passwordConfirm) {
+      errors.passwordConfirm = "Please fill out this field";
+    } else if (password !== passwordConfirm) {
+      errors.passwordConfirm = "Passwords do not match";
+    }
+    if (!termsAccepted) {
+      errors.terms = "You must accept the terms and conditions";
+    }
+
+    if (Object.keys(errors).length > 0) {
+      return fail(400, { errors, values: { name, email } });
+    }
 
     const directus = getDirectusInstance(fetch);
 
