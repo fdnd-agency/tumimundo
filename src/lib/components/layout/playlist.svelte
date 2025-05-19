@@ -78,6 +78,11 @@
 </article>
 
 <style>
+  :root {
+    --small-space: .5em;
+    --color-text: black;
+  }
+
   .playlist-card {
     display: flex;
     flex-direction: column;

@@ -34,40 +34,28 @@
 
     <section class="own-playlist">
         <h2>Own playlists</h2>
-        <ul>
-            <li class="playlist-1">
-                <picture>
-                    <source srcset="https://fdnd-agency.directus.app/assets/263e541a-9dd8-4978-8ad0-9a6e5b9dfe1a?width=300&format=avif" type="image/avif">
-                    <source srcset="https://fdnd-agency.directus.app/assets/263e541a-9dd8-4978-8ad0-9a6e5b9dfe1a?width=300&format=webp" type="image/webp">
-                    <img 
-                      src="https://fdnd-agency.directus.app/assets/263e541a-9dd8-4978-8ad0-9a6e5b9dfe1a?width=300" 
-                      class="story-img" 
-                      alt="story" 
-                      width="300" 
-                      height="300"
-                    >
-                  </picture>
-                <h3>The octopus who was very hungry</h3>
-                    <small> 
-                        <Play/>  
-                        <a href="all-stories">31 min. 55 sec</a>
-                    </small>
-            </li>
-            <li class="create-playlist">
-                <a href="#popup">
-                   <Plus/>
-                    <h3>Make a playlist !</h3>
-                    <small>Add your favorite stories in one playlist</small> 
-                </a>
-            </li>
-        </ul>
+            <div class="playlist-list">
+                <ul class="playlist-scroll-list">
+                    <li class="create-playlist">
+                        <a href="#popup">
+                        <Plus/>
+                            <h3>Make a playlist</h3>
+                            <small>Add your favorite stories in one playlist</small> 
+                        </a>
+                    </li>
+                    {#each data.playlists as playlist (playlist.id)}
+                        <li>
+                        <Playlist {playlist} on:likeToggle={handleLikeToggle} />
+                        </li>
+                    {/each}
+                </ul>
+            </div>
     </section>
 
     <MakePlaylist {data}/>
     
     <section class="all-stories">
         <h2>All stories</h2>
-
         <nav class="language-filter">
             <label for="checkbox-nl"><img src="/languages/Dutch.svg" alt="dutch" width="20" height="20">Dutch</label>
             <input type="checkbox" id="checkbox-nl">
@@ -77,32 +65,29 @@
 
             <a href="/all-stories">Show all</a>
         </nav>
-
         <Carousel {data}/>
     </section>
 
     <section class="own-playlist">
         <h2>Liked playlists</h2>
-        <section class="playlist-list">
+        <div class="playlist-list">
             <ul class="playlist-scroll-list">
                 {#each data.playlists.filter(playlist => playlist.isLiked) as playlist (playlist.id)}
                     <li><Playlist {playlist} on:likeToggle={handleLikeToggle} /></li>
                 {/each}
             </ul>
-            
-        </section>
+        </div>
     </section>
 
     <section class="own-playlist suggested-playlist">
         <h2>Suggested playlists</h2>
-        <section class="playlist-list">
+        <div class="playlist-list">
             <ul class="playlist-scroll-list">
                 {#each data.playlists.filter(playlist => !playlist.isLiked) as playlist (playlist.id)}
                     <li><Playlist {playlist} on:likeToggle={handleLikeToggle} /></li>
                 {/each}
             </ul>
-            
-        </section>
+        </div>
     </section>
 
 </main>
@@ -147,20 +132,36 @@ header {
 }
 
 /* Styling for "own playlist" section */
-.create-playlist, .playlist-1 {
+
+.create-playlist{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-}
-.create-playlist > a{
-    color: white;
+    width: 10em;
+    height: 16em;
+    background-color: #fff;
+    border-radius: 0.5em;
+    padding: 0.5em;
+    color: black;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+
+    & a{
+        color: white;
+    }
+
+    & h3{
+        margin-top: 1em;
+        font-size: 1em;
+        font-weight: bold;
+        margin-bottom: 1em;
+    }
+
+    & small{
+        margin-top: auto;
+    }
 }
 
-.playlist-1 {
-    background-color: var(--color-text-light);
-    color: var(--color-text);
-}
 
 .playlist-1 > a small {
     color: var(--color-text);
@@ -287,7 +288,7 @@ label > img {
 }
 
 /* Styling for suggested playlist page */
-section.playlist-list {
+.playlist-list {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
