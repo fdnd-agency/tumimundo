@@ -43,7 +43,7 @@
                             <small>Add your favorite stories in one playlist</small> 
                         </a>
                     </li>
-                    {#each data.playlists as playlist (playlist.id)}
+                    {#each data.playlists.slice().reverse() as playlist (playlist.id)}
                         <li>
                         <Playlist {playlist} on:likeToggle={handleLikeToggle} />
                         </li>
