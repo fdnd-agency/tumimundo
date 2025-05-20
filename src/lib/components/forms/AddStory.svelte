@@ -37,7 +37,7 @@
         on:change={handleChange}
     />
     <span class="checkbox-custom">
-        <svg width="14" height="14" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width="22" height="22" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="6" cy="6" r="5.5" stroke="#B0B0B0"/>
             <rect x="3" y="5.57141" width="6" height="0.857143" rx="0.428571" fill="#B0B0B0"/>
             <rect x="6.42871" y="3" width="6" height="0.857143" rx="0.428571" transform="rotate(90 6.42871 3)" fill="#B0B0B0"/>
@@ -62,8 +62,8 @@
   
     .checkbox-custom {
         display: inline-block;
-        width: 14px;
-        height: 14px;
+        width: 22px;
+        height: 22px;
         margin-left: 1em;
         position: relative;
     }
@@ -86,10 +86,10 @@
         content: '';
         position: absolute;
         display: block;
-        left: 4px;
-        top: 2px;
-        width: 4px;
-        height: 7px;
+        left: 7px;
+        top: 2.5px;
+        width: 6px;
+        height: 12px;
         border: solid white;
         border-width: 0 2px 2px 0;
         transform: rotate(45deg);
