@@ -46,7 +46,8 @@ export const actions = {
         const formData = await request.formData();
         const title = formData.get('Name');
         const description = formData.get('Description');
-        const stories = formData.getAll('stories');
+        const stories = formData.getAll('stories').map(id => parseInt(id, 10));
+
 
         console.log('Formuliergegevens:', { title, description, stories });
 
