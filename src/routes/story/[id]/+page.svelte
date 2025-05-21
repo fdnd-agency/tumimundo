@@ -1,5 +1,5 @@
 <script>
-import { Back, VisualsSVG } from '$lib/index';
+import { Back, VisualsSVG, DarkModeSVG } from '$lib/index';
 
 export let data;
 const { story } = data;
@@ -11,7 +11,7 @@ const audioSrc = story.audios?.[0]?.file || '';
   <header>
     <a href="/lessons" aria-label="Go back"><Back color="white"/></a>
     <div class="actions">
-      <button aria-label="Dark mode"></button>
+      <button aria-label="Dark mode"><DarkModeSVG/></button>
       <button aria-label="Visuals off"><VisualsSVG/></button>
     </div>
   </header>
