@@ -3,6 +3,10 @@ import argon2 from 'argon2';
 import getDirectusInstance from '$lib/directus';
 import { createItem } from '@directus/sdk';
 
+/**
+ * User registration with sveltekit form actions
+ * Validates input, returns errors for invalid input, and adds the user to the Directus database with a hashed password.
+ */
 export const actions = {
   default: async ({ request, fetch }) => {
     const formData = await request.formData();
@@ -15,7 +19,23 @@ export const actions = {
     const errors = {};
     if (!name) errors.name = "Please fill out this field";
     if (!email) errors.email = "Please fill out this field";
-    if (!password) errors.password = "Please fill out this field";
+    if (!password) {
+      errors.password = "Please fill out this field";
+    } else {
+      const passwordCriteria = [
+        { check: pw => /[a-z]/.check(pw)},
+        { check: pw => /[A-Z]/.check(pw)},
+        { check: pw => /\d/.check(pw)},
+        { check: pw => pw.length >= 8}
+      ];
+      for (const rule of passwordCriteria) {
+        if (!rule.check(password)) {
+          errors.password = "Password must contain: a lowercase letter, an uppercase letter, a number, and minimum 8 characters";
+          break;
+        }
+      }
+    }
+
     if (!passwordConfirm) {
       errors.passwordConfirm = "Please fill out this field";
     } else if (password !== passwordConfirm) {
@@ -26,7 +46,7 @@ export const actions = {
     }
 
     if (Object.keys(errors).length > 0) {
-      return fail(400, { errors, values: { name, email } });
+      return fail(400, { errors, values: { name, email, terms: !!termsAccepted } });
     }
 
     const directus = getDirectusInstance(fetch);

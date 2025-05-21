@@ -30,7 +30,7 @@ const criteria = [
   <section>
     <div class="heading">
       <a href="/onboarding">
-          <Back color="black"/>
+        <Back color="black"/>
       </a>
       <h1>Sign up</h1> 
     </div>
@@ -44,7 +44,7 @@ const criteria = [
         value={form?.values?.name ?? ''}
       />
       {#if form?.errors?.name}
-          <div class="field-error">{form.errors.name}</div>
+        <div class="field-error">{form.errors.name}</div>
       {/if}
             
       <Input 
@@ -55,20 +55,35 @@ const criteria = [
         value={form?.values?.email ?? ''}
       />
       {#if form?.errors?.email}
-          <div class="field-error">{form.errors.email}</div>
+        <div class="field-error">{form.errors.email}</div>
       {/if}
 
-      <Input 
-          type="password" 
-          name="password" 
-          placeholder="Enter your password"
+      <div class="password-field-wrapper">
+        <Input
           bind:value={password}
+          inputClass={form?.errors?.password ? 'is-invalid' : ''}
+          type={showPassword ? 'text' : 'password'}
+          name="password"
+          placeholder="Enter your password"
+          label="Password" 
           on:focus={() => showCriteria = true}
           on:blur={() => showCriteria = false}
-          inputClass={form?.errors?.password ? 'is-invalid' : ''}
-      />
+        />
+        <button
+          type="button"
+          class="toggle-password-btn"
+          aria-label={showPassword ? "Hide password" : "Show password"}
+          on:click={() => showPassword = !showPassword}
+        >
+          {#if showPassword}
+            <svg width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#444" stroke-width="2" d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12Z"/><circle cx="12" cy="12" r="3" stroke="#444" stroke-width="2"/></svg>
+            {:else}
+            <svg width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#444" stroke-width="2" d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12Z"/><circle cx="12" cy="12" r="3" stroke="#444" stroke-width="2"/><line x1="4" y1="20" x2="20" y2="4" stroke="#444" stroke-width="2"/></svg>
+          {/if}
+        </button>
+      </div>
       {#if form?.errors?.password}
-          <div class="field-error">{form.errors.password}</div>
+        <div class="field-error">{form.errors.password}</div>
       {/if}
 
       {#if showCriteria || password.length > 0}
@@ -114,6 +129,7 @@ const criteria = [
                   type="checkbox" 
                   aria-label="toggle-button"
                   name="terms"
+                  checked={form?.values?.terms}
               >
               <span class="slider round"></span>
             </label>
@@ -168,6 +184,19 @@ form {
     height: 5em;
     margin-bottom: 1.8em;
     margin-top: .6em;
+}
+
+.password-field-wrapper {
+  position: relative;
+  flex-direction: column;
+  margin-bottom: 0;
+}
+
+.password-field-wrapper .toggle-password-btn {
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  border: none;
 }
 
 .heading h1 {
