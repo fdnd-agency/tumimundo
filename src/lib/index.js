@@ -39,6 +39,8 @@ export { default as Profile } from '$lib/components/svg/Profile.svelte';
 export { default as Check } from '$lib/components/svg/Check.svelte';
 export { default as SmallCross } from '$lib/components/svg/SmallCross.svelte';
 export { default as DeleteSVG } from '$lib/components/svg/DeleteSVG.svelte';
+export { default as VisualsSVG } from '$lib/components/svg/VisualsSVG.svelte';
+
 
 // Buddy icons
 export { default as PercySVG } from '$lib/components/svg/Buddys/PercySVG.svelte';
