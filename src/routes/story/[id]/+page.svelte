@@ -1,34 +1,44 @@
 <script>
-import { Back, VisualsSVG, DarkModeSVG } from '$lib/index';
-import { onMount } from 'svelte'
+  import { Back, VisualsSVG, DarkModeSVG } from '$lib/index';
+  import { onMount } from 'svelte';
 
-export let data;
-const { story } = data;
-const audioSrc = story.audios?.[0]?.file || '';
-let showVisuals = true
-let jsEnabled = false
+  export let data;
+  const { story } = data;
+  const audioSrc = story.audios?.[0]?.file || '';
+
+  let showVisuals = true;
+  let jsEnabled = false;
 
   onMount(() => {
-    jsEnabled = true
+    jsEnabled = true;
+
+    const stored = localStorage.getItem('showVisuals');
+    if (stored !== null) {
+      showVisuals = stored === 'true';
+    }
   });
 
+  function toggleVisuals() {
+    showVisuals = !showVisuals;
+    localStorage.setItem('showVisuals', showVisuals);
+  }
 </script>
 
 <main>
   <header>
-    <a href="/lessons" aria-label="Go back"><Back color="white"/></a>
+    <a href="/lessons" aria-label="Go back"><Back color="white" /></a>
     <div class="actions">
-      <button aria-label="Dark mode"><DarkModeSVG/></button>
-      {#if jsEnabled}
-      <button aria-label="Toggle visuals" on:click={() => showVisuals = !showVisuals}>
-        {#if showVisuals}
-          <VisualsSVG mode="off" />
-        {:else}
-          <VisualsSVG mode="on" />
-        {/if}
-      </button>
-      {/if}
+      <button aria-label="Dark mode"><DarkModeSVG /></button>
 
+      {#if jsEnabled}
+        <button aria-label="Toggle visuals" on:click={toggleVisuals}>
+          {#if showVisuals}
+            <VisualsSVG mode="off" />
+          {:else}
+            <VisualsSVG mode="on" />
+          {/if}
+        </button>
+      {/if}
     </div>
   </header>
 
@@ -37,7 +47,6 @@ let jsEnabled = false
       <img src="{story.image}" alt="{story.summary}" />
     </section>
   {/if}
-
 
   <section class="story-text">
     <h1>{story.title}</h1>
@@ -57,6 +66,9 @@ let jsEnabled = false
 </main>
 
 <style>
+:global(html.js) .visuals.fallback {
+  display: none;
+}
 
 :global(body) {
   margin: 0;
@@ -74,11 +86,16 @@ main {
   position: relative;
 }
 
-header, .visuals, .story-text, .player{
+header,
+.visuals,
+.story-text,
+.player {
   padding: 1em;
   max-width: 31.25em;
 }
-.visuals, .story-text{
+
+.visuals,
+.story-text {
   margin: auto;
 }
 
@@ -103,9 +120,11 @@ header a {
   font-size: 1.2em;
   margin-left: 0.5em;
 }
-.visuals{
+
+.visuals {
   margin: auto;
 }
+
 .story-text {
   text-align: center;
   font-size: 1.4em;
