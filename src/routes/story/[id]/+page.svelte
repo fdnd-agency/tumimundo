@@ -1,11 +1,16 @@
 <script>
 import { Back, VisualsSVG, DarkModeSVG } from '$lib/index';
+import { onMount } from 'svelte'
 
 export let data;
 const { story } = data;
 const audioSrc = story.audios?.[0]?.file || '';
-
 let showVisuals = true
+let jsEnabled = false
+
+  onMount(() => {
+    jsEnabled = true
+  });
 
 </script>
 
@@ -14,9 +19,15 @@ let showVisuals = true
     <a href="/lessons" aria-label="Go back"><Back color="white"/></a>
     <div class="actions">
       <button aria-label="Dark mode"><DarkModeSVG/></button>
+      {#if jsEnabled}
       <button aria-label="Toggle visuals" on:click={() => showVisuals = !showVisuals}>
-      <VisualsSVG />
+        {#if showVisuals}
+          <VisualsSVG mode="off" />
+        {:else}
+          <VisualsSVG mode="on" />
+        {/if}
       </button>
+      {/if}
 
     </div>
   </header>
@@ -34,7 +45,6 @@ let showVisuals = true
   </section>
 
   <section class="player">
-    
     {#if audioSrc}
       <audio controls>
         <source src={audioSrc} type="audio/mpeg" />
