@@ -5,6 +5,8 @@ export let data;
 const { story } = data;
 const audioSrc = story.audios?.[0]?.file || '';
 
+let showVisuals = true
+
 </script>
 
 <main>
@@ -12,13 +14,19 @@ const audioSrc = story.audios?.[0]?.file || '';
     <a href="/lessons" aria-label="Go back"><Back color="white"/></a>
     <div class="actions">
       <button aria-label="Dark mode"><DarkModeSVG/></button>
-      <button aria-label="Visuals off"><VisualsSVG/></button>
+      <button aria-label="Toggle visuals" on:click={() => showVisuals = !showVisuals}>
+      <VisualsSVG />
+      </button>
+
     </div>
   </header>
 
-  <section class="visuals">
-    <img src="{story.image}" alt="{story.summary}"/>
-  </section>
+  {#if showVisuals}
+    <section class="visuals">
+      <img src="{story.image}" alt="{story.summary}" />
+    </section>
+  {/if}
+
 
   <section class="story-text">
     <h1>{story.title}</h1>
@@ -26,6 +34,7 @@ const audioSrc = story.audios?.[0]?.file || '';
   </section>
 
   <section class="player">
+    
     {#if audioSrc}
       <audio controls>
         <source src={audioSrc} type="audio/mpeg" />
