@@ -5,31 +5,64 @@
   export let data;
   const { story, audio } = data;
   const audioSrc = story.audios?.[0]?.file || '';
-  const transcriptLines = audio?.transcript ? parseVTT(audio.transcript) : [];
 
+  let transcriptLines = audio?.transcript ? parseVTT(audio.transcript) : [];
+  let currentTime = 0;
+  let audioEl;
   let showVisuals = true;
   let jsEnabled = false;
 
   onMount(() => {
     jsEnabled = true;
-
     const stored = localStorage.getItem('showVisuals');
     if (stored !== null) {
       showVisuals = stored === 'true';
     }
   });
 
-  function toggleVisuals() {
-    showVisuals = !showVisuals;
-    localStorage.setItem('showVisuals', showVisuals);
-  }
+function toggleVisuals() {
+  showVisuals = !showVisuals;
+  localStorage.setItem('showVisuals', showVisuals);
+}
 
-  function parseVTT(vtt) {
-    return vtt
-      .split('\n')
-      .filter(line => line && !line.includes('-->') && !line.startsWith('WEBVTT'))
-      .map(line => line.replace(/"/g, ''));
+function parseVTT(vtt) {
+  const lines = vtt.split('\n');
+  const result = [];
+  let current = null;
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i].trim();
+
+    if (line === '' || line === 'WEBVTT') continue;
+
+    if (line.includes('-->')) {
+      const [start, end] = line.split('-->').map(s => parseTime(s.trim()));
+      current = { start, end, text: '' };
+      continue;
+    }
+
+    if (current) {
+      current.text += line + ' ';
+      const nextLine = lines[i + 1]?.trim();
+      if (!nextLine || nextLine.includes('-->')) {
+        result.push({ ...current, text: current.text.trim() });
+        current = null;
+      }
+    }
   }
+  return result;
+}
+
+function parseTime(timeString) {
+  const [h, m, s] = timeString.split(':');
+  const [sec, ms = 0] = s.split('.');
+  return (
+    parseInt(h) * 3600 +
+    parseInt(m) * 60 +
+    parseInt(sec) +
+    (parseInt(ms) || 0) / 1000
+  );
+}
 </script>
 
 <main>
@@ -52,24 +85,27 @@
 
   {#if showVisuals}
     <section class="visuals">
-      <img src="{story.image}" alt="{story.summary}" />
+      <img src={story.image} alt={story.summary} />
     </section>
   {/if}
 
   <section class="transcript">
     <h2>{story.title}</h2>
-      {#if transcriptLines.length > 0}
-        {#each transcriptLines as line}
-          <p>{line}</p>
-        {/each}
-      {:else}
-        <p>No transcripts available.</p>
-      {/if}
+
+    {#if transcriptLines.length > 0}
+      {#each transcriptLines as line}
+        <p class:active={currentTime >= line.start && currentTime < line.end}>
+          {line.text}
+        </p>
+      {/each}
+    {:else}
+      <p>No transcripts available.</p>
+    {/if}
   </section>
 
   <section class="player">
     {#if audioSrc}
-      <audio controls>
+      <audio bind:this={audioEl} on:timeupdate={() => currentTime = audioEl.currentTime} controls>
         <source src={audioSrc} type="audio/mpeg" />
         Your browser does not support the audio element.
       </audio>
@@ -80,7 +116,6 @@
 </main>
 
 <style>
-
 main {
   background: linear-gradient(to bottom, #2e003e, #5f2c82);
   min-height: 100vh;
@@ -128,11 +163,11 @@ header a {
 
 .visuals {
   margin: auto;
+}
 
-  & img{
-    max-width: 20em;
-    max-height: 20em;
-  }
+.visuals img {
+  max-width: 20em;
+  max-height: 20em;
 }
 
 .transcript {
@@ -145,6 +180,18 @@ header a {
   max-width: 14em;
   overflow: auto;
   color: white;
+}
+
+.transcript p {
+  margin: 0.4em 0;
+  transition: background-color 0.3s;
+}
+
+.transcript p.active {
+  color: #f3a22a;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 0.2em 0.4em;
+  border-radius: 0.25em;
 }
 
 .player {
