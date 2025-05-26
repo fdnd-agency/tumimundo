@@ -3,8 +3,9 @@
   import { onMount } from 'svelte';
 
   export let data;
-  const { story } = data;
+  const { story, audio } = data;
   const audioSrc = story.audios?.[0]?.file || '';
+  const transcriptLines = parseVTT(audio.transcript);
 
   let showVisuals = true;
   let jsEnabled = false;
@@ -21,6 +22,13 @@
   function toggleVisuals() {
     showVisuals = !showVisuals;
     localStorage.setItem('showVisuals', showVisuals);
+  }
+
+  function parseVTT(vtt) {
+    return vtt
+      .split('\n')
+      .filter(line => line && !line.includes('-->') && !line.startsWith('WEBVTT'))
+      .map(line => line.replace(/"/g, ''));
   }
 </script>
 
@@ -48,10 +56,13 @@
     </section>
   {/if}
 
-  <section class="story-text">
-    <h1>{story.title}</h1>
-    <p>{story.summary}</p>
-  </section>
+  <section class="transcript">
+  <h2>{story.title}</h2>
+  {#each transcriptLines as line}
+    <p>{line}</p>
+  {/each}
+</section>
+
 
   <section class="player">
     {#if audioSrc}
@@ -66,15 +77,6 @@
 </main>
 
 <style>
-:global(html.js) .visuals.fallback {
-  display: none;
-}
-
-:global(body) {
-  margin: 0;
-  font-family: sans-serif;
-  color: white;
-}
 
 main {
   background: linear-gradient(to bottom, #2e003e, #5f2c82);
@@ -88,14 +90,14 @@ main {
 
 header,
 .visuals,
-.story-text,
+.transcript,
 .player {
   padding: 1em;
   max-width: 31.25em;
 }
 
 .visuals,
-.story-text {
+.transcript {
   margin: auto;
 }
 
@@ -125,12 +127,16 @@ header a {
   margin: auto;
 }
 
-.story-text {
-  text-align: center;
+.transcript {
+  text-align: left;
   font-size: 1.4em;
   font-weight: bold;
   margin-top: 1em;
   line-height: 1.4;
+  max-height: 8em;
+  width: 20em;
+  overflow: auto;
+  color: white;
 }
 
 .player {
@@ -142,6 +148,7 @@ header a {
   background: #42275a;
   border-top-left-radius: 2em;
   border-top-right-radius: 2em;
+  color: white;
 }
 
 .player audio {
