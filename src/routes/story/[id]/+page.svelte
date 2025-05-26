@@ -7,8 +7,12 @@
   const audioSrc = story.audios?.[0]?.file || '';
 
   let transcriptLines = audio?.transcript ? parseVTT(audio.transcript) : [];
-  let currentTime = 0;
+
   let audioEl;
+  let currentTime = 0;
+  let currentLineIndex = -1;
+  let transcriptRefs = [];
+
   let showVisuals = true;
   let jsEnabled = false;
 
@@ -20,49 +24,68 @@
     }
   });
 
-function toggleVisuals() {
-  showVisuals = !showVisuals;
-  localStorage.setItem('showVisuals', showVisuals);
-}
+  function toggleVisuals() {
+    showVisuals = !showVisuals;
+    localStorage.setItem('showVisuals', showVisuals);
+  }
 
-function parseVTT(vtt) {
-  const lines = vtt.split('\n');
-  const result = [];
-  let current = null;
+  function parseVTT(vtt) {
+    const lines = vtt.split('\n');
+    const result = [];
+    let current = null;
 
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i].trim();
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i].trim();
 
-    if (line === '' || line === 'WEBVTT') continue;
+      if (line === '' || line === 'WEBVTT') continue;
 
-    if (line.includes('-->')) {
-      const [start, end] = line.split('-->').map(s => parseTime(s.trim()));
-      current = { start, end, text: '' };
-      continue;
-    }
+      if (line.includes('-->')) {
+        const [start, end] = line.split('-->').map(s => parseTime(s.trim()));
+        current = { start, end, text: '' };
+        continue;
+      }
 
-    if (current) {
-      current.text += line + ' ';
-      const nextLine = lines[i + 1]?.trim();
-      if (!nextLine || nextLine.includes('-->')) {
-        result.push({ ...current, text: current.text.trim() });
-        current = null;
+      if (current) {
+        current.text += line + ' ';
+        const nextLine = lines[i + 1]?.trim();
+        if (!nextLine || nextLine.includes('-->')) {
+          result.push({ ...current, text: current.text.trim() });
+          current = null;
+        }
       }
     }
-  }
-  return result;
-}
 
-function parseTime(timeString) {
-  const [h, m, s] = timeString.split(':');
-  const [sec, ms = 0] = s.split('.');
-  return (
-    parseInt(h) * 3600 +
-    parseInt(m) * 60 +
-    parseInt(sec) +
-    (parseInt(ms) || 0) / 1000
-  );
-}
+    return result;
+  }
+
+  function parseTime(timeString) {
+    const [h, m, s] = timeString.split(':');
+    const [sec, ms = 0] = s.split('.');
+    return (
+      parseInt(h) * 3600 +
+      parseInt(m) * 60 +
+      parseInt(sec) +
+      (parseInt(ms) || 0) / 1000
+    );
+  }
+
+  // Detects the active sentence of the story
+  $: {
+    const index = transcriptLines.findIndex(
+      (line) => currentTime >= line.start && currentTime < line.end
+    );
+    if (index !== -1 && index !== currentLineIndex) {
+      currentLineIndex = index;
+      scrollToActiveLine();
+    }
+  }
+
+  function scrollToActiveLine() {
+    const el = transcriptRefs[currentLineIndex];
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
 </script>
 
 <main>
@@ -93,8 +116,11 @@ function parseTime(timeString) {
     <h2>{story.title}</h2>
 
     {#if transcriptLines.length > 0}
-      {#each transcriptLines as line}
-        <p class:active={currentTime >= line.start && currentTime < line.end}>
+      {#each transcriptLines as line, i}
+        <p
+          class:active={i === currentLineIndex}
+          bind:this={transcriptRefs[i]}
+        >
           {line.text}
         </p>
       {/each}
@@ -105,7 +131,11 @@ function parseTime(timeString) {
 
   <section class="player">
     {#if audioSrc}
-      <audio bind:this={audioEl} on:timeupdate={() => currentTime = audioEl.currentTime} controls>
+      <audio
+        bind:this={audioEl}
+        on:timeupdate={() => currentTime = audioEl.currentTime}
+        controls
+      >
         <source src={audioSrc} type="audio/mpeg" />
         Your browser does not support the audio element.
       </audio>
@@ -116,6 +146,7 @@ function parseTime(timeString) {
 </main>
 
 <style>
+  
 main {
   background: linear-gradient(to bottom, #2e003e, #5f2c82);
   min-height: 100vh;
@@ -168,23 +199,25 @@ header a {
 .visuals img {
   max-width: 20em;
   max-height: 20em;
+  border-radius: 1em;
 }
 
 .transcript {
-  text-align: left;
-  font-size: 2.5em;
+  text-align: center;
+  font-size: 2em;
   font-weight: bold;
   margin-top: 1em;
   line-height: 1.4;
   max-height: 5em;
-  max-width: 14em;
-  overflow: auto;
+  max-width: 15em;
+  overflow-y: auto;
   color: white;
+  scroll-behavior: smooth;
 }
 
 .transcript p {
   margin: 0.4em 0;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .transcript p.active {
