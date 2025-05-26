@@ -218,6 +218,13 @@ header a {
   overflow-y: auto;
   color: white;
   scroll-behavior: smooth;
+  overflow-y: scroll; 
+  scrollbar-width: none;       
+  -ms-overflow-style: none;  
+}
+
+.transcript::-webkit-scrollbar {
+  display: none;
 }
 
 .transcript p {
