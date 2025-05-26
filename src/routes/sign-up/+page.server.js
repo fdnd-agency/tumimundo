@@ -1,7 +1,6 @@
 import { fail, redirect } from '@sveltejs/kit';
 import argon2 from 'argon2';
-import getDirectusInstance from '$lib/directus';
-import { createItem } from '@directus/sdk';
+import { createUser, fetchCollection } from '$lib/api';
 
 /**
  * User registration with sveltekit form actions
@@ -15,6 +14,7 @@ export const actions = {
     const password = formData.get('password');
     const passwordConfirm = formData.get('passwordConfirm');
     const termsAccepted = formData.get('terms');
+    let hashedPassword;
 
     const errors = {};
     if (!name) errors.name = "Please fill out this field";
@@ -23,9 +23,9 @@ export const actions = {
       errors.password = "Please fill out this field";
     } else {
       const passwordCriteria = [
-        { check: pw => /[a-z]/.check(pw)},
-        { check: pw => /[A-Z]/.check(pw)},
-        { check: pw => /\d/.check(pw)},
+        { check: pw => /[a-z]/.test(pw)},
+        { check: pw => /[A-Z]/.test(pw)},
+        { check: pw => /\d/.test(pw)},
         { check: pw => pw.length >= 8}
       ];
       for (const rule of passwordCriteria) {
@@ -45,14 +45,21 @@ export const actions = {
       errors.terms = "You must accept the terms and conditions";
     }
 
+    if (email && Object.keys(errors).length === 0) {
+      const existingUsers = await fetchCollection(fetch, 'tm_users', {
+        filter: { email: { _eq: email } },
+        limit: 1
+      });
+      if (Array.isArray(existingUsers) && existingUsers.length > 0) {
+        errors.email = "This email address is already registered";
+      }
+    }
+
     if (Object.keys(errors).length > 0) {
       return fail(400, { errors, values: { name, email, terms: !!termsAccepted } });
     }
 
-    const directus = getDirectusInstance(fetch);
-
     /** hier wordt het wachtwoord gehasht met argon2, zodat de wachtwoord beveiligd in de database staat */
-    let hashedPassword;
     try {
       hashedPassword = await argon2.hash(password);
     } catch (err) {
@@ -60,16 +67,16 @@ export const actions = {
     }
 
     // De nieuwe gebruiker wordt hiermee toegevoegd aan directus
-    try {
-      await directus.request(
-        createItem('tm_users', {
-          name,
-          email,
-          password: hashedPassword
-        })
-      );
-    } catch (err) {
-      return fail(500, { err });
+    const creationResult = await createUser(fetch, {
+      name,
+      email,
+      password: hashedPassword
+    });
+
+    if (creationResult.status !== 201) {
+      return fail(creationResult.status, { 
+        errors: { general: creationResult.error } 
+      });
     }
 
     /** als de gebruiker is toegevoegd aan de database, wordt de gebruiker omgeleid naar de choose-buddy pagina om verder te gaan met de registratie */
