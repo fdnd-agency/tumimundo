@@ -1,43 +1,65 @@
 <script>
-        /**
-     * Represents a popup dialog for creating a new playlist and selecting stories.
-     *
+    /**
      * Props:
      *   @prop {Object} data - Data required for rendering stories and playlists.
      *
      * Reactive Variables:
      *   $selectedLanguage: Tracks which language is selected for filtering stories.
+     *   $selectedStories: Array of selected story IDs.
+     *
+     * State:
+     *   formError: General error message for the form.
+     *   formSuccess: Indicates if the form was submitted successfully.
+     *   errors: Field-specific error messages.
+     *   values: Field values to repopulate the form after a failed submit.
+     *   formElement: Reference to the form DOM element.
      *
      * Methods:
-     *   toggleStory(event):
-     *     Toggles selection of stories in the playlist.
-     *
-     *   closePopup():
-     *     Closes the popup dialog and resets form fields.
-     *
-     * Behavior:
-     *   On successful form submission, resets fields and closes popup after a delay.
-     *
+     *   toggleStory(event): Toggles selection of stories in the playlist.
+     *   closePopup(): Closes the popup dialog and resets form fields.
      */
+
     import { Input, Story, Check, SmallCross, AddStory } from '$lib/index'
     import { enhance } from '$app/forms';
     import { writable } from 'svelte/store';
     import { invalidateAll } from '$app/navigation';
 
-    export let data
-    let formError = '';
-    let formSuccess = false;
-    let formElement;
- 
-    let selectedLanguage = writable('languages');
-    let selectedStories = writable([]);
+    /** @type {Object} */
+    export let data;
+
     
+
+    /** @type {string} */
+    let formError = '';
+    /** @type {boolean} */
+    let formSuccess = false;
+    /** @type {Object} */
+    let errors = {};
+    /** @type {Object} */
+    let values = {};
+    /** @type {HTMLFormElement} */
+    let formElement;
+
+    /** @type {import('svelte/store').Writable<string>} */
+    let selectedLanguage = writable('languages');
+    /** @type {import('svelte/store').Writable<number[]>} */
+    let selectedStories = writable([]);
+
+    /**
+     * Filter stories by selected language.
+     * @type {Array}
+     */
     $: stories = $selectedLanguage !== 'languages'
         ? data.stories.filter(story => story.language && story.language.toLowerCase() === $selectedLanguage.toLowerCase())
         : data.stories;
-    
+
+    /** @type {boolean} */
     $: noStoriesFound = stories.length === 0;
- 
+
+    /**
+     * Toggle a story in the selectedStories store.
+     * @param {CustomEvent} event - The toggle event with storyId and checked status.
+     */
     function toggleStory(event) {
         const { storyId, checked } = event.detail;
         if (checked) {
@@ -47,6 +69,9 @@
         }
     }
 
+    /**
+     * Close the popup and reset form state.
+     */
     function closePopup() {
         window.location.hash = 'create-playlist';
         if (formElement) {
@@ -55,77 +80,114 @@
         selectedStories.set([]);
         formError = '';
         formSuccess = false;
+        errors = {};
+        values = {};
     }
 </script>
- 
+
 <dialog class="popup" id="popup">
     <div class="popup__content">
         <h2>Make a playlist!</h2>
-     
         <form
-        bind:this={formElement}
-        action="?/createPlaylist"
-        class="form"
-        method="POST"
-        use:enhance={async ({ formElement }) => {
-            return async ({ result }) => {
-              if (result.type === 'success') {
-                formSuccess = true;
-                formError = '';
-                formElement.reset();
-                selectedStories.set([]);
-                await invalidateAll();
-                setTimeout(() => {
-                  closePopup();
-                }, 1000);
-              } else if (result.type === 'failure') {
-                formError = result.data.error;
-              }
-            };
-          }}
-      >
+            bind:this={formElement}
+            action="?/createPlaylist"
+            class="form"
+            method="POST"
+            novalidate
+            use:enhance={async ({ formElement }) => {
+                /**
+                 * Handles the result of the form submission.
+                 * @param {Object} result - The result object from the server.
+                 */
+                return async ({ result }) => {
+                    if (result.type === 'success') {
+                        formSuccess = true;
+                        formError = '';
+                        errors = {};
+                        values = {};
+                        formElement.reset();
+                        selectedStories.set([]);
+                        await invalidateAll();
+                        setTimeout(() => {
+                            closePopup();
+                        }, 1000);
+                    } else if (result.type === 'failure') {
+                        formError = result.data.error;
+                        errors = result.data.errors || {};
+                        values = result.data.values || {};
+                    }
+                };
+            }}
+        >
 
-        <Input name="Name" type="text" placeholder="Playlist name"/>
-        <Input name="Description" type="text" placeholder="Playlist description"/>
-       
-        <h3>Add stories</h3>
-        <p>Click on the + to add story to playlist</p>
- 
-        <section class="story-list">
-            <ul>
-            {#if noStoriesFound}
-                <p class="no-stories-message">No stories found</p>
-            {:else}
-                {#each stories as story (story.id)}
-                <li>
-                    <div class="story-item">
-                        <Story {story} />
-                        <AddStory
-                            storyId={story.id}
-                            checked={$selectedStories.includes(story.id)}
-                            on:toggle={(event) => toggleStory({ detail: { storyId: story.id, checked: event.detail.checked } })}
-                        />
-                    </div>
-                </li>
-                {/each}
+        <Input
+        name="Name"
+        type="text"
+        placeholder="Playlist name"
+        value={values.title || ''}
+        error={errors.title}
+      />
+      
+
+            <Input
+                name="Description"
+                type="text"
+                placeholder="Playlist description"
+                value={values.description || ''}
+                error={errors.description}
+            />
+
+            <h3>Add stories</h3>
+            <p>Click on the + to add story to playlist</p>
+
+            <section class="story-list">
+                <ul>
+                    {#if noStoriesFound}
+                        <p class="no-stories-message">No stories found</p>
+                    {:else}
+                        {#each stories as story (story.id)}
+                            <li>
+                                <div class="story-item">
+                                    <Story {story} />
+                                    <AddStory
+                                        storyId={story.id}
+                                        checked={$selectedStories.includes(story.id)}
+                                        on:toggle={(event) => toggleStory({ detail: { storyId: story.id, checked: event.detail.checked } })}
+                                    />
+                                </div>
+                            </li>
+                        {/each}
+                    {/if}
+                </ul>
+            </section>
+            {#if errors.stories}
+                <span class="error">{errors.stories}</span>
             {/if}
-            </ul>
-        </section>
-        {#if formError}
-                <p class="error">{formError}</p>
-            {/if}
+
             {#if formSuccess}
                 <p class="success">Playlist created successfully!</p>
             {/if}
-        <div class="buttons-container">
-            <a href="#create-playlist" class="close-button" on:click={closePopup}>Cancel <SmallCross/></a>
-            <button type="submit" class="create-button">Create <Check/></button>
-        </div>
- 
-      </form>
+            <div class="buttons-container">
+                <a href="#create-playlist" class="close-button" on:click={closePopup}>Cancel <SmallCross/></a>
+                <button type="submit" class="create-button">Create <Check/></button>
+            </div>
+        </form>
     </div>
 </dialog>
+
 <style>
+.error {
+    color: #b60000;
+    font-size: 1em;
+    margin-top: 1em;
+    text-align: center;
+}
+.success {
+    color: #256639;
+    font-size: 1em;
+    margin-top: 2em;
+    text-align: center;
+}
 .story-item {
     display: flex;
 }
@@ -244,6 +306,4 @@ h3{
         min-height: 12em;
     }
 }
- 
- 
 </style>
