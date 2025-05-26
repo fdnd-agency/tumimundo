@@ -1,6 +1,7 @@
 <script>
-  import { Back, VisualsSVG, DarkModeSVG } from '$lib/index';
+  import { Back, VisualsSVG, DarkModeSVG, CloudsSVG } from '$lib/index';
   import { onMount } from 'svelte';
+  import CloudsSvg from '../../../lib/components/svg/CloudsSVG.svelte';
 
   export let data;
   const { story, audio } = data;
@@ -143,10 +144,13 @@
       <p>No audio available</p>
     {/if}
   </section>
+
+  <CloudsSvg/>
+
 </main>
 
 <style>
-  
+
 main {
   background: linear-gradient(to bottom, #2e003e, #5f2c82);
   min-height: 100vh;
@@ -155,6 +159,7 @@ main {
   align-items: center;
   justify-content: space-between;
   position: relative;
+  z-index: 0;
 }
 
 header,
@@ -232,7 +237,6 @@ header a {
   width: 100%;
   height: 8em;
   padding: 1em;
-  background: #42275a;
   border-top-left-radius: 2em;
   border-top-right-radius: 2em;
   color: white;
