@@ -128,23 +128,27 @@ header a {
 
 .visuals {
   margin: auto;
+
+  & img{
+    max-width: 20em;
+    max-height: 20em;
+  }
 }
 
 .transcript {
   text-align: left;
-  font-size: 1.4em;
+  font-size: 2.5em;
   font-weight: bold;
   margin-top: 1em;
   line-height: 1.4;
-  max-height: 8em;
-  width: 20em;
+  max-height: 5em;
+  max-width: 14em;
   overflow: auto;
   color: white;
 }
 
 .player {
   position: relative;
-  margin-top: 2em;
   width: 100%;
   height: 8em;
   padding: 1em;
@@ -152,6 +156,8 @@ header a {
   border-top-left-radius: 2em;
   border-top-right-radius: 2em;
   color: white;
+  margin: 1em;
+  margin-bottom: 0;
 }
 
 .player audio {
