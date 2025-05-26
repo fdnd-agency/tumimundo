@@ -42,9 +42,11 @@ const {
   <p class="story-summary">{summary}</p>
 
   <div class="story-playtime flex-items">
-    <a href={`/story/${story.id}`} aria-label={`Open story: ${title}`}>
-      <PlayStory />
-    </a>
+    {#if story?.id}
+      <a href={`/story/${story.id}`} aria-label={`Open story: ${title}`}>
+        <PlayStory />
+      </a>
+    {/if}
     <p>{playtime}</p>
 </div>
 

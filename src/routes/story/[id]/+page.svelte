@@ -5,7 +5,7 @@
   export let data;
   const { story, audio } = data;
   const audioSrc = story.audios?.[0]?.file || '';
-  const transcriptLines = parseVTT(audio.transcript);
+  const transcriptLines = audio?.transcript ? parseVTT(audio.transcript) : [];
 
   let showVisuals = true;
   let jsEnabled = false;
@@ -57,12 +57,15 @@
   {/if}
 
   <section class="transcript">
-  <h2>{story.title}</h2>
-  {#each transcriptLines as line}
-    <p>{line}</p>
-  {/each}
-</section>
-
+    <h2>{story.title}</h2>
+      {#if transcriptLines.length > 0}
+        {#each transcriptLines as line}
+          <p>{line}</p>
+        {/each}
+      {:else}
+        <p>No transcripts available.</p>
+      {/if}
+  </section>
 
   <section class="player">
     {#if audioSrc}
