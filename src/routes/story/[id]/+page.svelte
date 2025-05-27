@@ -30,9 +30,16 @@
   });
 
   function toggleVisuals() {
+  if (!document.startViewTransition) {
     showVisuals = !showVisuals;
     localStorage.setItem('showVisuals', showVisuals);
+    return;
   }
+  document.startViewTransition(() => {
+    showVisuals = !showVisuals;
+    localStorage.setItem('showVisuals', showVisuals);
+  });
+}
 
   function toggleTheme() {
     if (!document.startViewTransition) {
@@ -126,7 +133,7 @@
 
   {#if showVisuals}
     <section class="visuals">
-      <img src={story.image} alt={story.summary} />
+      <img src={story.image} alt={story.summary} style="view-transition-name:visuals"/>
     </section>
   {/if}
 
@@ -257,6 +264,7 @@ header a {
   max-width: 20em;
   max-height: 20em;
   border-radius: 1em;
+  transition: 1s;
 }
 
 .transcript {
@@ -334,4 +342,21 @@ main.light-mode .transcript p {
   from { opacity: 0.2; }
   to { opacity: 1; }
 }
+
+::view-transition-old(visual-img),
+::view-transition-new(visual-img) {
+  animation: fade-visual-img 0.4s ease;
+}
+
+@keyframes fade-visual-img {
+  from {
+    opacity: 0;
+    transform: scale(0.1);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 </style>
