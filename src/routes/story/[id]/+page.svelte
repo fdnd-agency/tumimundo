@@ -1,5 +1,5 @@
 <script>
-  import { Back, VisualsSVG, DarkModeSVG, CloudsSVG } from '$lib/index';
+  import { Back, VisualsSVG, CloudsSVG, DarkModeSVG } from '$lib/index';
   import { onMount } from 'svelte';
   import CloudsSvg from '../../../lib/components/svg/CloudsSVG.svelte';
 
@@ -16,6 +16,7 @@
 
   let showVisuals = true;
   let jsEnabled = false;
+  let darkMode = true;
 
   onMount(() => {
     jsEnabled = true;
@@ -23,11 +24,26 @@
     if (stored !== null) {
       showVisuals = stored === 'true';
     }
+
+    const theme = localStorage.getItem('theme');
+    if (theme) darkMode = theme === 'dark';
   });
 
   function toggleVisuals() {
     showVisuals = !showVisuals;
     localStorage.setItem('showVisuals', showVisuals);
+  }
+
+  function toggleTheme() {
+    if (!document.startViewTransition) {
+      darkMode = !darkMode;
+      localStorage.setItem('theme', darkMode ? 'dark' : 'light');
+      return;
+    }
+    document.startViewTransition(() => {
+      darkMode = !darkMode;
+      localStorage.setItem('theme', darkMode ? 'dark' : 'light');
+    });
   }
 
   function parseVTT(vtt) {
@@ -70,7 +86,6 @@
     );
   }
 
-  // Detects the active sentence of the story
   $: {
     const index = transcriptLines.findIndex(
       (line) => currentTime >= line.start && currentTime < line.end
@@ -89,11 +104,13 @@
   }
 </script>
 
-<main>
+<main class:light-mode={!darkMode} style="view-transition-name:main-bg;">
   <header>
-    <a href="/lessons" aria-label="Go back"><Back color="white" /></a>
+    <a href="/lessons" aria-label="Go back"><Back color={darkMode ? 'white' : 'black'} /></a>
     <div class="actions">
-      <button aria-label="Dark mode"><DarkModeSVG /></button>
+      <button aria-label="Toggle theme" on:click={toggleTheme}>
+        <DarkModeSVG {darkMode} />
+      </button>
 
       {#if jsEnabled}
         <button aria-label="Toggle visuals" on:click={toggleVisuals}>
@@ -145,14 +162,23 @@
     {/if}
   </section>
 
-  <CloudsSvg/>
-
+  {#if darkMode}
+    <CloudsSVG 
+    style="view-transition-name:clouds"
+    color="dark" />
+    <div class="moon" style="view-transition-name:clouds"></div>
+  {:else}
+    <CloudsSvg
+    style="view-transition-name:clouds"
+    color="light" />
+    <div class="sun" style="view-transition-name:clouds"></div>
+  {/if}
 </main>
 
 <style>
-
 main {
-  background: linear-gradient(to bottom, #2e003e, #5f2c82);
+  transition: background 5s ease;
+  background: var(--bg-story-dark);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -160,6 +186,37 @@ main {
   justify-content: space-between;
   position: relative;
   z-index: 0;
+  overflow-y: hidden;
+}
+
+main.light-mode {
+  background: var(--bg-image-blue);
+}
+
+.sun {
+  position: absolute;
+  top: -2em;
+  left: -1em;
+  width: 10em;
+  height: 10em;
+  background: radial-gradient(circle, #ffe066, #ffcc00);
+  border-radius: 50%;
+  box-shadow: 0 0 30px #ffcc00;
+  animation: rise 1s ease-out forwards;
+  z-index: -1;
+}
+
+.moon {
+  position: absolute;
+  top: -2em;
+  left: -1em;
+  width: 10em;
+  height: 10em;
+  background: radial-gradient(circle, #d3d3d3, #838383);
+  border-radius: 50%;
+  box-shadow: 0 0 30px #d6d6d6;
+  animation: rise 1s ease-out forwards;
+  z-index: -1;
 }
 
 header,
@@ -168,11 +225,6 @@ header,
 .player {
   padding: 1em;
   max-width: 31.25em;
-}
-
-.visuals,
-.transcript {
-  margin: auto;
 }
 
 header {
@@ -218,9 +270,8 @@ header a {
   overflow-y: auto;
   color: white;
   scroll-behavior: smooth;
-  overflow-y: scroll; 
-  scrollbar-width: none;       
-  -ms-overflow-style: none;  
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 .transcript::-webkit-scrollbar {
@@ -239,6 +290,15 @@ header a {
   border-radius: 0.25em;
 }
 
+main.light-mode .transcript p.active {
+  background-color: rgba(0, 0, 0, 0.05);
+  color: #000000;
+}
+
+main.light-mode .transcript p {
+  color: #272727;
+}
+
 .player {
   position: relative;
   width: 100%;
@@ -247,11 +307,31 @@ header a {
   border-top-left-radius: 2em;
   border-top-right-radius: 2em;
   color: white;
-  margin: 1em;
-  margin-bottom: 0;
+  margin: 1em 0 0;
 }
 
 .player audio {
   width: 100%;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(2em);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+::view-transition-old(main-bg),
+::view-transition-new(main-bg) {
+  animation: fade-color 0.6s ease forwards;
+}
+
+@keyframes fade-color {
+  from { opacity: 0.2; }
+  to { opacity: 1; }
 }
 </style>

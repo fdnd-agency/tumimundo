@@ -141,7 +141,7 @@
       <p class="black-text">It will be permanently removed from your profile, and you won't be able to recover it.</p>
 
       <div class="popup-btns">
-        <a href="#" class="black-text cancel-btn">Cancel</a>
+        <a href="#close" class="black-text cancel-btn">Cancel</a>
         <form method="POST" action={`/lessons/delete/${playlist.id}`} on:submit|preventDefault={deletePlaylist}>
           <button type="submit" class="delete-btn">Delete <DeleteSVG/></button>
         </form>
