@@ -343,8 +343,8 @@ main.light-mode .transcript p {
   to { opacity: 1; }
 }
 
-::view-transition-old(visual-img),
-::view-transition-new(visual-img) {
+::view-transition-old(visuals),
+::view-transition-new(visuals) {
   animation: fade-visual-img 0.4s ease;
 }
 
