@@ -28,9 +28,10 @@
   "type": "module",
   "dependencies": {
     "@directus/sdk": "17.0.*",
+    "argon2": "^0.43.0",
     "undici": "^7.7.0"
-    	},
-	"exports": {
-		"./lib/*": "./src/lib/*"
+  },
+  "exports": {
+    "./lib/*": "./src/lib/*"
   }
 }

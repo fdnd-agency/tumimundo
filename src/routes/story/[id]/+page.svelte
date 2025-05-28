@@ -68,7 +68,6 @@
         current = { start, end, text: '' };
         continue;
       }
-
       if (current) {
         current.text += line + ' ';
         const nextLine = lines[i + 1]?.trim();
@@ -78,7 +77,6 @@
         }
       }
     }
-
     return result;
   }
 
@@ -184,7 +182,6 @@
 
 <style>
 main {
-  transition: background 5s ease;
   background: var(--bg-story-dark);
   min-height: 100vh;
   display: flex;
