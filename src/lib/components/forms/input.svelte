@@ -3,6 +3,7 @@
   export let placeholder = '';
   export let value = '';
   export let name = '';
+  export let error = '';
 </script>
 
 <label for={name}>
@@ -72,5 +73,13 @@
     border-radius: .5em;
     padding: 1.5rem 1rem;
     box-sizing: border-box;
+  }
+  .error {
+    color: #b60000;
+    font-size: 0.95em;
+    margin-top: -1em;
+    margin-bottom: 1em;
+    display: block;
+    text-align: left;
   }
 </style>

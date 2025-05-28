@@ -38,28 +38,33 @@
 <article class="playlist-card">
   <div class="image-container">
     <picture>
-      <source srcset="{image}?width=128&format=avif" type="image/avif">
-      <source srcset="{image}?width=128&format=webp" type="image/webp">
+      <source srcset="{image}?width=256&format=avif" type="image/avif">
+      <source srcset="{image}?width=256&format=webp" type="image/webp">
       <img
-      src="{image}?width=128"
-      alt="{title}"
-      style="view-transition-name:playlist-image-{playlist.id};"
+        src="{image}?width=256"
+        alt="{title}"
+        style="view-transition-name:playlist-image-{playlist.id};"
       />
     </picture>
   </div>
 
   <h3
-  class="playlist-title"
-  style="view-transition-name:playlist-title-{playlist.id};"
->
-  <a href={`/playlist/${playlist.id}`} aria-label="Go to playlist">
-    {title}
-  </a>
+    class="playlist-title"
+    style="view-transition-name:playlist-title-{playlist.id};"
+  >
+    <a href={`/playlist/${playlist.id}`} aria-label="Go to playlist">
+      {title}
+    </a>
+  </h3>
 
-  <div class="playlist-playtime flex-items">
-    <Play/>
-    <p>{playtime}</p>
-  </div>
+  <div class="card-bottom">
+    <div
+      class="playlist-playtime flex-items"
+      style="view-transition-name:playlist-play-{playlist.id};"
+    >
+      <Play />
+      <p>{playtime}</p>
+    </div>
 
     <form action="/like" method="POST" on:submit|preventDefault={toggleLike}>
       {#if isLiked}
@@ -69,8 +74,13 @@
         <input type="hidden" name="playlistId" value="{playlist.id}" />
         <input type="hidden" name="profileId" value="{profileId}" />
       {/if}
-      
-      <button type="submit" class="playlist-icons" aria-label="{isLiked ? 'Unlike' : 'Like'}">
+
+      <button
+        type="submit"
+        class="playlist-icons"
+        aria-label="{isLiked ? 'Unlike' : 'Like'}"
+        style="view-transition-name:playlist-like-{playlist.id};"
+      >
         <LikeButton {isLiked} />
       </button>
     </form>
@@ -125,15 +135,17 @@
     justify-content: space-between;
     align-items: center;
   }
-
-  .playtime {
+  
+  .playlist-playtime {
     display: flex;
     align-items: center;
     gap: 0.25em;
     font-size: 0.75em;
   }
 
-  .like-button {
+
+  .like-button,
+  .playlist-icons {
     background: none;
     border: none;
     cursor: pointer;
@@ -141,12 +153,15 @@
   }
 
   .like-button svg.liked,
-  .like-button svg.liked path {
+  .playlist-icons button svg.liked,
+  .playlist-icons button svg.liked path {
     fill: #F33232;
     stroke: #F33232;
   }
 
-  .like-button svg.liked {
+
+  .like-button svg.liked,
+  .playlist-icons button svg.liked {
     animation: scale 0.4s ease-in-out;
   }
 
@@ -159,29 +174,20 @@
     }
   }
 
-  :global(.playlist-icons button svg.liked, .playlist-icons button svg.liked path) {
-    fill: #F33232;
-    stroke: #F33232;
+  ::view-transition-old(playlist-title-*),
+  ::view-transition-new(playlist-title-*) {
+    animation: fade-slide 0.4s ease;
   }
 
-  :global(.playlist-icons button svg.liked) {
-    animation: scale .5s ease-in;
+  @keyframes fade-slide {
+    from {
+      opacity: 0;
+      transform: translateY(0.5em);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
-
-/* view transition for title */
-::view-transition-old(playlist-title-*),
-::view-transition-new(playlist-title-*) {
-  animation: fade-slide 0.4s ease;
-}
-
-@keyframes fade-slide {
-  from {
-    opacity: 0;
-    transform: translateY(0.5em);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 </style>
+
