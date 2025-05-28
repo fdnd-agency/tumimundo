@@ -1,11 +1,8 @@
 <script>
-  // Standard data
   export let type = 'text';
   export let placeholder = '';
   export let value = '';
   export let name = '';
-  export let inputClass = '';
-  export let label = '';
 </script>
 
 <label for={name}>
@@ -52,6 +49,10 @@
   />
 {/if}
 
+{#if error}
+  <span class="error">{error}</span>
+{/if}
+
 <style>
   label {
     color: black;
@@ -71,11 +72,5 @@
     border-radius: .5em;
     padding: 1.5rem 1rem;
     box-sizing: border-box;
-  }
-  input.is-valid {
-    border: 2px solid #2ecc40;
-  }
-  input.is-invalid {
-    border: 2px solid #d32f2f;
   }
 </style>

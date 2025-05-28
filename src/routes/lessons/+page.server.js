@@ -1,7 +1,34 @@
 import { fail } from '@sveltejs/kit';
 import { createPlaylistWithStories, fetchApi, fetchAllData, mapPlaylistsWithDetails, mapStoriesWithDetails } from '$lib/api';
 
+// --- STRATEGY PATTERN: Validation strategies ---
+const titleStrategies = [
+  (value) => !value?.trim() && 'Title is required',
+  (value) => value?.length > 25 && 'Title must be less than 25 characters'
+];
 
+const descriptionStrategies = [
+  (value) => !value?.trim() && 'Description is required'
+];
+
+const storiesStrategies = [
+  (value) => (!value || value.length === 0) && 'At least one story must be selected'
+];
+
+/**
+ * Runs all validation strategies for a given value.
+ * Returns the first error message found, or null if all pass.
+ * @param {any} value - The value to validate
+ * @param {Array<Function>} strategies - Array of validation functions
+ * @returns {string|null}
+ */
+function validateField(value, strategies) {
+  for (const strategy of strategies) {
+    const error = strategy(value);
+    if (error) return error;
+  }
+  return null;
+}
 export async function load({ fetch }) {
     const profileId = 122;
     const data = await fetchAllData(fetch);
@@ -25,75 +52,53 @@ export async function load({ fetch }) {
         languages: data.languages
     };
 }
-/**
- * Creates a new playlist with the given title, description, and selected stories.
- *
- * @async
- * @function createPlaylist
- * @param {Object} options - The options object.
- * @param {Request} options.request - The request object containing form data.
- * @param {Object} options.locals - The locals object containing user information.
- * @param {Function} options.fetch - The fetch function for making API requests.
- * @returns {Promise<Object>} A promise that resolves to:
- *   - success {boolean} - Indicates if the playlist was created successfully.
- *   - playlists {Array} - Updated playlists after creation.
- *   - stories {Array} - Updated stories after creation.
- *   - error {string} - Error message if creation failed.
- *   - errors {Object} - Validation errors if any.
- */
 export const actions = {
     createPlaylist: async ({ request, locals, fetch }) => {
         const formData = await request.formData();
-        const title = formData.get('Name');
-        const description = formData.get('Description');
-        const stories = formData.getAll('stories');
+        const values = {
+            title: formData.get('Name'),
+            description: formData.get('Description'),
+            stories: formData.getAll('stories').map(id => parseInt(id, 10))
+        };
 
-        console.log('Formuliergegevens:', { title, description, stories });
+        // Validate fields using strategies
+        const errors = {
+            title: validateField(values.title, titleStrategies),
+            description: validateField(values.description, descriptionStrategies),
+            stories: validateField(values.stories, storiesStrategies)
+        };
 
-        const errors = {};
-        if (!title || title.trim() === '') {
-            errors.title = 'Title is required';
-        } else if (title.length > 25) {
-            errors.title = 'Title must be less than 25 characters';
-        }
+        // Remove nulls from errors
+        const filteredErrors = Object.fromEntries(
+            Object.entries(errors).filter(([_, v]) => v)
+        );
 
-        if (!description || description.trim() === '') {
-            errors.description = 'Description is required';
-        }
-
-        if (!stories || stories.length === 0) {
-            errors.stories = 'At least one story must be selected';
-        }
-
-        if (Object.keys(errors).length > 0) {
-            return fail(400, {  // Use fail from @sveltejs/kit
+        if (Object.keys(filteredErrors).length > 0) {
+            return fail(400, {
                 error: 'Validation failed',
-                errors,
-                values: { title, description }
+                errors: filteredErrors,
+                values
             });
         }
 
         try {
-            const result = await createPlaylistWithStories(fetch,
-                { title, description, user_created: locals.user?.id },
-                stories.map(id => parseInt(id, 10))
+            const result = await createPlaylistWithStories(
+                fetch,
+                { title: values.title, description: values.description, user_created: locals.user?.id },
+                values.stories
             );
 
-            console.log('New Playlist Created Result:', result);  // Log the result
-
             if (result.status === 201) {
-                // Success: Redirect to the new playlist's page
                 return {
                     status: 201,
                     redirect: `/playlist/${result.data.id}`,
-                    success: true,
+                    success: true
                 };
             } else {
-                // Error
                 return {
                     status: result.status || 500,
                     error: result.error || 'Failed to create playlist',
-                    values: { title, description }
+                    values
                 };
             }
         } catch (error) {
@@ -101,7 +106,7 @@ export const actions = {
             return {
                 status: 500,
                 error: 'Failed to create playlist',
-                values: { title, description }
+                values
             };
         }
     }
