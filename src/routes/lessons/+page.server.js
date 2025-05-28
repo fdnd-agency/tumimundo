@@ -55,26 +55,30 @@ export async function load({ fetch }) {
 export const actions = {
     createPlaylist: async ({ request, locals, fetch }) => {
         const formData = await request.formData();
-        const values = {
-            title: formData.get('Name'),
-            description: formData.get('Description'),
-            stories: formData.getAll('stories').map(id => parseInt(id, 10))
-        };
+        const title = formData.get('Name');
+        const description = formData.get('Description');
+        const stories = formData.getAll('stories').map(id => parseInt(id, 10));
 
-        // Validate fields using strategies
-        const errors = {
-            title: validateField(values.title, titleStrategies),
-            description: validateField(values.description, descriptionStrategies),
-            stories: validateField(values.stories, storiesStrategies)
-        };
 
-        // Remove nulls from errors
-        const filteredErrors = Object.fromEntries(
-            Object.entries(errors).filter(([_, v]) => v)
-        );
+        console.log('Formuliergegevens:', { title, description, stories });
 
-        if (Object.keys(filteredErrors).length > 0) {
-            return fail(400, {
+        const errors = {};
+        if (!title || title.trim() === '') {
+            errors.title = 'Title is required';
+        } else if (title.length > 25) {
+            errors.title = 'Title must be less than 25 characters';
+        }
+
+        if (!description || description.trim() === '') {
+            errors.description = 'Description is required';
+        }
+
+        if (!stories || stories.length === 0) {
+            errors.stories = 'At least one story must be selected';
+        }
+
+        if (Object.keys(errors).length > 0) {
+            return fail(400, {  // Use fail from @sveltejs/kit
                 error: 'Validation failed',
                 errors: filteredErrors,
                 values
