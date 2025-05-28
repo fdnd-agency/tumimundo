@@ -60,6 +60,7 @@ export const actions = {
             description: formData.get('Description'),
             stories: formData.getAll('stories').map(id => parseInt(id, 10))
         };
+     
 
         // Validate fields using strategies
         const errors = {
