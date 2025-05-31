@@ -6,12 +6,35 @@ const assetBaseUrl = `${PUBLIC_APIURL}/assets/`;
  
 export async function fetchCollection(fetch, collectionName, id = null) {
     const directus = getDirectusInstance(fetch);
+
+    if (id && typeof id === 'object' && !Array.isArray(id)) {
+        return await directus.request(readItems(collectionName, id));
+    }
  
     if (id) {
         return await directus.request(readItem(collectionName, id));
     }
  
     return await directus.request(readItems(collectionName));
+}
+
+export async function createUser(fetch, userData) {
+    const directus = getDirectusInstance(fetch);
+    try {
+      const newUser = await directus.request(
+      createItem('tm_users', userData)
+    );
+      return {
+      status: 201,
+      data: newUser
+      };
+    } catch (error) {
+      return {
+      status: 500,
+      error: 'User creation failed',
+      details: error.message
+      };
+    }
 }
   
 /**

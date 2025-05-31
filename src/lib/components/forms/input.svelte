@@ -3,12 +3,15 @@
   export let placeholder = '';
   export let value = '';
   export let name = '';
-  export let error = '';
+  export let inputClass = '';
+  export let label = '';
 </script>
 
 <label for={name}>
-  {#if type === 'email'}
-    Email
+  {#if label}
+    {label}
+  {:else if type === 'email'}
+  Email
   {:else if type === 'password'}
     Password
   {:else}
@@ -24,7 +27,7 @@
     placeholder={placeholder}
     aria-label={name}
     bind:value={value}
-    required
+    class={inputClass}
   />
 {:else if type === 'password'}
   <input
@@ -34,7 +37,7 @@
     placeholder={placeholder}
     aria-label={name}
     bind:value={value}
-    required
+    class={inputClass}
   />
 {:else}
   <input
@@ -44,12 +47,8 @@
     placeholder={placeholder}
     aria-label={name}
     bind:value={value}
-    required
+    class={inputClass}
   />
-{/if}
-
-{#if error}
-  <span class="error">{error}</span>
 {/if}
 
 <style>
@@ -72,12 +71,10 @@
     padding: 1.5rem 1rem;
     box-sizing: border-box;
   }
-  .error {
-    color: #b60000;
-    font-size: 0.95em;
-    margin-top: -1em;
-    margin-bottom: 1em;
-    display: block;
-    text-align: left;
+  input.is-valid {
+    border: 2px solid #2ecc40;
+  }
+  input.is-invalid {
+    border: 2px solid #d32f2f;
   }
 </style>
