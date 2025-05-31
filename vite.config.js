@@ -11,7 +11,10 @@ export default defineConfig({
   },
   test: {
     globals: true,       // Maakt globale functies zoals 'vi', 'test', en 'expect' beschikbaar
-	environment: 'jsdom',
-  
+    environment: 'jsdom',
+    include: [
+      'tests/unit/**/*.{test,spec}.{js,ts}',
+      'tests/integration/**/*.{test,spec}.{js,ts}',
+    ],
   },
 });
