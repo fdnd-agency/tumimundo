@@ -1,3 +1,4 @@
+// changed fetch-json.js to Fetch-json.js
 export default async function fetchJson(url, options = {}) {
     const response = await fetch(url, options);
   
