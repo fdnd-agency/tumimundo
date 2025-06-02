@@ -1,9 +1,31 @@
 <script>
 import { Input, Back } from '$lib/index';
 
-</script>
+export let form;
 
-<title>sign-up</title>
+let password = '';
+let showPassword = false;
+let showCriteria = false;
+
+const criteria = [
+  {
+    label: 'A lowercase letter',
+    test: pw => /[a-z]/.test(pw)
+  },
+  {
+    label: 'An uppercase letter',
+    test: pw => /[A-Z]/.test(pw)
+  },
+  {
+    label: 'A number',
+    test: pw => /\d/.test(pw)
+  },
+  {
+    label: 'Minimum 8 characters',
+    test: pw => pw.length >= 8
+  }
+];
+</script>
 <main>
     <section>
         <div class="heading">
@@ -14,18 +36,107 @@ import { Input, Back } from '$lib/index';
         </div>
     
         <form method="POST" action="/sign-up">
-                <Input type="text" name="name" placeholder="Enter your full name"/>
-                <Input type="email" name="email" placeholder="email@example.com"/>
-                <Input type="password" name="password" placeholder="Enter your password"/>
+            <Input 
+                inputClass={form?.errors?.name ? 'is-invalid' : ''}
+                type="text" 
+                name="name" 
+                placeholder="Enter your full name"
+                value={form?.values?.name ?? ''}
+            />
+            {#if form?.errors?.name}
+                <div class="field-error">{form.errors.name}</div>
+            {/if}
 
+            <Input 
+                inputClass={form?.errors?.email ? 'is-invalid' : ''}
+                type="email" 
+                name="email" 
+                placeholder="email@example.com"
+                value={form?.values?.email ?? ''}
+            />
+            {#if form?.errors?.email}
+                <div class="field-error">{form.errors.email}</div>
+            {/if}
+
+
+            <div class="password-field-wrapper">
+                <Input
+                    bind:value={password}
+                    inputClass={form?.errors?.password ? 'is-invalid' : ''}
+                    type={showPassword ? 'text' : 'password'}
+                    name="password"
+                    placeholder="Enter your password"
+                    label="Password" 
+                    on:focus={() => showCriteria = true}
+                    on:blur={() => showCriteria = false}
+                />
+                <button
+                    type="button"
+                    class="toggle-password-btn"
+                    aria-label={showPassword ? "Hide password" : "Show password"}
+                    on:click={() => showPassword = !showPassword}
+                >
+                    {#if showPassword}
+                        <svg width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#444" stroke-width="2" d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12Z"/><circle cx="12" cy="12" r="3" stroke="#444" stroke-width="2"/></svg>
+                    {:else}
+                        <svg width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="#444" stroke-width="2" d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12Z"/><circle cx="12" cy="12" r="3" stroke="#444" stroke-width="2"/><line x1="4" y1="20" x2="20" y2="4" stroke="#444" stroke-width="2"/></svg>
+                    {/if}
+                </button>
+            </div>
+            {#if form?.errors?.password}
+                <div class="field-error">{form.errors.password}</div>
+            {/if}
+
+            {#if showCriteria || password.length > 0}
+            <div class="password-criteria">
+                <h3>Password must contain the following:</h3>
+                <ul>
+                {#each criteria as item}
+                <li class={item.test(password) ? 'valid' : 'invalid'}>
+                    {#if item.test(password)}
+                        <svg width="16" height="16" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M27 9L13 23L6 16" stroke="#2ecc40" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    {:else}
+                        <svg width="16" height="16" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6 6L14 14M14 6L6 14" stroke="#d32f2f" stroke-width="3" stroke-linecap="round"/>
+                        </svg>
+                    {/if}
+                    {item.label}
+                </li>
+                {/each}
+                </ul>
+            </div>
+            {/if}
+              
+            <Input 
+                inputClass={form?.errors?.passwordConfirm ? 'is-invalid' : ''}
+                type="password" 
+                name="passwordConfirm" 
+                placeholder="Confirm your password"
+                label="Confirm password"
+            />
+            {#if form?.errors?.passwordConfirm}
+                <div class="field-error">{form.errors.passwordConfirm}</div>
+            {/if}
+            
             <article>
+                {#if form?.errors?.terms}
+                    <div class="terms-error">{form.errors.terms}</div>
+                {/if}
+
                 <div class="toggle-row">
-                    <label class="switch">
-                        <input type="checkbox" aria-label="toggle-button">
+                    <label class="switch {form?.errors?.terms ? 'is-invalid' : ''}">
+                        <input 
+                            type="checkbox" 
+                            aria-label="toggle-button"
+                            name="terms"
+                            checked={form?.values?.terms}
+                        >
                         <span class="slider round"></span>
                     </label>
 
-                    <p>Agree to the terms of services and the privacy policy <a href="/click" class="click-here">(click here for more information)</a></p>
+                    <p>Agree to the terms of services and the privacy policy <a href="/click" class="click-here">(click here for more information)</a>*</p>
                 </div>
         
                 <div class="toggle-row">
@@ -49,21 +160,26 @@ import { Input, Back } from '$lib/index';
     padding: 0;
     margin: 0;
 }
+
 section, form, main{
     display: flex;
     flex-direction: column;
 }
+
 main{
     align-items: center;
 }
+
 section {
     padding: 1.25em;
     max-width: 30em ;
     height: 100dvh; 
 }
+
 form {
     flex-grow: 1;
 }
+
 .heading {
     display: flex;
     align-items: center;
@@ -89,9 +205,59 @@ form {
     align-items: center;
 }
 
+.password-field-wrapper {
+  position: relative;
+  flex-direction: column;
+  margin-bottom: 0;
+}
+
+.password-field-wrapper .toggle-password-btn {
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  border: none;
+}
+
+.field-error {
+  color: #d32f2f;
+  margin-top: -0.8em;
+  margin-bottom: 0.8em;
+}
+
+.terms-error {
+  color: #d32f2f;
+  margin-bottom: 0.4em; 
+  margin-top: 0.5em;
+}
+
+.password-criteria {
+  background: #f7fafd;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.6em;
+  padding: 1em;
+  flex-direction: column ;
+}
+
+.password-criteria h3 {
+  font-size: 1em;
+  margin-bottom: 0.5em;
+}
+
+.password-criteria li.valid {
+  color: #2ecc40;
+  font-weight: 500;
+}
+
+.password-criteria li.invalid {
+  color: #d32f2f;
+  font-weight: 400;
+}
+
 label{
     font-size: 1.25em;
-}                                                                                
+    margin-bottom: .6em;
+}          
+
 p{
     max-width: 40ch;
 }
@@ -104,9 +270,11 @@ input{
     margin-bottom: 1.25em ;
     font-size: 1em;
 }
+
 label{
     margin-bottom: .6em;
 }
+
 div{
     display: flex;
     flex-direction: row;
