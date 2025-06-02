@@ -1,5 +1,5 @@
 <script>
-        import { Story, Back } from '$lib/index';
+    import { Story, Back } from '$lib/index';
 
 let currentPage = "lessons";
 
@@ -47,7 +47,6 @@ function scrollCarousel(direction) {
 
 <style>
 
-
 nav{
     display: flex;
     margin-top: var(--space-md);
@@ -93,14 +92,6 @@ input[type=radio] {
     box-sizing: border-box;
 }
     
-@media only screen and (min-width: 600px) {
-    main {
-        align-items: center;
-    }
-    .story-list {
-        grid-template-rows: repeat(4, auto);
-    }
-}
 @media only screen and (min-width: 800px) {
     .story-list {
         grid-template-columns: repeat(2, 1fr);
