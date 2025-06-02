@@ -6,7 +6,7 @@ export { default as Dropdown } from '$lib/components/core/Dropdown.svelte'
 
 export { default as Button } from '$lib/components/forms/ContinueBtn.svelte'
 export { default as Filter } from '$lib/components/forms/Filter.svelte'
-export { default as Input } from '$lib/components/forms/input.svelte'
+export { default as Input } from '$lib/components/forms/Input.svelte'
 export { default as Search } from '$lib/components/forms/search.svelte'
 export { default as AddStory } from '$lib/components/forms/AddStory.svelte';
 
