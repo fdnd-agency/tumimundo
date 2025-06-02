@@ -1,6 +1,6 @@
 // Components
 export { default as MakePlaylist } from '$lib/components/core/MakePlaylist.svelte'
-export { default as Menu } from '$lib/components/core/menu.svelte'
+export { default as Menu } from '$lib/components/core/Menu.svelte'
 export { default as Carousel } from '$lib/components/core/Carousel.svelte'
 export { default as Dropdown } from '$lib/components/core/Dropdown.svelte'
 
