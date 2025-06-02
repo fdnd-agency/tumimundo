@@ -12,7 +12,7 @@ export { default as AddStory } from '$lib/components/forms/AddStory.svelte';
 
 export { default as Playlist } from '$lib/components/layout/Playlist.svelte'
 export { default as Popup } from '$lib/components/layout/Popup.svelte'
-export { default as Story } from '$lib/components/layout/story.svelte'
+export { default as Story } from '$lib/components/layout/Story.svelte'
 
 
 // Helpers
