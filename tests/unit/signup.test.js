@@ -2,9 +2,12 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { actions } from '../../src/routes/sign-up/+page.server.js';
 
-/** The argon2 hash module is mocked so the test does not depend on the library itself, but we can still get a fake hashed password. */
-vi.mock('argon2', () => ({
-    default: { hash: vi.fn(async pw => `hashed_${pw}`) }
+/** The bcryptjs hash module is mocked so the test does not depend on the library itself, but we can still get a fake hashed password. */
+vi.mock('bcryptjs', () => ({
+  default: {
+    hash: vi.fn(async pw => `hashed_${pw}`),
+    compare: vi.fn(async (pw, hash) => hash === `hashed_${pw}`)
+  }
 }));
 
 /** The functions from the api are mocked */

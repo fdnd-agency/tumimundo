@@ -1,5 +1,5 @@
 import { fail, redirect } from '@sveltejs/kit';
-import argon2 from 'argon2';
+import bcrypt from 'bcryptjs';
 import { createUser, fetchCollection } from '$lib/api';
 
 /**
@@ -61,9 +61,9 @@ export const actions = {
     }
 
 
-    /** The password is hashed here with argon2, so the password is securely stored in the database */
+    /** The password is hashed here with bcryptjs, so the password is securely stored in the database */
     try {
-      hashedPassword = await argon2.hash(password);
+      hashedPassword = await bcrypt.hash(password, 10);
     } catch (err) {
       return fail(500, { err });
     }
