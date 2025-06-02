@@ -2,19 +2,19 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { actions } from '../../src/routes/sign-up/+page.server.js';
 
-/** De argon2 hash-module wordt gemockt zodat de test niet afhankelijk is van de library zelf, maar we wel een neppe gehashte wachtwoord kunnen krijgen. */
+/** The argon2 hash module is mocked so the test does not depend on the library itself, but we can still get a fake hashed password. */
 vi.mock('argon2', () => ({
     default: { hash: vi.fn(async pw => `hashed_${pw}`) }
 }));
 
-/** De functies uit de api worden gemockt */
+/** The functions from the api are mocked */
 vi.mock('$lib/api', () => {
   const fetchCollection = vi.fn();
   const createUser = vi.fn();
   return { fetchCollection, createUser, _mocks: { fetchCollection, createUser } };
 });
 
-/** Hier worden de sveltekit helpers gemockt. Hierdoor kunnen we de redirect en errors simuleren in de test */
+/** SvelteKit helpers are mocked here. This allows us to simulate redirects and errors in the test */
 vi.mock('@sveltejs/kit', () => ({
   redirect: (status, location) => {
     const err = new Error('Redirect');
@@ -25,7 +25,7 @@ vi.mock('@sveltejs/kit', () => ({
   fail: (status, data) => ({ status, data }),
 }));
 
-/** hiermee wordt een request-object en form-object gemockt */
+/** This mocks a request object and form object */
 function makeRequest(form) {
   return {
     formData: async () => ({
@@ -36,7 +36,7 @@ function makeRequest(form) {
 
 describe('Sign-up Unit', () => {
   let fetchCollection, createUser;
-  /** de before each zorgt ervoor dat voor elke test de mockfuncties worden opgehaald en beschikbaar zijn voor de test */
+  /** The beforeEach ensures that before every test the mock functions are retrieved and available for the test */
   beforeEach(async () => {
     ({ fetchCollection, createUser } = (await import('$lib/api'))._mocks);
   });

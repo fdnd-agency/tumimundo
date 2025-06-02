@@ -61,14 +61,14 @@ export const actions = {
     }
 
 
-    /** hier wordt het wachtwoord gehasht met argon2, zodat de wachtwoord beveiligd in de database staat */
+    /** The password is hashed here with argon2, so the password is securely stored in the database */
     try {
       hashedPassword = await argon2.hash(password);
     } catch (err) {
       return fail(500, { err });
     }
 
-    // De nieuwe gebruiker wordt hiermee toegevoegd aan directus
+    // The new user is added to Directus
     const creationResult = await createUser(fetch, {
       name,
       email,
@@ -81,7 +81,7 @@ export const actions = {
       });
     }
 
-    /** als de gebruiker is toegevoegd aan de database, wordt de gebruiker omgeleid naar de choose-buddy pagina om verder te gaan met de registratie */
+   /** If the user is added to the database, they are redirected to the choose-buddy page to continue the registration */
     throw redirect(303, '/choose-buddy');
   }
 };

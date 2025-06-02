@@ -160,21 +160,26 @@ const criteria = [
     padding: 0;
     margin: 0;
 }
+
 section, form, main{
     display: flex;
     flex-direction: column;
 }
+
 main{
     align-items: center;
 }
+
 section {
     padding: 1.25em;
     max-width: 30em ;
     height: 100dvh; 
 }
+
 form {
     flex-grow: 1;
 }
+
 .heading {
     display: flex;
     align-items: center;
@@ -251,7 +256,8 @@ form {
 label{
     font-size: 1.25em;
     margin-bottom: .6em;
-}                                                                                
+}      
+
 p{
     max-width: 40ch;
 }
@@ -264,9 +270,7 @@ input{
     margin-bottom: 1.25em ;
     font-size: 1em;
 }
-/* label{
-    margin-bottom: .6em;
-} */
+
 div{
     display: flex;
     flex-direction: row;
@@ -281,6 +285,7 @@ div{
   height: 1.25em;
   margin-right: .6em;
 }
+
 .switch input {
   opacity: 0;
   width: 0;
@@ -297,6 +302,7 @@ div{
   margin-left: 3.5em;
   line-height: 1.4;
 }
+
 .slider {
   position: absolute;
   cursor: pointer;
@@ -309,6 +315,7 @@ div{
   -webkit-transition: .4s;
   transition: .4s;
 }
+
 .slider:before {
   position: absolute;
   content: "";
@@ -320,23 +327,29 @@ div{
   -webkit-transition: .4s;
   transition: .4s;
 }
+
 input:checked + .slider {
   background-color: hsla(217, 91%, 60%, 1);;
 }
+
 input:focus + .slider {
   box-shadow: 0 0 1px hsla(217, 91%, 60%, 1);
 }
+
 input:checked + .slider:before {
   -webkit-transform: translateX(1.25em);
   -ms-transform: translateX(1.25em);
   transform: translateX(0.80em);
 }
+
 .slider.round {
   border-radius: 1em;
 }
+
 .slider.round:before {
   border-radius: 50%;
 }
+
 .sign-upbtn{
     align-self: center;
     bottom: 0;
@@ -356,6 +369,7 @@ input:checked + .slider:before {
 .sign-upbtn:hover {
     background-color: var(--color-login-bg-hover);
 }
+
 .click-here{
     color: hsla(217, 75%, 65%, 1);
 }
