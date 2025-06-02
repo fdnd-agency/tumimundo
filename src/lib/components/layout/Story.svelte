@@ -116,6 +116,7 @@ article {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   overflow: hidden;
   font-size: var(--font-size-xs);
 }
@@ -126,20 +127,10 @@ article {
   font-size: var(--font-size-xs);
 }
 
-.story-playtime a svg:hover circle {
-  fill: #F3A22A;
-}
-
 .story-icons {
   grid-area: 3 / 5 / 4 / 6; 
   justify-content: flex-end;
   gap: var(--space-sm);
-}
-
-.story-icons svg:hover path,
-.story-icons svg:hover rect,
-.story-icons svg:hover circle {
-  cursor: pointer;
 }
 
 @media (min-width: 412px) {

@@ -170,37 +170,9 @@ header {
     justify-content: center;
 }
 
-.playlist-1 > h3 {
-    font-weight: var(--font-weight-bold);
-    color: var(--color-text);
-    margin-bottom: .5em;
-}
-
 .own-playlist {
     display: flex;
     flex-direction: column;
-}
-
-.own-playlist > ul {
-    display: flex;
-    gap: var(--space-sm);
-    overflow-x: auto;
-}
-
-.own-playlist > ul > li {
-    height: 14rem;
-    width: 10em;
-    color: var(--color-text);
-    border-radius: var(--border-radius);
-    padding: .75em;
-    justify-content: center;
-}
-
-.playlist-1 > small {
-    display: flex;
-    gap: .3em;
-    align-items: center;
-    justify-content: center;
 }
 
 /* Styling for "all stories" section & carousel nav */
@@ -223,11 +195,7 @@ nav {
     align-items: center;
     justify-content: center;
 }
-.story-img {
-    width: 100%; 
-    max-width: 100%; 
-    height: auto;
-}
+
 .language-filter {
     display: flex;
     align-items: center;
@@ -278,13 +246,6 @@ label > img {
     background-color: hsla(248, 27%, 36%, 1);
     text-align: center;
     color: var(--color-text-light);
-}
-
-
-
-.playlist-1 > small {
-    align-self: start;
-    margin-top: auto;
 }
 
 /* Styling for suggested playlist page */

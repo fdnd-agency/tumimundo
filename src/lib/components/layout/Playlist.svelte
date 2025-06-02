@@ -126,6 +126,7 @@
     overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 2;
+    line-clamp: 2;
     -webkit-box-orient: vertical;
   }
 
@@ -142,24 +143,11 @@
     font-size: 0.75em;
   }
 
-  .like-button,
   .playlist-icons {
     background: none;
     border: none;
     cursor: pointer;
     padding: 0;
-  }
-
-  .like-button svg.liked,
-  .playlist-icons button svg.liked,
-  .playlist-icons button svg.liked path {
-    fill: #F33232;
-    stroke: #F33232;
-  }
-
-  .like-button svg.liked,
-  .playlist-icons button svg.liked {
-    animation: scale 0.4s ease-in-out;
   }
 
   @keyframes scale {
