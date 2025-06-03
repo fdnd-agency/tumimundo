@@ -1,45 +1,42 @@
 <script>
   import { Back, VisualsSVG, CloudsSVG, DarkModeSVG } from '$lib/index';
   import { onMount } from 'svelte';
-  import CloudsSvg from '../../../lib/components/svg/CloudsSVG.svelte';
+  import { enhance } from '$app/forms';
 
   export let data;
-  const { story, audio } = data;
+  const { story, audio, theme, showVisuals: showVisualsFromServer } = data;
   const audioSrc = story.audios?.[0]?.file || '';
 
   let transcriptLines = audio?.transcript ? parseVTT(audio.transcript) : [];
-
   let audioEl;
   let currentTime = 0;
   let currentLineIndex = -1;
   let transcriptRefs = [];
 
-  let showVisuals = true;
+  let showVisuals = showVisualsFromServer;
+  let darkMode = theme === 'dark';
   let jsEnabled = false;
-  let darkMode = true;
 
   onMount(() => {
     jsEnabled = true;
-    const stored = localStorage.getItem('showVisuals');
-    if (stored !== null) {
-      showVisuals = stored === 'true';
-    }
+    const storedVisuals = localStorage.getItem('showVisuals');
+    const storedTheme = localStorage.getItem('theme');
 
-    const theme = localStorage.getItem('theme');
-    if (theme) darkMode = theme === 'dark';
+    if (storedVisuals !== null) showVisuals = storedVisuals === 'true';
+    if (storedTheme) darkMode = storedTheme === 'dark';
   });
 
   function toggleVisuals() {
-  if (!document.startViewTransition) {
-    showVisuals = !showVisuals;
-    localStorage.setItem('showVisuals', showVisuals);
-    return;
+    if (!document.startViewTransition) {
+      showVisuals = !showVisuals;
+      localStorage.setItem('showVisuals', showVisuals);
+      return;
+    }
+    document.startViewTransition(() => {
+      showVisuals = !showVisuals;
+      localStorage.setItem('showVisuals', showVisuals);
+    });
   }
-  document.startViewTransition(() => {
-    showVisuals = !showVisuals;
-    localStorage.setItem('showVisuals', showVisuals);
-  });
-}
 
   function toggleTheme() {
     if (!document.startViewTransition) {
@@ -60,7 +57,6 @@
 
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i].trim();
-
       if (line === '' || line === 'WEBVTT') continue;
 
       if (line.includes('-->')) {
@@ -68,6 +64,7 @@
         current = { start, end, text: '' };
         continue;
       }
+
       if (current) {
         current.text += line + ' ';
         const nextLine = lines[i + 1]?.trim();
@@ -111,21 +108,26 @@
 
 <main class:light-mode={!darkMode} style="view-transition-name:main-bg;">
   <header>
-    <a href="/lessons" aria-label="Go back"><Back color={darkMode ? 'white' : 'black'} /></a>
-    <div class="actions">
-      <button aria-label="Toggle theme" on:click={toggleTheme}>
-        <DarkModeSVG {darkMode} />
-      </button>
+    <a href="/lessons" aria-label="Go back">
+      <Back color={darkMode ? 'white' : 'black'} />
+    </a>
 
-      {#if jsEnabled}
-        <button aria-label="Toggle visuals" on:click={toggleVisuals}>
+    <div class="actions">
+      <form method="POST" action="?/toggleTheme" use:enhance on:submit|preventDefault={toggleTheme}>
+        <button aria-label="Toggle theme" type="submit">
+          <DarkModeSVG {darkMode} />
+        </button>
+      </form>
+
+      <form method="POST" action="?/toggleVisuals" use:enhance on:submit|preventDefault={toggleVisuals}>
+        <button aria-label="Toggle visuals" type="submit">
           {#if showVisuals}
             <VisualsSVG mode="off" />
           {:else}
             <VisualsSVG mode="on" />
           {/if}
         </button>
-      {/if}
+      </form>
     </div>
   </header>
 
@@ -141,12 +143,13 @@
           height="270" 
           width="320" 
         />
-      </picture> 
+      </picture>
     </section>
   {/if}
 
   <section class="transcript">
     <h2>{story.title}</h2>
+
     {#if transcriptLines.length > 0}
       {#each transcriptLines as line, i}
         <p
@@ -177,14 +180,10 @@
   </section>
 
   {#if darkMode}
-    <CloudsSVG 
-    style="view-transition-name:clouds"
-    color="dark" />
+    <CloudsSVG style="view-transition-name:clouds" color="dark" />
     <div class="moon" style="view-transition-name:clouds"></div>
   {:else}
-    <CloudsSvg
-    style="view-transition-name:clouds"
-    color="light" />
+    <CloudsSVG style="view-transition-name:clouds" color="light" />
     <div class="sun" style="view-transition-name:clouds"></div>
   {/if}
 </main>
@@ -254,12 +253,17 @@ header a {
   text-decoration: none;
 }
 
+.actions{
+  display: flex;
+}
+
 .actions button {
   background: none;
   border: none;
   color: white;
   font-size: 1.2em;
   margin-left: 0.5em;
+  cursor: pointer;
 }
 
 .visuals {
