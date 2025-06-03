@@ -131,13 +131,22 @@
 
   {#if showVisuals}
     <section class="visuals">
-      <img src={story.image} alt={story.summary} style="view-transition-name:visuals"/>
+      <picture class="story-image flex-items">
+        <source srcset="{story.image}?width=320&format=avif" type="image/avif">
+        <source srcset="{story.image}?width=320&format=webp" type="image/webp">
+        <source srcset="{story.image}?width=320" type="image/jpeg">
+        <img 
+          src="{story.image}?width=320" 
+          alt="{story.summary} cover image" 
+          height="270" 
+          width="320" 
+        />
+      </picture> 
     </section>
   {/if}
 
   <section class="transcript">
     <h2>{story.title}</h2>
-
     {#if transcriptLines.length > 0}
       {#each transcriptLines as line, i}
         <p
