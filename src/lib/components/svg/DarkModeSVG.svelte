@@ -2,7 +2,7 @@
   export let darkMode = true;
 </script>
 
-<div class="icon-label">
+<span class="icon-label">
   {#if darkMode}
     <!-- Moon -->
     <svg width="33" height="33" viewBox="0 0 26 28" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -24,7 +24,7 @@
     </svg>
     <span>Light</span>
   {/if}
-</div>
+  </span>
 
 <style>
   .icon-label {
