@@ -82,5 +82,42 @@ li, li a {
 .active a {
     border-bottom: 3px solid #599AE7;
 }
+/* Desktop sidebar */
+@media screen and (min-width: 1025px) {
+	header {
+		position: fixed;
+		top: 0;
+		left: 0;
+		transform: none;
+		width: 300px;
+		height: 100%;
+		padding-top: 2rem;
+	}
+
+	ul {
+		flex-direction: column;
+		align-items: flex-start;
+		justify-content: space-evenly;
+        align-items: center;
+		height: 100%;
+		gap: rem;
+		padding-left: 1rem;
+	}
+
+	li, li a {
+		flex-direction: row;
+		align-items: center;
+		justify-content: flex-start;
+		gap: 0.5rem;
+        font-size: 1.5rem;
+	}
+
+	.active a {
+		border-bottom: none;
+		border-left: 3px solid #599AE7;
+		padding-left: 0.5rem;
+	}
+}
+
 </style>
 

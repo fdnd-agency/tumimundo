@@ -104,7 +104,9 @@
     --hover-border-color: #f0f0f0;
   }
   
-  
+main {
+    padding-bottom: 5em; 
+}
 
 *, body {
     margin: 0;
@@ -158,5 +160,12 @@ p {
         @view-transition {
             navigation: auto;
         }
+    }
+}
+
+@media screen and (min-width: 768px) {
+    main {
+        margin-left: 300px; 
+        padding-bottom: 0;
     }
 }
