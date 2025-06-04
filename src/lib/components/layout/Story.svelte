@@ -1,7 +1,7 @@
 <script>
   import { PlayStory, Download, AddStory } from '$lib/index';
 
-  export let story = {}; // voorkomt dat story undefined is
+  export let story = {}; // prevents story to be undefined
 
 const { 
   image = '', 
@@ -42,16 +42,14 @@ const {
   <p class="story-summary">{summary}</p>
 
   <div class="story-playtime flex-items">
-    {#if firstAudio}
-    <a href={firstAudio} target="_blank" aria-label="Listen to {title}">
-      <PlayStory/>
-    </a>
-  {:else}
-    <span>No audio available</span>
-  {/if}
-
+    {#if story?.id}
+      <a href={`/story/${story.id}`} aria-label={`Open story: ${title}`}>
+        <PlayStory />
+      </a>
+    {/if}
     <p>{playtime}</p>
-  </div>
+</div>
+
 
   <div class="story-icons flex-items">
     <Download/>

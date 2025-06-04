@@ -261,3 +261,24 @@ export async function deleteFromCollection(fetch, collectionName, id) {
         throw error;
     }
 }
+
+export async function fetchAudioById(fetch, id) {
+  const directus = getDirectusInstance(fetch);
+
+  try {
+    const audio = await directus.request(
+      readItem('tm_audio', id, {
+        fields: ['id', 'audio_file', 'transcript', 'transcript_file', 'voice_colours', 'speaker_profile']
+      })
+    );
+
+    return {
+      ...audio,
+      audio_file: audio.audio_file ? `${assetBaseUrl}${audio.audio_file}` : null,
+      transcript_file: audio.transcript_file ? `${assetBaseUrl}${audio.transcript_file}` : null
+    };
+  } catch (error) {
+    console.error(`Error fetching audio with id ${id}:`, error);
+    throw error;
+  }
+}
