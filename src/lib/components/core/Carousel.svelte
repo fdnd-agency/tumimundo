@@ -44,7 +44,6 @@ function scrollCarousel(direction) {
 
 </section>
 
-
 <style>
 
 nav{
@@ -92,6 +91,7 @@ input[type=radio] {
     box-sizing: border-box;
 }
     
+
 @media only screen and (min-width: 800px) {
     .story-list {
         grid-template-columns: repeat(2, 1fr);

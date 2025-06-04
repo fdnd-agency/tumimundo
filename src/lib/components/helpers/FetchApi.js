@@ -1,7 +1,7 @@
 // Credits to the original Tumi mundo project. https://github.com/briannededeugd/tumimundo/tree/main
 import { PUBLIC_APIURL } from '$env/static/public';
 
-export async function fetchApi(path, method = 'GET', data = null) {
+export async function FetchApi(path, method = 'GET', data = null) {
   const url = `${PUBLIC_APIURL}/items${path}`;
 
   const options = {

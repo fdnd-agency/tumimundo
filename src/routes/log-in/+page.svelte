@@ -277,4 +277,3 @@ label {
     margin-top: .6em;
     text-align: center;
 }
-</style>    

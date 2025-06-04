@@ -7,3 +7,4 @@ export default async function fetchJson(url, options = {}) {
   
     return response.json();
   }
+

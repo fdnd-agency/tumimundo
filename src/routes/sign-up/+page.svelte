@@ -329,7 +329,7 @@ div{
   transition: .4s;
 }
 input:checked + .slider {
-  background-color: hsla(217, 91%, 60%, 1);;
+  background-color: hsla(217, 91%, 60%, 1);
 }
 input:focus + .slider {
   box-shadow: 0 0 1px hsla(217, 91%, 60%, 1);

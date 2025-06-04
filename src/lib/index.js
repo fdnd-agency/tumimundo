@@ -50,4 +50,3 @@ export { default as RaymondSVG } from '$lib/components/svg/Buddys/RaymondSVG.sve
 export { default as BennySVG } from '$lib/components/svg/Buddys/BennySVG.svelte';
 export { default as MiloSVG } from '$lib/components/svg/Buddys/MiloSVG.svelte';
 export { default as DaisySVG } from '$lib/components/svg/Buddys/DaisySVG.svelte';
-

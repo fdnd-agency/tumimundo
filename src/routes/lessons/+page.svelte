@@ -1,4 +1,3 @@
-
 <script>
     import { Playlist, Menu, Carousel, Play, Plus, Input, MakePlaylist } from '$lib/index';
 
@@ -270,4 +269,3 @@ label > img {
     }
 }
     </style>
-    

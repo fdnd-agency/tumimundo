@@ -40,7 +40,7 @@
         <button class="edit-button">
             <Edit/>
             <p>Edit</p>
-        <button>
+        </button>
     </section>
     <ul>
         {#each filteredProfiles as profile}
@@ -141,4 +141,3 @@ h1 {
 h2 {
     font-size: 1em;
 }
-</style>
