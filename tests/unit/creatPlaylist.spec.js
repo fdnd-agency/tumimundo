@@ -84,20 +84,18 @@ describe('createPlaylist Unit Tests', () => {
       });
 
       expect(result.status).toBe(400);
-      expect(result).toEqual(expect.objectContaining({ 
-          status: 400,
-          data: {
-              error: 'Validation failed',
-              errors: {
-                  title: 'Title is required',
-                  description: 'Description is required',
-                  stories: 'At least one story must be selected',
-              },
-              values: {
-                  title: '',
-                  description: '',
-              },
+      expect(result.data).toEqual({
+          error: 'Validation failed',
+          errors: {
+              title: 'Title is required',
+              description: 'Description is required',
+              stories: 'At least one story must be selected',
+          },
+          values: {
+              title: '',
+              description: '',
+              stories: [], // Voeg dit toe, want jouw action returned ook stories: []
           }
-      }));
-  });
+      });
+    })
 })

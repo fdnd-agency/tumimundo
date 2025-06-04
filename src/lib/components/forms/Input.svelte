@@ -5,6 +5,7 @@
   export let name = '';
   export let inputClass = '';
   export let label = '';
+  export let error = '';
 </script>
 
 <label for={name}>
@@ -39,6 +40,9 @@
     bind:value={value}
     class={inputClass}
   />
+  {#if error}
+    <span class="error">{error}</span>
+  {/if}
 {:else}
   <input
     type="text"
@@ -48,8 +52,12 @@
     aria-label={name}
     bind:value={value}
     class={inputClass}
+    required
   />
-{/if}
+  {#if error}
+    <span class="error">{error}</span>
+  {/if}
+  {/if}
 
 <style>
   label {
@@ -71,10 +79,12 @@
     padding: 1.5rem 1rem;
     box-sizing: border-box;
   }
-  input.is-valid {
-    border: 2px solid #2ecc40;
-  }
-  input.is-invalid {
-    border: 2px solid #d32f2f;
+  .error {
+    color: #b60000;
+    font-size: 0.95em;
+    margin-top: -1em;
+    margin-bottom: 1em;
+    display: block;
+    text-align: left;
   }
 </style>
