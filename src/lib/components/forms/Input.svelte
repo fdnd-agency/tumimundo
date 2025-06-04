@@ -1,14 +1,17 @@
 <script>
-  // Standard data
   export let type = 'text';
   export let placeholder = '';
   export let value = '';
   export let name = '';
+  export let inputClass = '';
+  export let label = '';
 </script>
 
 <label for={name}>
-  {#if type === 'email'}
-    Email
+  {#if label}
+    {label}
+  {:else if type === 'email'}
+  Email
   {:else if type === 'password'}
     Password
   {:else}
@@ -24,7 +27,7 @@
     placeholder={placeholder}
     aria-label={name}
     bind:value={value}
-    required
+    class={inputClass}
   />
 {:else if type === 'password'}
   <input
@@ -34,7 +37,7 @@
     placeholder={placeholder}
     aria-label={name}
     bind:value={value}
-    required
+    class={inputClass}
   />
 {:else}
   <input
@@ -44,7 +47,7 @@
     placeholder={placeholder}
     aria-label={name}
     bind:value={value}
-    required
+    class={inputClass}
   />
 {/if}
 
@@ -67,5 +70,11 @@
     border-radius: .5em;
     padding: 1.5rem 1rem;
     box-sizing: border-box;
+  }
+  input.is-valid {
+    border: 2px solid #2ecc40;
+  }
+  input.is-invalid {
+    border: 2px solid #d32f2f;
   }
 </style>

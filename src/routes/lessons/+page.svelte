@@ -34,40 +34,28 @@
 
     <section class="own-playlist">
         <h2>Own playlists</h2>
-        <ul>
-            <li class="playlist-1">
-                <picture>
-                    <source srcset="https://fdnd-agency.directus.app/assets/263e541a-9dd8-4978-8ad0-9a6e5b9dfe1a?width=300&format=avif" type="image/avif">
-                    <source srcset="https://fdnd-agency.directus.app/assets/263e541a-9dd8-4978-8ad0-9a6e5b9dfe1a?width=300&format=webp" type="image/webp">
-                    <img 
-                      src="https://fdnd-agency.directus.app/assets/263e541a-9dd8-4978-8ad0-9a6e5b9dfe1a?width=300" 
-                      class="story-img" 
-                      alt="story" 
-                      width="300" 
-                      height="300"
-                    >
-                  </picture>
-                <h3>The octopus who was very hungry</h3>
-                    <small> 
-                        <Play/>  
-                        <a href="all-stories">31 min. 55 sec</a>
-                    </small>
-            </li>
-            <li class="create-playlist">
-                <a href="#popup">
-                   <Plus/>
-                    <h3>Make a playlist !</h3>
-                    <small>Add your favorite stories in one playlist</small> 
-                </a>
-            </li>
-        </ul>
+            <div class="playlist-list">
+                <ul class="playlist-scroll-list">
+                    <li class="create-playlist">
+                        <a href="#popup">
+                        <Plus/>
+                            <h3>Make a playlist</h3>
+                            <small>Add your favorite stories in one playlist</small> 
+                        </a>
+                    </li>
+                    {#each data.playlists.slice().reverse() as playlist (playlist.id)}
+                        <li>
+                        <Playlist {playlist} on:likeToggle={handleLikeToggle} />
+                        </li>
+                    {/each}
+                </ul>
+            </div>
     </section>
 
     <MakePlaylist {data}/>
     
     <section class="all-stories">
         <h2>All stories</h2>
-
         <nav class="language-filter">
             <label for="checkbox-nl"><img src="/languages/Dutch.svg" alt="dutch" width="20" height="20">Dutch</label>
             <input type="checkbox" id="checkbox-nl">
@@ -77,26 +65,29 @@
 
             <a href="/all-stories">Show all</a>
         </nav>
-
         <Carousel {data}/>
     </section>
 
     <section class="own-playlist">
         <h2>Liked playlists</h2>
-        <section class="playlist-list">
-            {#each data.playlists.filter(playlist => playlist.isLiked) as playlist (playlist.id)}
-                <Playlist {playlist} on:likeToggle={handleLikeToggle} />
-            {/each}
-        </section>
+        <div class="playlist-list">
+            <ul class="playlist-scroll-list">
+                {#each data.playlists.filter(playlist => playlist.isLiked) as playlist (playlist.id)}
+                    <li><Playlist {playlist} on:likeToggle={handleLikeToggle} /></li>
+                {/each}
+            </ul>
+        </div>
     </section>
 
     <section class="own-playlist suggested-playlist">
         <h2>Suggested playlists</h2>
-        <section class="playlist-list">
-            {#each data.playlists.filter(playlist => !playlist.isLiked) as playlist (playlist.id)}
-                <Playlist {playlist} on:likeToggle={handleLikeToggle} />
-            {/each}
-        </section>
+        <div class="playlist-list">
+            <ul class="playlist-scroll-list">
+                {#each data.playlists.filter(playlist => !playlist.isLiked) as playlist (playlist.id)}
+                    <li><Playlist {playlist} on:likeToggle={handleLikeToggle} /></li>
+                {/each}
+            </ul>
+        </div>
     </section>
 
 </main>
@@ -141,20 +132,36 @@ header {
 }
 
 /* Styling for "own playlist" section */
-.create-playlist, .playlist-1 {
+
+.create-playlist{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-}
-.create-playlist > a{
-    color: white;
+    width: 10em;
+    height: 16em;
+    background-color: #fff;
+    border-radius: 0.5em;
+    padding: 0.5em;
+    color: black;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+
+    & a{
+        color: white;
+    }
+
+    & h3{
+        margin-top: 1em;
+        font-size: 1em;
+        font-weight: bold;
+        margin-bottom: 1em;
+    }
+
+    & small{
+        margin-top: auto;
+    }
 }
 
-.playlist-1 {
-    background-color: var(--color-text-light);
-    color: var(--color-text);
-}
 
 .playlist-1 > a small {
     color: var(--color-text);
@@ -163,37 +170,9 @@ header {
     justify-content: center;
 }
 
-.playlist-1 > h3 {
-    font-weight: var(--font-weight-bold);
-    color: var(--color-text);
-    margin-bottom: .5em;
-}
-
 .own-playlist {
     display: flex;
     flex-direction: column;
-}
-
-.own-playlist > ul {
-    display: flex;
-    gap: var(--space-sm);
-    overflow-x: auto;
-}
-
-.own-playlist > ul > li {
-    height: 14rem;
-    width: 10em;
-    color: var(--color-text);
-    border-radius: var(--border-radius);
-    padding: .75em;
-    justify-content: center;
-}
-
-.playlist-1 > small {
-    display: flex;
-    gap: .3em;
-    align-items: center;
-    justify-content: center;
 }
 
 /* Styling for "all stories" section & carousel nav */
@@ -216,11 +195,7 @@ nav {
     align-items: center;
     justify-content: center;
 }
-.story-img {
-    width: 100%; 
-    max-width: 100%; 
-    height: auto;
-}
+
 .language-filter {
     display: flex;
     align-items: center;
@@ -273,21 +248,20 @@ label > img {
     color: var(--color-text-light);
 }
 
-
-
-.playlist-1 > small {
-    align-self: start;
-    margin-top: auto;
-}
-
 /* Styling for suggested playlist page */
-section.playlist-list {
+.playlist-list {
     display: flex;
+    flex-direction: row;
     flex-wrap: wrap;
     gap: var(--space-lg);
     overflow-x: auto;
     padding-bottom: var(--space-md);
     scroll-snap-type: x mandatory;
+}
+.playlist-scroll-list{
+    display: flex;
+    flex-direction: row ;
+    gap: 1em;
 }
 
 @media only screen and (min-width: 600px) {
