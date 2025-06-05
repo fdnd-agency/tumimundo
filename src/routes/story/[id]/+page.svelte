@@ -137,11 +137,11 @@
         <source srcset="{story.image}?width=320&format=avif" type="image/avif">
         <source srcset="{story.image}?width=320&format=webp" type="image/webp">
         <source srcset="{story.image}?width=320" type="image/jpeg">
-        <img 
-          src="{story.image}?width=320" 
-          alt="{story.summary} cover image" 
-          height="270" 
-          width="320" 
+        <img
+          src="{story.image}?width=320"
+          alt="{story.summary} cover image"
+          height="270"
+          width="320"
         />
       </picture>
     </section>
@@ -149,19 +149,20 @@
 
   <section class="transcript">
     <h2>{story.title}</h2>
-
-    {#if transcriptLines.length > 0}
-      {#each transcriptLines as line, i}
-        <p
-          class:active={i === currentLineIndex}
-          bind:this={transcriptRefs[i]}
-        >
-          {line.text}
-        </p>
-      {/each}
-    {:else}
-      <p>No transcripts available.</p>
-    {/if}
+    <div class="transcript-lines">
+      {#if transcriptLines.length > 0}
+        {#each transcriptLines as line, i}
+          <p
+            class:active={i === currentLineIndex}
+            bind:this={transcriptRefs[i]}
+          >
+            {line.text}
+          </p>
+        {/each}
+      {:else}
+        <p>No transcripts available.</p>
+      {/if}
+    </div>
   </section>
 
   <section class="player">
@@ -205,36 +206,29 @@ main.light-mode {
   background: var(--bg-image-blue);
 }
 
-.sun {
-  position: absolute;
-  top: -2em;
-  left: -1em;
-  width: 10em;
-  height: 10em;
-  background: radial-gradient(circle, #ffe066, #ffcc00);
-  border-radius: 50%;
-  box-shadow: 0 0 30px #ffcc00;
-  animation: rise 1s ease-out forwards;
-  z-index: -1;
-}
-
+.sun,
 .moon {
   position: absolute;
   top: -2em;
   left: -1em;
   width: 10em;
   height: 10em;
-  background: radial-gradient(circle, #d3d3d3, #838383);
   border-radius: 50%;
-  box-shadow: 0 0 30px #d6d6d6;
+  box-shadow: 0 0 30px #ffcc00;
   animation: rise 1s ease-out forwards;
   z-index: -1;
 }
 
-header,
-.visuals,
-.transcript,
-.player {
+.sun {
+  background: radial-gradient(circle, #ffe066, #ffcc00);
+}
+
+.moon {
+  background: radial-gradient(circle, #d3d3d3, #838383);
+  box-shadow: 0 0 30px #d6d6d6;
+}
+
+header, .visuals, .transcript, .player {
   padding: 1em;
   max-width: 31.25em;
 }
@@ -253,7 +247,7 @@ header a {
   text-decoration: none;
 }
 
-.actions{
+.actions {
   display: flex;
 }
 
@@ -281,18 +275,28 @@ header a {
   text-align: center;
   font-size: 2em;
   font-weight: bold;
-  margin-top: 1em;
   line-height: 1.4;
-  max-height: 5em;
   max-width: 15em;
-  overflow-y: auto;
   color: white;
+}
+
+.transcript h2 {
+  margin-bottom: 0.5em;
+  position: sticky;
+  top: 0;
+  background: inherit;
+  z-index: 1;
+}
+
+.transcript-lines {
+  max-height: 5em;
+  overflow-y: auto;
   scroll-behavior: smooth;
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
 
-.transcript::-webkit-scrollbar {
+.transcript-lines::-webkit-scrollbar {
   display: none;
 }
 
@@ -368,5 +372,4 @@ main.light-mode .transcript p {
     transform: scale(1);
   }
 }
-
 </style>
