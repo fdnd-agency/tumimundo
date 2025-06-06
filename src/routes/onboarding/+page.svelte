@@ -1,6 +1,6 @@
 <script>
   import { onMount } from 'svelte';
-  import Eclipse from '../../lib/components/svg/eclipse.svelte';
+  import Eclipse from '../../lib/components/svg/Eclipse.svelte';
 
   let currentSlide = 0;
 

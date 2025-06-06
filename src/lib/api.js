@@ -1,29 +1,82 @@
 import getDirectusInstance from '$lib/directus';
-import { readItem, readItems } from '@directus/sdk';
+import { readItem, readItems, createItem, deleteItem } from '@directus/sdk';
 import { PUBLIC_APIURL } from '$env/static/public';
-
+ 
 const assetBaseUrl = `${PUBLIC_APIURL}/assets/`;
-
+ 
 export async function fetchCollection(fetch, collectionName, id = null) {
     const directus = getDirectusInstance(fetch);
 
+    if (id && typeof id === 'object' && !Array.isArray(id)) {
+        return await directus.request(readItems(collectionName, id));
+    }
+ 
     if (id) {
-        // Haal één specifiek item op als een ID is meegegeven
         return await directus.request(readItem(collectionName, id));
     }
-
-    // Haal een volledige collectie op als er geen ID is meegegeven
+ 
     return await directus.request(readItems(collectionName));
 }
+
+export async function createUser(fetch, userData) {
+    const directus = getDirectusInstance(fetch);
+    try {
+        const newUser = await directus.request(
+        createItem('tm_users', userData)
+    );
+        return {
+            status: 201,
+            data: newUser
+        };
+    } catch (error) {
+        return {
+            status: 500,
+            error: 'User creation failed',
+            details: error.message
+        };
+    }
+}
+  
 /**
- * Fetches a list of animals from the Directus API.
+ * Creates a new playlist in Directus and links it with selected stories.
  *
  * @async
- * @function fetchAnimals
- * @param {fetch} fetch - The fetch function provided by SvelteKit's `load` function.
- * @returns {Promise<Array<Object>>} A promise that resolves to an array of animal objects.
- * @throws {Error} If there's an error during the API request.
+ * @function createPlaylistWithStories
+ * @param {Function} fetch - The fetch function for making API requests.
+ * @param {Object} playlistData - Data for the new playlist, including title, description, and user ID.
+ * @param {Array<number>} storyIds - Array of story IDs to link with the playlist.
+ * @returns {Promise<Object>} A promise that resolves to the newly created playlist object.
  */
+
+export async function createPlaylistWithStories(fetch, { title, description, user_created }, storyIds) {
+    const directus = getDirectusInstance(fetch);
+
+    let image = null;
+    if (storyIds.length > 0) {
+        const firstStory = await directus.request(readItem('tm_story', storyIds[0]));
+        if (firstStory && firstStory.image) {
+            image = firstStory.image; // bijv. 'blue.png'
+        }
+    }
+   
+
+    const newPlaylist = await directus.request(
+        createItem('tm_playlist', {
+            title,
+            description,
+            user_created,
+            stories: storyIds,
+            image
+        })
+    );
+
+    return {
+        status: 201,
+        data: newPlaylist
+    };
+} 
+
+
 export async function fetchAnimals(fetch) {
     const directus = getDirectusInstance(fetch);
     try {
@@ -36,7 +89,7 @@ export async function fetchAnimals(fetch) {
         throw error;
     }
 }
-
+ 
 export async function fetchSeasons(fetch) {
     try {
         const seasons = await fetchCollection(fetch, 'tm_season');
@@ -46,9 +99,8 @@ export async function fetchSeasons(fetch) {
         throw error;
     }
 }
-
+ 
 export async function fetchAllData(fetch) {
-
     const [
         users,
         profiles,
@@ -76,7 +128,7 @@ export async function fetchAllData(fetch) {
         fetchCollection(fetch, 'tm_playlist_stories'),
         fetchCollection(fetch, 'tm_profile_user')
     ]);
-
+ 
     return {
         users,
         profiles,
@@ -92,20 +144,18 @@ export async function fetchAllData(fetch) {
         profileUsers
     };
 }
-
+ 
 function retrieveFromAssets(url) {
-    const link = `${assetBaseUrl}${url}`;
-    return link
+    return `${assetBaseUrl}${url}`;
 }
-
+ 
 function formatPlaytime(seconds) {
-    const minutes = Math.floor(seconds / 60); // Calculate minutes
-    const remainingSeconds = seconds % 60;   // Calculate remaining seconds
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
     return `${minutes} min ${remainingSeconds} sec`;
 }
-
+ 
 export function mapStoriesWithDetails(stories, audios, languages) {
-
     return stories.map((story) => {
         const language = languages.find((lang) => lang.id === story.language)?.language || "unknown.svg";
         const storyAudios = story.audio.map((audioId) => {
@@ -121,17 +171,18 @@ export function mapStoriesWithDetails(stories, audios, languages) {
             }
             return null;
         }).filter(Boolean);
-
+ 
         if (story.image) {
             story.image = retrieveFromAssets(story.image);
         }
-
+ 
         if (story.playtime) {
+            story.playtimeSeconds = story.playtime;
             story.playtime = formatPlaytime(story.playtime);
         }
-
+ 
         story.language = language;
-
+ 
         return {
             ...story,
             audios: storyAudios
@@ -139,53 +190,95 @@ export function mapStoriesWithDetails(stories, audios, languages) {
     });
 }
 
-export function mapPlaylistsWithDetails(playlists, stories, playlistStories) {
-    const storyMap = new Map(stories.map((story) => [story.id, story]));
+export function SeasonDetailInStories(stories, seasons) {
+    return stories.map(story => ({
+        ...story,
+        season: seasons.find((s) => s.id === story.season)?.season || null
+    }));
+}
 
-    return playlists.map((playlist) => {
-        const relatedStoryIds = playlistStories
-            .filter((link) => link.playlist_id === playlist.id)
-            .map((link) => link.story_id);
-
-        const playlistStoriesData = relatedStoryIds
-            .map((storyId) => {
-                const story = storyMap.get(storyId);
-                return story;
-            })
-            .filter(Boolean);
-
-        const totalPlaytime = playlistStoriesData.reduce((sum, story) => {
-            return sum + (story.playtime || 0);
-        }, 0);
-
-        if (playlist.image) {
-            playlist.image = retrieveFromAssets(playlist.image);
-        }
-
-        const formattedPlaytime = totalPlaytime > 0 ? formatPlaytime(totalPlaytime) : "0 min 0 sec";
-
-        const enrichedPlaylist = {
-            ...playlist,
-            image: playlist.image,
-            playtime: formattedPlaytime,
-            stories: playlistStoriesData,
+export function AnimalDetailInStories(stories, animals) {
+    return stories.map(story => {
+        const animal = animals?.find((a) => a.id === story.animal)?.animal || null;
+        return {
+            ...story,
+            animal: animal
         };
-
-        return enrichedPlaylist;
     });
 }
 
 
+
+export function mapPlaylistsWithDetails(playlists, stories) {
+    return playlists.map((playlist) => {
+        const playlistStoriesData = (playlist.stories || [])
+            .map(storyId => stories.find(story => story.id === storyId))
+            .filter(Boolean);
+
+        let imageUrl = playlist.image
+            ? `${PUBLIC_APIURL}/assets/${playlist.image}`
+            : undefined;
+
+        return {
+            ...playlist,
+            image: imageUrl,
+            stories: playlistStoriesData
+        };
+    });
+}
+
+
+ 
 export function mapProfilesWithImages(profiles) {
-
     return profiles.map((profile) => {
-
         if (profile.avatar) {
             profile.avatar = retrieveFromAssets(profile.avatar);
         }
-
+ 
         return {
             ...profile
         };
     });
+}
+ 
+export async function fetchApi(fetch, endpoint) {
+    const directus = getDirectusInstance(fetch);
+    try {
+        const response = await directus.request(readItems(endpoint));
+        return response;
+    } catch (error) {
+        console.error('Error in fetchApi:', error);
+        throw error;
+    }
+}
+
+export async function deleteFromCollection(fetch, collectionName, id) {
+    const directus = getDirectusInstance(fetch);
+    try {
+        return await directus.request(deleteItem(collectionName, id));
+    } catch (error) {
+        console.error('Error deleting item:', error);
+        throw error;
+    }
+}
+
+export async function fetchAudioById(fetch, id) {
+  const directus = getDirectusInstance(fetch);
+
+  try {
+    const audio = await directus.request(
+      readItem('tm_audio', id, {
+        fields: ['id', 'audio_file', 'transcript', 'transcript_file', 'voice_colours', 'speaker_profile']
+      })
+    );
+
+    return {
+      ...audio,
+      audio_file: audio.audio_file ? `${assetBaseUrl}${audio.audio_file}` : null,
+      transcript_file: audio.transcript_file ? `${assetBaseUrl}${audio.transcript_file}` : null
+    };
+  } catch (error) {
+    console.error(`Error fetching audio with id ${id}:`, error);
+    throw error;
+  }
 }

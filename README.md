@@ -51,8 +51,14 @@ Bovendien worden deze inzichten nog niet op grote schaal toegepast als ontwikkel
 [Bekijk de applicatie live](https://tumimundo.agency.fdnd.nl/)
 
 ## Teamleden
-- Jesse Kramer - developer [github](https://github.com/Jesse-Kramer)
-- Lemuel Magsino - developer [github](https://github.com/lemuelmgsn)
+ ### Actief
+- Lemuel Magsino - Frontend Developer [github](https://github.com/lemuelmgsn)
+- Marjam Lodien - Backend Developer [github](https://github.com/marjamlodien)
+- Roumaisa El Filali - Backend Developer [github](https://github.com/roumaisaHVA))
+- Mamush Hepark - UX/UI Designer [github](https://github.com/Mamush123454321)
+
+### Inactief
+- Jesse Kramer - Frontend Developer [github](https://github.com/Jesse-Kramer)
 
 ## Technische stack
 

@@ -22,6 +22,8 @@
     --bg-image-blue: linear-gradient(to bottom, hsla(196, 47%, 48%, 1), hsla(197, 61%, 28%, 1));
     --bg-image-playlist: linear-gradient(hsla(229, 60%, 61%, 1), hsla(242, 77%, 19%, 1));
 
+    --bg-story-dark: linear-gradient(to bottom, hsla(280, 100%, 12%, 1), hsla(270, 49%, 34%, 1));
+
     
     /* Log-in */
     --color-login-bg: #378DB3;
@@ -89,6 +91,9 @@
     --button-padding: 0.75em 1.5em;
     --button-border-radius: var(--border-radius);
     --button-font-size: var(--font-size-sm);
+    --button-blue: hsl(200, 52%, 46%);
+    --button-darker-blue: hsl(200, 49%, 26%);
+    --button-grey: hsl(0, 0%, 75%);
     
     /* ------------------------------- */
     /* Hover States */

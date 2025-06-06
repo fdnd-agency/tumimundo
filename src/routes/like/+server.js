@@ -1,4 +1,4 @@
-import { FetchApi } from '$lib/index';
+import { fetchApi } from '$lib/index';
 
 /** @type {import('./$types').RequestHandler} */
 export async function POST({ request }) {
@@ -15,7 +15,7 @@ export async function POST({ request }) {
         }
 
         // Handle unlike (DELETE)
-        await FetchApi(`/tm_likes/${likeId}`, 'DELETE');
+        await fetchApi(`/tm_likes/${likeId}`, 'DELETE');
         break;
       }
 
@@ -28,7 +28,7 @@ export async function POST({ request }) {
         }
 
         // Handle like (POST)
-        await FetchApi('/tm_likes', 'POST', {
+        await fetchApi('/tm_likes', 'POST', {
           playlist: playlistId,
           profile: parseInt(profileId, 10),
         });

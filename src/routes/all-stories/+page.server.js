@@ -1,37 +1,67 @@
 // @author roumaisa el filali
+// @author Marjam Lodien
 /** @type {import('./$types').PageLoad} */
 export let csr = true;
 import { error } from '@sveltejs/kit';
-import { fetchAllData, mapStoriesWithDetails, fetchSeasons } from '$lib/api';
+import { fetchAllData, mapStoriesWithDetails, fetchSeasons, SeasonDetailInStories, AnimalDetailInStories } from '$lib/api';
 import { fetchAnimals } from '../../lib/api';
 /**
- * Loads data for the page, fetching stories, animals, and languages.
- *
+ * Loads data for the page, fetching stories, animals, languages and seasons.
  * @async
  * @function load
- * @param {Object} context - The context object provided by SvelteKit's `load` function.
  * @param {fetch} context.fetch - The fetch function for making HTTP requests.
- * @returns {Promise<Object>} A promise that resolves to an object containing stories, animals, and languages.
+ * @param {url} context.url - The current page URL object.
+ * @returns {Promise<Object>} A promise that resolves to an object containing stories, animals, languages seasons and selected filters.
  * @throws {Error} If there's an error during data fetching.
  */
-export async function load({ fetch }) {
-    try{
-    const [data, animals, seasons] = await Promise.all([fetchAllData(fetch),fetchAnimals(fetch), fetchSeasons(fetch)]);
+export async function load({ fetch, url }) {
+    try {
+      const [data, animalData, seasonsData] = await Promise.all([
+        fetchAllData(fetch),
+        fetchAnimals(fetch),
+        fetchSeasons(fetch)
+      ]);
+  
+      let storiesWithDetails = mapStoriesWithDetails(data.stories, data.audios, data.languages);
+      storiesWithDetails = SeasonDetailInStories(storiesWithDetails, seasonsData.seasons);
+      storiesWithDetails = AnimalDetailInStories(storiesWithDetails, animalData); 
+  
+      const selectedSeason = url.searchParams.get('season') || '';
+      const selectedLanguage = url.searchParams.get('language') || '';
+      const selectedAnimal = url.searchParams.get('animal') || '';
+      const selectedSorting = url.searchParams.get('sorting') || ''
 
-    const storiesWithDetails = mapStoriesWithDetails(data.stories, data.audios, data.languages);
+      const filteredStories = storiesWithDetails.filter(story => 
+        (!selectedSeason || story.season === selectedSeason) &&
+        (!selectedLanguage || story.language === selectedLanguage) &&
+        (!selectedAnimal || story.animal === selectedAnimal)
+      );
 
-    return {
-        ...data,
-        animals,
-        stories: storiesWithDetails,
+      const sortingOptions = {
+        'A-Z': (a, b) => a.title.localeCompare(b.title),
+        'Z-A': (a, b) => b.title.localeCompare(a.title),
+        'short-long': (a, b) => a.playtimeSeconds - b.playtimeSeconds,
+        'long-short': (a, b) => b.playtimeSeconds - a.playtimeSeconds,
+      };
+
+      if (selectedSorting && sortingOptions[selectedSorting]) {
+        filteredStories.sort(sortingOptions[selectedSorting]);
+      }
+  
+      return {
+        stories: filteredStories,
+        animals: animalData,
         languages: data.languages,
-        seasons: seasons.seasons
-    };
-} catch (err) {
-    
-    console.error('Error loading data:', error);
-    throw error(500, {
-        message: error.message
-    });
-}
-}
+        seasons: seasonsData.seasons,
+        selectedSeason,
+        selectedLanguage,
+        selectedAnimal,
+        selectedSorting
+      };
+    } catch (err) {
+      console.error('Error loading data:', err);
+      throw error(500, {
+        message: err.message
+      });
+    }
+  }
