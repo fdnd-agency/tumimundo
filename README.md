@@ -12,15 +12,17 @@ Een innovatieve aanpak om taalontwikkeling bij kinderen te ondersteunen door mid
 4. [Live Link](#live-link)
 5. [Teamleden](#teamleden)
 6. [Technische stack](#technische-stack)
-7. [Installatiehandleiding](#installatiehandleiding)
-8. [Belangrijke scripts](#belangrijke-scripts)
-9. [Huisstijl](#huisstijl)
-10. [Bijdragen](#bijdragen)
-11. [Hints voor volgende teams](#hints-voor-volgende-teams)
-12. [Gebruikte Bronnen](#gebruikte-bronnen)
-13. [Badges](#badges)
-14. [Link naar Projectboard](#link-naar-projectboard)
-15. [Licentie](#licentie)
+7. [Tools](#tools)
+8. [Installatiehandleiding](#installatiehandleiding)
+9. [Belangrijke scripts](#belangrijke-scripts)
+10. [Huisstijl](#huisstijl)
+11. [Bijdragen](#bijdragen)
+12. [Versies](#versies)
+13. [Hints voor volgende teams](#hints-voor-volgende-teams)
+14. [Gebruikte Bronnen](#gebruikte-bronnen)
+15. [Badges](#badges)
+16. [Link naar Projectboard](#link-naar-projectboard)
+17. [Licentie](#licentie)
 
 ## Introductie
 
@@ -62,11 +64,19 @@ Bovendien worden deze inzichten nog niet op grote schaal toegepast als ontwikkel
 
 ## Technische stack
 
-- **Framework:** SvelteKit
-- **Headless CMS:** Directus
-- **Package manager:** NPM
-- **Bundler:** Vite
-- **Programmeertalen:** HTML, CSS, JavaScript
+- **Framework:** SvelteKit  
+- **Headless CMS:** Directus  
+- **Package manager:** NPM  
+- **Bundler:** Vite  
+- **Programmeertalen:** HTML, CSS, JavaScript  
+
+## Tools
+
+- [svgomg](https://svgomg.net)  
+- [Web Developer Extension](https://chrispederick.com/work/web-developer/)  
+- [Polypane](https://polypane.app)  
+- [Figma](https://figma.com) *(voor ontwerp en UI-uitwerking)*
+
 
 ## Installatiehandleiding
 
@@ -93,38 +103,72 @@ npm start
 
 De huisstijlrichtlijnen zijn beschikbaar in het Figma-bestand:
 
-[Huisstijl in Figma](https://www.figma.com/file/RDlD4etdXBvcOW9AAqueBz/TuMiMundo_FDND_Prototype?type=design&node-id=0%3A1&mode=design&t=3z8nbpTxTLvGHUIm-1)
+Oud: [Huisstijl in Figma](https://www.figma.com/file/RDlD4etdXBvcOW9AAqueBz/TuMiMundo_FDND_Prototype?type=design&node-id=0%3A1&mode=design&t=3z8nbpTxTLvGHUIm-1)
 
-## Bijdragen
+Nieuw (gemaakt door @Mamush123454321) : [Redesign Huisstijl](https://www.figma.com/design/IvOZLsH7kHegNh19OEtsSS/Mamush-Tumi-Mundo?node-id=0-1&t=1RRQ9lwK8olUps9P-1)
 
-Contributies aan dit project zijn welkom! Volg deze stappen om bij te dragen:
+ # Bijdragen  
+  
+ Contributies aan dit project zijn welkom! Volg deze stappen om bij te dragen:  
+  
+ 1. Fork de repository.  
+ 2. Maak een nieuwe branch (`git checkout -b feat/onderdeel-naam`).  
+ 3. Commit je wijzigingen met een [conventional commit](https://www.conventionalcommits.org/) bericht. Gebruik het volgende formaat:  
+  
+    `<type>[optional scope]: <korte beschrijving> [optional gitmoji] #issue-nummer`  
+  
+    **Voorbeelden:**  
+    - `feat: voeg live transcript toe  #42`  
+    - `fix: corrigeer verkeerde tijdcode in transcript  #45`  
+    - `refactor: onnodige css regels verwijderd  #12`  
+    - `chore: update dependencies #50`  
+  
+    **Let op:** het refereren van een issue is verplicht (`#issue-nummer`).  
+  
+ 4. Commit regelmatig   
+ 5. Push naar je branch (`git push origin feat/onderdeel-naam`).  
+ 6. Maak een Pull Request en beschrijf duidelijk wat er is veranderd en waarom.  
+  
+ > We hanteren Semantic Versioning en gebruiken Conventional Commits om versies automatisch te kunnen genereren en overzicht te houden in wijzigingen.
 
-1. Fork de repository.
-2. Maak een nieuwe branch (`git checkout -b feature-naam`).
-3. Commit je wijzigingen (`git commit -m "Beschrijving van de wijziging"`).
-4. Push naar de branch (`git push origin feature-naam`).
-5. Maak een Pull Request.
 
-We werken op dit project in de onderstaande versies:
+## Versies
+
+We werken op dit project met de onderstaande versies:
+
+```json
+  "devDependencies": {
+    "@fast-check/vitest": "^0.2.0",
+    "@playwright/test": "^1.51.1",
+    "@sveltejs/adapter-auto": "3.2.*",
+    "@sveltejs/adapter-netlify": "^5.0.2",
+    "@sveltejs/kit": "^2.21.2",
+    "@sveltejs/vite-plugin-svelte": "3.0.*",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/svelte": "^5.2.7",
+    "@types/node": "^22.13.16",
+    "fast-check": "^4.0.1",
+    "jsdom": "^26.0.0",
+    "playwright": "^1.51.1",
+    "svelte": "4.2.*",
+    "vite": "5.0.*",
+    "vitest": "^3.1.1"
+  },
+  "type": "module",
+  "dependencies": {
+    "@directus/sdk": "17.0.*",
+    "bcryptjs": "^3.0.2",
+    "form-data": "^4.0.2",
+    "undici": "^7.7.0"
+  }
 ```
-	"devDependencies": {
-		"@sveltejs/adapter-auto": "3.2.*",
-		"@sveltejs/kit": "2.0.*",
-		"@sveltejs/vite-plugin-svelte": "3.0.*",
-		"svelte": "4.2.*",
-		"vite": "5.0.*"
-	},
-	"type": "module",
-	"dependencies": {
-		"@directus/sdk": "17.0.*"
-	}
-}
-```
+
 
 ## Hints voor volgende teams
 
 - Zorg voor duidelijke documentatie bij nieuwe functies.
 - Test nieuwe features grondig op verschillende apparaten.
+- 
 
 ## Gebruikte Bronnen
 
@@ -134,6 +178,7 @@ We werken op dit project in de onderstaande versies:
 - [Github/Briannededeugd](https://github.com/briannededeugd/tumimundo/)
 - [Vercel](https://vercel.com/)
 - [Chatgpt](https://chat.openai.com)
+- [Netlify](https://www.netlify.com/)
 
 ## Badges
 
