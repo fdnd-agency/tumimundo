@@ -67,6 +67,8 @@ Bovendien worden deze inzichten nog niet op grote schaal toegepast als ontwikkel
 - **Package manager:** NPM
 - **Bundler:** Vite
 - **Programmeertalen:** HTML, CSS, JavaScript
+- **Testing libraries:** Vitest (voor unit-, en integration tests) & playwright (voor end-to-end tests)
+- **Hashing library:** Bcrypt
 
 ## Installatiehandleiding
 
@@ -88,6 +90,8 @@ npm start
 - `npm run dev` - Start de applicatie in ontwikkelmodus.
 - `npm run build` - Bouwt de applicatie voor productie.
 - `npm run preview` - Start een lokale preview van de productie-build.
+- `npm run test` - Voert alle tests uit met behulp van het Vitest testframework.
+- `npm run playwright-test` - Voert alle end-to-end tests uit met het Playwright testframework.
 
 ## Huisstijl
 
@@ -123,7 +127,7 @@ We werken op dit project in de onderstaande versies:
 
 ## Hints voor volgende teams
 
-- Zorg voor duidelijke documentatie bij nieuwe functies.
+- Zorg voor duidelijke Engelstalige documentatie bij nieuwe functies.
 - Test nieuwe features grondig op verschillende apparaten.
 
 ## Gebruikte Bronnen
