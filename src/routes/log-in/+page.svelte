@@ -1,32 +1,15 @@
 <script>
+    import { Input, Close } from '$lib/index';
+
     export let data;
+    export let form;
 
-    import { Input, userState, Close } from '$lib/index';
-    import { goto } from '$app/navigation';
-
-    let users = data.users;
     let email = '';
     let password = '';
-    let errorMessage = '';
+    let popupOpen = false;
 
-    async function handleLogin(event) {
-        event.preventDefault();
-
-        if (!email || !password) {
-            errorMessage = 'Please fill out both fields.';
-            return;
-        }
-
-        const user = users.find((user) => user.email === email && user.password === password);
-
-        if (user) {
-            userState.set({ userId: user.id, profileId: null });
-            
-            await goto('/profile-selection');
-        } else {
-            errorMessage = 'Invalid email or password.';
-        }
-    }
+    $: users = data?.users
+    $: if (form?.error) popupOpen = true;
 </script>
 
 <main>
@@ -42,7 +25,7 @@
     </section>
 
     <div class="popup-container">
-        <input type="checkbox" id="login-popup">
+        <input type="checkbox" id="login-popup" bind:checked={popupOpen}>
         <div class="popup">
             <label for="login-popup" class="transparent-label"></label>
             <div class="popup-inner">
@@ -54,13 +37,13 @@
                     </div>
                 </div>
                 <div class="popup-content">
-                    <form on:submit|preventDefault={handleLogin}>
+                    <form method="post">
                         <ul>
                             <li><Input type="email" name="email-input" placeholder="Email" bind:value={email} /></li>
                             <li><Input type="password" name="password-input" placeholder="Password" bind:value={password} /></li>
                             <li><button type="submit" class="login-popup">Log in</button></li>
-                            {#if errorMessage}
-                            <li class="error-message">{errorMessage}</li>
+                            {#if form?.error}
+                                <li class="error-message">{form.error}</li>
                             {/if}
                             <li><a href="/">I don't remember my password/username</a></li>
                         </ul>
@@ -71,9 +54,7 @@
     </div>
 </main>
 
-
 <style>
-
 :root {
     --color-text: white;;
 
@@ -277,4 +258,4 @@ label {
     margin-top: .6em;
     text-align: center;
 }
-</style>
+</style>  
